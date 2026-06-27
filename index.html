@@ -1,733 +1,1373 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Elite Residence — Premium Real Estate in Dhaka</title>
-<meta name="description" content="Discover premium flats, plots and houses in Dhaka's most elite neighborhoods — Gulshan, Banani, Bashundhara and more."/>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>Elite Residence — Luxury Real Estate in Dhaka</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
 <style>
-  :root{
-    --bg:#fbfaf7;
-    --surface:#ffffff;
-    --ink:#0f1c2e;
-    --ink-soft:#3a475a;
-    --muted:#7a8699;
-    --line:#e7e3dc;
-    --accent:#0b3d91;       /* Elite Royal Blue */
-    --accent-2:#0a6b4a;     /* Emerald */
-    --gold:#b6924a;
-    --radius:14px;
-    --shadow:0 10px 30px rgba(15,28,46,.08);
-    --shadow-lg:0 30px 60px rgba(15,28,46,.18);
-    --serif:'Cormorant Garamond', serif;
-    --sans:'Inter', system-ui, sans-serif;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
-  img{display:block;max-width:100%}
-  a{color:inherit;text-decoration:none}
-  .container{max-width:1240px;margin:0 auto;padding:0 24px}
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS
+═══════════════════════════════════════════ */
+:root {
+  --white:       #FFFFFF;
+  --off-white:   #F7F8FA;
+  --slate:       #1A1E2E;
+  --charcoal:    #2D3142;
+  --blue:        #1B4FD8;
+  --blue-dark:   #1340B8;
+  --blue-tint:   #EEF2FF;
+  --blue-mid:    #3D6BE8;
+  --silver:      #8892A4;
+  --border:      #E4E7EF;
+  --card-shadow: 0 4px 24px rgba(26,30,46,0.08);
+  --hover-shadow:0 12px 48px rgba(26,30,46,0.14);
+  --radius:      8px;
+  --radius-lg:   14px;
+  --serif:       'DM Serif Display', Georgia, serif;
+  --sans:        'DM Sans', system-ui, sans-serif;
+}
 
-  /* HEADER */
-  header.site{
-    position:sticky;top:0;z-index:50;
-    background:rgba(255,255,255,.85);
-    backdrop-filter:saturate(180%) blur(14px);
-    border-bottom:1px solid var(--line);
-  }
-  .nav{display:flex;align-items:center;justify-content:space-between;height:78px;gap:24px}
-  .brand{display:flex;align-items:center;gap:12px}
-  .brand .mark{width:42px;height:42px}
-  .brand-text{display:flex;flex-direction:column;line-height:1}
-  .brand-text .name{font-family:var(--serif);font-weight:700;font-size:22px;letter-spacing:.5px}
-  .brand-text .tag{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:4px}
-  nav.primary{display:flex;gap:32px}
-  nav.primary a{font-size:14px;font-weight:500;color:var(--ink-soft);position:relative;padding:6px 0;transition:color .2s}
-  nav.primary a:hover{color:var(--accent)}
-  nav.primary a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .25s}
-  nav.primary a:hover::after{transform:scaleX(1)}
-  .cta-call{display:inline-flex;align-items:center;gap:10px;padding:10px 18px;border:1px solid var(--ink);border-radius:999px;font-size:13px;font-weight:600;transition:all .2s}
-  .cta-call:hover{background:var(--ink);color:#fff}
+/* ═══════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body { font-family: var(--sans); color: var(--charcoal); background: var(--white); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+button { font-family: var(--sans); cursor: pointer; }
+a { text-decoration: none; color: inherit; }
+ul { list-style: none; }
 
-  /* CATEGORY TABS */
-  .cat-tabs{display:flex;justify-content:center;gap:8px;padding:18px 0;border-bottom:1px solid var(--line);background:#fff}
-  .cat-tabs button{
-    background:transparent;border:1px solid var(--line);padding:9px 22px;border-radius:999px;
-    font-family:var(--sans);font-size:13px;font-weight:500;color:var(--ink-soft);cursor:pointer;transition:all .2s;letter-spacing:.5px
-  }
-  .cat-tabs button:hover{border-color:var(--accent);color:var(--accent)}
-  .cat-tabs button.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 10px; }
 
-  /* HERO */
-  .hero{
-    position:relative;min-height:640px;display:flex;align-items:center;
-    background:
-      linear-gradient(135deg, rgba(11,28,46,.72), rgba(11,28,46,.45)),
-      url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;
-    color:#fff;
-  }
-  .hero-inner{padding:120px 0 160px;max-width:860px}
-  .eyebrow{display:inline-block;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#e9d9b3;border:1px solid rgba(233,217,179,.4);padding:6px 14px;border-radius:999px;margin-bottom:24px}
-  h1.hero-title{font-family:var(--serif);font-weight:600;font-size:clamp(38px,5.5vw,68px);line-height:1.08;letter-spacing:-.5px;margin-bottom:18px}
-  h1.hero-title em{font-style:italic;color:#e9d9b3;font-weight:500}
-  .hero p.sub{font-size:17px;color:#dde3ec;max-width:620px;font-weight:300}
+/* ═══════════════════════════════════════════
+   UTILITY
+═══════════════════════════════════════════ */
+.container { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+.section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); margin-bottom: 12px; }
+.section-title { font-family: var(--serif); font-size: clamp(1.9rem, 3vw, 2.75rem); color: var(--slate); line-height: 1.18; }
+.section-title em { font-style: italic; color: var(--blue); }
+.divider { width: 40px; height: 3px; background: var(--blue); border-radius: 2px; margin-top: 16px; }
+.badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; }
+.badge-flat  { background: #DBEAFE; color: #1D4ED8; }
+.badge-plot  { background: #DCFCE7; color: #166534; }
+.badge-house { background: #FEF3C7; color: #92400E; }
 
-  /* SEARCH BAR */
-  .search-wrap{position:relative;margin-top:-70px;z-index:10}
-  .search{
-    background:#fff;border-radius:var(--radius);box-shadow:var(--shadow-lg);
-    padding:22px;display:grid;grid-template-columns:1.2fr 1fr 1fr auto;gap:14px;align-items:end;
-  }
-  .field label{display:block;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:600}
-  .field select,.field input{
-    width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:8px;
-    font-family:var(--sans);font-size:14px;color:var(--ink);background:#fff;
-    transition:border-color .2s
-  }
-  .field select:focus,.field input:focus{outline:none;border-color:var(--accent)}
-  .search button.search-btn{
-    background:var(--accent);color:#fff;border:none;padding:14px 30px;border-radius:8px;
-    font-weight:600;font-size:14px;letter-spacing:.5px;cursor:pointer;height:46px;
-    display:flex;align-items:center;gap:8px;transition:background .2s
-  }
-  .search button.search-btn:hover{background:#082e6b}
+/* ═══════════════════════════════════════════
+   STICKY HEADER
+═══════════════════════════════════════════ */
+#header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  height: 72px;
+}
+#header.scrolled { border-color: var(--border); box-shadow: 0 2px 20px rgba(26,30,46,0.07); }
 
-  /* SECTION */
-  section.section{padding:90px 0}
-  .section-head{text-align:center;max-width:680px;margin:0 auto 50px}
-  .section-head .eyebrow-d{display:inline-block;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:14px}
-  .section-head h2{font-family:var(--serif);font-size:clamp(32px,3.6vw,46px);font-weight:600;line-height:1.15;margin-bottom:14px}
-  .section-head p{color:var(--muted);font-size:16px}
+.header-inner { display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 32px; }
 
-  /* LOCATION FILTER PILLS */
-  .loc-pills{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-bottom:48px}
-  .loc-pills button{
-    padding:10px 22px;border-radius:999px;background:#fff;border:1px solid var(--line);
-    font-family:var(--sans);font-size:13px;font-weight:500;color:var(--ink-soft);cursor:pointer;
-    transition:all .2s;letter-spacing:.3px
-  }
-  .loc-pills button:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
-  .loc-pills button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+/* SVG Logo */
+.logo-wrap { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+.logo-text-group { display: flex; flex-direction: column; line-height: 1; }
+.logo-name { font-family: var(--serif); font-size: 18px; color: var(--slate); letter-spacing: -0.01em; }
+.logo-tagline { font-size: 9px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: var(--silver); margin-top: 2px; }
 
-  /* PROPERTY GRID */
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:30px}
-  .card{
-    background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);
-    transition:transform .35s, box-shadow .35s;cursor:pointer;display:flex;flex-direction:column;
-    border:1px solid var(--line)
-  }
-  .card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
-  .card .img{position:relative;aspect-ratio:4/3;overflow:hidden}
-  .card .img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
-  .card:hover .img img{transform:scale(1.06)}
-  .card .tag{
-    position:absolute;top:14px;left:14px;background:rgba(255,255,255,.95);
-    color:var(--accent);padding:5px 12px;border-radius:4px;font-size:11px;font-weight:600;
-    letter-spacing:1px;text-transform:uppercase
-  }
-  .card .fav{
-    position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;
-    background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;color:var(--ink-soft)
-  }
-  .card .body{padding:22px;display:flex;flex-direction:column;gap:12px;flex:1}
-  .card h3{font-family:var(--serif);font-size:22px;font-weight:600;line-height:1.25}
-  .card .loc{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px}
-  .card .specs{display:flex;gap:14px;font-size:13px;color:var(--ink-soft);padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:auto}
-  .card .specs span{display:flex;align-items:center;gap:5px}
-  .card .foot{display:flex;justify-content:space-between;align-items:center;gap:10px}
-  .price{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--accent)}
-  .btn-visit{
-    background:var(--ink);color:#fff;border:none;padding:9px 16px;border-radius:6px;
-    font-size:12px;font-weight:600;cursor:pointer;letter-spacing:.5px;transition:background .2s
-  }
-  .btn-visit:hover{background:var(--accent)}
+/* Nav */
+.nav-links { display: flex; align-items: center; gap: 28px; }
+.nav-links a { font-size: 13.5px; font-weight: 500; color: var(--charcoal); transition: color 0.2s; white-space: nowrap; }
+.nav-links a:hover { color: var(--blue); }
 
-  .empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted)}
+/* Nav cats */
+.nav-cats { display: flex; align-items: center; gap: 4px; }
+.nav-cat { font-size: 12.5px; font-weight: 600; color: var(--silver); padding: 6px 14px; border-radius: 20px; transition: all 0.2s; cursor: pointer; border: 1.5px solid transparent; white-space: nowrap; }
+.nav-cat:hover { color: var(--blue); border-color: var(--blue-tint); background: var(--blue-tint); }
+.nav-cat.active { color: var(--blue); background: var(--blue-tint); border-color: #C7D7F9; }
 
-  /* DETAIL PAGE */
-  .detail{display:none;padding:40px 0 90px;background:var(--bg);min-height:100vh}
-  .detail.active{display:block;animation:fadeIn .4s ease}
-  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-  .back-btn{
-    display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);
-    padding:10px 18px;border-radius:999px;font-size:13px;font-weight:500;cursor:pointer;margin-bottom:30px;
-    transition:all .2s
-  }
-  .back-btn:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
-  .detail-hero{display:grid;grid-template-columns:2fr 1fr;gap:14px;height:520px;margin-bottom:40px;border-radius:var(--radius);overflow:hidden}
-  .detail-hero img{width:100%;height:100%;object-fit:cover}
-  .detail-hero .side{display:grid;grid-template-rows:1fr 1fr;gap:14px}
-  .detail-grid{display:grid;grid-template-columns:1.7fr 1fr;gap:50px}
-  .detail-main h1{font-family:var(--serif);font-size:42px;font-weight:600;line-height:1.15;margin-bottom:8px}
-  .detail-main .loc-line{color:var(--muted);font-size:15px;margin-bottom:24px}
-  .detail-main .specs-row{display:flex;gap:30px;padding:22px;background:#fff;border-radius:var(--radius);border:1px solid var(--line);margin-bottom:36px}
-  .detail-main .specs-row > div{display:flex;flex-direction:column}
-  .detail-main .specs-row .k{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
-  .detail-main .specs-row .v{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--ink)}
-  .detail-main h3.dh{font-family:var(--serif);font-size:26px;font-weight:600;margin:30px 0 14px}
-  .detail-main p.desc{color:var(--ink-soft);font-size:15px;line-height:1.8}
-  .features{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 20px;margin-top:14px}
-  .features li{list-style:none;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ink-soft)}
-  .features li::before{content:"";width:18px;height:18px;border-radius:50%;background:var(--accent-2);display:inline-flex;flex-shrink:0;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
-    background-size:12px;background-position:center;background-repeat:no-repeat}
-  .booking{
-    background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:30px;
-    position:sticky;top:100px;box-shadow:var(--shadow)
-  }
-  .booking .price-big{font-family:var(--serif);font-size:34px;font-weight:700;color:var(--accent);margin-bottom:4px}
-  .booking .price-sub{font-size:12px;color:var(--muted);margin-bottom:24px}
-  .booking input,.booking textarea{
-    width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:8px;font-family:var(--sans);
-    font-size:14px;margin-bottom:12px;color:var(--ink)
-  }
-  .booking input:focus,.booking textarea:focus{outline:none;border-color:var(--accent)}
-  .booking textarea{resize:vertical;min-height:90px}
-  .booking .btn-primary{
-    width:100%;background:var(--accent);color:#fff;border:none;padding:14px;border-radius:8px;
-    font-weight:600;font-size:14px;cursor:pointer;letter-spacing:.5px;margin-bottom:10px;transition:background .2s
-  }
-  .booking .btn-primary:hover{background:#082e6b}
-  .booking .btn-outline{
-    width:100%;background:transparent;color:var(--ink);border:1px solid var(--ink);padding:14px;border-radius:8px;
-    font-weight:600;font-size:14px;cursor:pointer;letter-spacing:.5px;transition:all .2s
-  }
-  .booking .btn-outline:hover{background:var(--ink);color:#fff}
+/* Header CTA */
+.header-cta { background: var(--blue); color: #fff; border: none; padding: 10px 22px; border-radius: var(--radius); font-size: 13.5px; font-weight: 600; transition: background 0.2s, transform 0.15s; white-space: nowrap; }
+.header-cta:hover { background: var(--blue-dark); transform: translateY(-1px); }
 
-  /* FOOTER */
-  footer.site{background:#0a1322;color:#c4ccd8;padding:80px 0 30px;margin-top:80px}
-  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:50px;margin-bottom:50px}
-  .foot-grid h4{font-family:var(--serif);font-size:18px;color:#fff;margin-bottom:18px;font-weight:600}
-  .foot-grid ul{list-style:none}
-  .foot-grid li{margin-bottom:10px;font-size:14px}
-  .foot-grid a:hover{color:#fff}
-  .foot-brand p{font-size:14px;line-height:1.7;margin:14px 0 20px;color:#8b95a7;max-width:300px}
-  .socials{display:flex;gap:10px}
-  .socials a{
-    width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.06);
-    display:flex;align-items:center;justify-content:center;color:#c4ccd8;transition:all .2s;cursor:pointer
-  }
-  .socials a:hover{background:var(--accent);color:#fff;transform:translateY(-2px)}
-  .foot-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:#8b95a7}
-  .foot-bottom a{margin-left:20px}
+.hamburger { display: none; background: none; border: none; font-size: 20px; color: var(--slate); }
 
-  @media (max-width:900px){
-    nav.primary{display:none}
-    .search{grid-template-columns:1fr 1fr;gap:12px;padding:18px}
-    .search button.search-btn{grid-column:1/-1;width:100%}
-    .detail-hero{grid-template-columns:1fr;height:auto}
-    .detail-hero .side{grid-template-rows:auto auto;grid-template-columns:1fr 1fr}
-    .detail-hero img{height:240px}
-    .detail-grid{grid-template-columns:1fr;gap:30px}
-    .booking{position:static}
-    .foot-grid{grid-template-columns:1fr 1fr;gap:30px}
-    .detail-main .specs-row{flex-wrap:wrap;gap:18px}
-  }
+/* Mobile nav */
+#mobile-nav { display: none; position: fixed; top: 72px; left: 0; right: 0; background: #fff; border-bottom: 1px solid var(--border); padding: 20px 24px; z-index: 999; flex-direction: column; gap: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+#mobile-nav.open { display: flex; }
+#mobile-nav a, #mobile-nav .nav-cat { font-size: 15px; font-weight: 500; color: var(--charcoal); padding: 8px 0; border-bottom: 1px solid var(--off-white); display: block; border-radius: 0; }
+
+/* ═══════════════════════════════════════════
+   HERO SECTION
+═══════════════════════════════════════════ */
+#hero {
+  position: relative;
+  height: 100vh;
+  min-height: 700px;
+  margin-top: 72px;
+  overflow: visible;
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1920&q=85');
+  background-size: cover;
+  background-position: center 30%;
+}
+.hero-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(165deg, rgba(26,30,46,0.62) 0%, rgba(26,30,46,0.35) 55%, rgba(26,30,46,0.72) 100%);
+}
+
+.hero-content {
+  position: relative; z-index: 2;
+  height: calc(100% - 90px);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 0 24px;
+}
+
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+  backdrop-filter: blur(8px);
+  color: #fff; font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 7px 18px; border-radius: 20px; margin-bottom: 28px;
+}
+.hero-eyebrow span { width: 5px; height: 5px; background: var(--blue-mid); border-radius: 50%; display: inline-block; }
+
+.hero-h1 { font-family: var(--serif); font-size: clamp(2.4rem, 5.5vw, 4.2rem); color: #fff; line-height: 1.12; max-width: 780px; margin-bottom: 20px; }
+.hero-h1 em { font-style: italic; color: #7BA7F7; }
+
+.hero-sub { font-size: 16px; font-weight: 400; color: rgba(255,255,255,0.72); max-width: 520px; line-height: 1.7; margin-bottom: 36px; }
+
+/* ── HOUZEZ SEARCH ISLAND ── */
+.search-island {
+  position: absolute;
+  bottom: -54px;
+  left: 50%; transform: translateX(-50%);
+  width: min(960px, calc(100% - 48px));
+  background: #fff;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 60px rgba(26,30,46,0.18);
+  z-index: 10;
+  overflow: hidden;
+}
+.search-island-tabs { display: flex; border-bottom: 1px solid var(--border); }
+.si-tab { flex: 1; padding: 14px 20px; font-size: 13px; font-weight: 600; color: var(--silver); background: none; border: none; border-bottom: 2.5px solid transparent; transition: all 0.2s; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px; }
+.si-tab.active { color: var(--blue); border-bottom-color: var(--blue); background: var(--blue-tint); }
+.si-tab i { font-size: 13px; }
+
+.search-island-body { display: flex; align-items: center; gap: 0; }
+.si-field { flex: 1; padding: 18px 22px; border-right: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.si-field:last-of-type { border-right: none; }
+.si-label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--silver); }
+.si-select { border: none; outline: none; font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--slate); background: transparent; width: 100%; cursor: pointer; appearance: none; -webkit-appearance: none; }
+.si-select option { color: var(--charcoal); }
+.si-input { border: none; outline: none; font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--slate); background: transparent; width: 100%; }
+.si-input::placeholder { color: #BCC3D0; font-weight: 400; }
+.si-search-btn { margin: 14px; background: var(--blue); color: #fff; border: none; border-radius: var(--radius); padding: 16px 28px; font-size: 14px; font-weight: 700; letter-spacing: 0.04em; display: flex; align-items: center; gap: 9px; white-space: nowrap; transition: background 0.2s, transform 0.15s; flex-shrink: 0; }
+.si-search-btn:hover { background: var(--blue-dark); transform: translateY(-1px); }
+
+/* ═══════════════════════════════════════════
+   STATS STRIP
+═══════════════════════════════════════════ */
+.stats-strip { background: var(--slate); padding: 36px 0; }
+.stats-inner { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; }
+.stat-item { text-align: center; padding: 0 24px; border-right: 1px solid rgba(255,255,255,0.08); }
+.stat-item:last-child { border-right: none; }
+.stat-num { font-family: var(--serif); font-size: 2.4rem; color: #fff; line-height: 1; }
+.stat-num span { color: var(--blue-mid); }
+.stat-label { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 6px; font-weight: 500; letter-spacing: 0.06em; }
+
+/* ═══════════════════════════════════════════
+   LISTINGS SECTION
+═══════════════════════════════════════════ */
+#listings { padding: 100px 0 80px; background: var(--off-white); }
+
+.listings-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 40px; flex-wrap: wrap; }
+.listings-head-left .section-title { margin-top: 8px; }
+
+/* Location filter pills */
+.loc-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.loc-btn {
+  font-size: 13px; font-weight: 600; color: var(--silver);
+  background: #fff; border: 1.5px solid var(--border);
+  padding: 8px 18px; border-radius: 24px; cursor: pointer;
+  transition: all 0.2s;
+}
+.loc-btn:hover { color: var(--blue); border-color: var(--blue); }
+.loc-btn.active { color: #fff; background: var(--blue); border-color: var(--blue); }
+
+/* Results meta */
+.results-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+.results-count { font-size: 13.5px; color: var(--silver); font-weight: 500; }
+.results-count strong { color: var(--charcoal); }
+
+/* Grid */
+#property-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 28px; }
+
+/* ── PROPERTY CARD ── */
+.prop-card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex; flex-direction: column;
+  border: 1.5px solid transparent;
+}
+.prop-card:hover { transform: translateY(-6px); box-shadow: var(--hover-shadow); border-color: #DBEAFE; }
+
+.card-img-wrap { position: relative; overflow: hidden; aspect-ratio: 16/10; cursor: pointer; }
+.card-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.55s ease; }
+.prop-card:hover .card-img-wrap img { transform: scale(1.06); }
+
+.card-overlay-actions { position: absolute; top: 14px; right: 14px; display: flex; gap: 8px; }
+.card-action-btn { width: 34px; height: 34px; background: rgba(255,255,255,0.92); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--slate); font-size: 13px; transition: all 0.2s; backdrop-filter: blur(4px); }
+.card-action-btn:hover { background: var(--blue); color: #fff; }
+
+.card-badge-wrap { position: absolute; bottom: 14px; left: 14px; display: flex; gap: 6px; }
+.card-status { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; background: rgba(26,30,46,0.75); color: #fff; backdrop-filter: blur(4px); }
+
+.card-body { padding: 20px 22px 0; flex: 1; }
+.card-location { font-size: 12px; color: var(--blue); font-weight: 600; letter-spacing: 0.06em; display: flex; align-items: center; gap: 5px; margin-bottom: 6px; }
+.card-title { font-family: var(--serif); font-size: 1.15rem; color: var(--slate); line-height: 1.3; margin-bottom: 12px; cursor: pointer; transition: color 0.2s; }
+.card-title:hover { color: var(--blue); }
+.card-specs { display: flex; flex-wrap: wrap; gap: 14px; padding: 14px 0; border-top: 1px solid var(--off-white); border-bottom: 1px solid var(--off-white); margin-bottom: 14px; }
+.card-spec { display: flex; align-items: center; gap: 5px; font-size: 12.5px; color: var(--silver); font-weight: 500; }
+.card-spec i { font-size: 11px; color: var(--blue); }
+
+.card-footer { padding: 14px 22px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.card-price { font-family: var(--serif); font-size: 1.3rem; color: var(--slate); }
+.card-price sub { font-family: var(--sans); font-size: 11px; color: var(--silver); font-weight: 500; display: block; margin-top: 1px; }
+
+.btn-contact { background: var(--blue); color: #fff; border: none; border-radius: var(--radius); padding: 10px 18px; font-size: 12.5px; font-weight: 700; letter-spacing: 0.04em; display: flex; align-items: center; gap: 7px; transition: background 0.2s, transform 0.15s; white-space: nowrap; }
+.btn-contact:hover { background: var(--blue-dark); transform: translateY(-1px); }
+
+.btn-view { background: var(--blue-tint); color: var(--blue); border: 1.5px solid #C7D7F9; border-radius: var(--radius); padding: 10px 15px; font-size: 12.5px; font-weight: 700; transition: all 0.2s; white-space: nowrap; }
+.btn-view:hover { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+/* No results */
+#no-results { display: none; text-align: center; padding: 80px 0; }
+#no-results i { font-size: 3rem; color: var(--border); margin-bottom: 16px; }
+#no-results p { color: var(--silver); font-size: 15px; }
+
+/* Load more */
+.load-more-wrap { text-align: center; margin-top: 56px; }
+.btn-outline-blue { background: transparent; border: 2px solid var(--blue); color: var(--blue); padding: 14px 40px; border-radius: var(--radius); font-size: 14px; font-weight: 700; letter-spacing: 0.05em; transition: all 0.2s; display: inline-flex; align-items: center; gap: 10px; }
+.btn-outline-blue:hover { background: var(--blue); color: #fff; }
+
+/* ═══════════════════════════════════════════
+   WHY CHOOSE US
+═══════════════════════════════════════════ */
+#why { padding: 100px 0; background: #fff; }
+.why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.why-img-collage { position: relative; }
+.why-img-main { width: 100%; height: 420px; object-fit: cover; border-radius: var(--radius-lg); }
+.why-img-inset { position: absolute; bottom: -28px; right: -28px; width: 200px; height: 160px; object-fit: cover; border-radius: var(--radius); border: 5px solid #fff; box-shadow: var(--card-shadow); }
+.why-badge-float { position: absolute; top: 28px; left: -24px; background: var(--blue); color: #fff; border-radius: var(--radius); padding: 16px 22px; box-shadow: 0 8px 24px rgba(27,79,216,0.35); }
+.why-badge-float .num { font-family: var(--serif); font-size: 2rem; display: block; line-height: 1; }
+.why-badge-float .lbl { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.8; margin-top: 3px; }
+
+.why-features { display: grid; gap: 22px; margin-top: 36px; }
+.why-feature { display: flex; gap: 16px; align-items: flex-start; padding: 20px; background: var(--off-white); border-radius: var(--radius); border: 1.5px solid var(--border); transition: border-color 0.2s, box-shadow 0.2s; }
+.why-feature:hover { border-color: #BFCFF8; box-shadow: 0 4px 16px rgba(27,79,216,0.07); }
+.why-feature-icon { width: 44px; height: 44px; background: var(--blue-tint); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; color: var(--blue); font-size: 18px; flex-shrink: 0; }
+.why-feature-text h4 { font-size: 14.5px; font-weight: 700; color: var(--slate); margin-bottom: 4px; }
+.why-feature-text p { font-size: 13px; color: var(--silver); line-height: 1.6; }
+
+/* ═══════════════════════════════════════════
+   CONTACT BAND
+═══════════════════════════════════════════ */
+#contact-band { background: var(--blue); padding: 72px 0; }
+.contact-band-inner { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+.contact-band-text h2 { font-family: var(--serif); font-size: 2.1rem; color: #fff; margin-bottom: 10px; }
+.contact-band-text p { color: rgba(255,255,255,0.7); font-size: 15px; max-width: 480px; line-height: 1.7; }
+.contact-band-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-white { background: #fff; color: var(--blue); border: none; padding: 14px 28px; border-radius: var(--radius); font-size: 14px; font-weight: 700; transition: all 0.2s; display: flex; align-items: center; gap: 9px; }
+.btn-white:hover { background: var(--off-white); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
+.btn-ghost-white { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.4); padding: 14px 28px; border-radius: var(--radius); font-size: 14px; font-weight: 700; transition: all 0.2s; }
+.btn-ghost-white:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.7); }
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer { background: var(--slate); padding: 72px 0 0; }
+.footer-grid { display: grid; grid-template-columns: 1.8fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 56px; }
+.footer-brand p { font-size: 13.5px; color: rgba(255,255,255,0.45); line-height: 1.75; margin-top: 16px; max-width: 280px; }
+.footer-social { display: flex; gap: 10px; margin-top: 24px; }
+.social-btn { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.55); font-size: 14px; transition: all 0.2s; cursor: pointer; }
+.social-btn:hover { background: var(--blue); color: #fff; border-color: var(--blue); transform: translateY(-2px); }
+
+.footer-col h4 { font-size: 12px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 20px; }
+.footer-col ul { display: flex; flex-direction: column; gap: 11px; }
+.footer-col a { font-size: 13.5px; color: rgba(255,255,255,0.55); transition: color 0.2s; }
+.footer-col a:hover { color: #fff; }
+
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding: 22px 0; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.footer-bottom p { font-size: 12.5px; color: rgba(255,255,255,0.3); }
+.footer-bottom-links { display: flex; gap: 20px; }
+.footer-bottom-links a { font-size: 12.5px; color: rgba(255,255,255,0.35); transition: color 0.2s; }
+.footer-bottom-links a:hover { color: rgba(255,255,255,0.7); }
+
+/* ═══════════════════════════════════════════
+   PROPERTY DETAIL PAGE (simulated)
+═══════════════════════════════════════════ */
+#detail-page {
+  display: none;
+  min-height: 100vh;
+  padding-top: 72px;
+  background: var(--off-white);
+}
+#detail-page.visible { display: block; }
+
+.detail-hero { position: relative; height: 480px; overflow: hidden; }
+.detail-hero img { width: 100%; height: 100%; object-fit: cover; }
+.detail-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,30,46,0.7) 0%, transparent 60%); }
+.detail-breadcrumb { position: absolute; top: 28px; left: 32px; display: flex; align-items: center; gap: 8px; font-size: 13px; color: rgba(255,255,255,0.75); }
+.detail-breadcrumb button { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); color: #fff; padding: 8px 18px; border-radius: var(--radius); font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 7px; transition: background 0.2s; backdrop-filter: blur(8px); }
+.detail-breadcrumb button:hover { background: rgba(255,255,255,0.28); }
+.detail-hero-bottom { position: absolute; bottom: 28px; left: 32px; right: 32px; display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.detail-hero-title { font-family: var(--serif); font-size: clamp(1.6rem, 3vw, 2.4rem); color: #fff; max-width: 600px; line-height: 1.2; }
+.detail-hero-price { font-family: var(--serif); font-size: 1.9rem; color: #fff; text-align: right; white-space: nowrap; }
+.detail-hero-price span { display: block; font-family: var(--sans); font-size: 12px; color: rgba(255,255,255,0.6); margin-bottom: 4px; font-weight: 500; }
+
+/* Detail body */
+.detail-body { display: grid; grid-template-columns: 1fr 360px; gap: 40px; padding: 52px 0 80px; }
+.detail-main h3 { font-family: var(--serif); font-size: 1.4rem; color: var(--slate); margin-bottom: 16px; }
+.detail-description { font-size: 15px; color: var(--silver); line-height: 1.8; margin-bottom: 40px; }
+.detail-specs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; }
+.detail-spec-card { background: #fff; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 18px; text-align: center; }
+.detail-spec-card i { font-size: 1.3rem; color: var(--blue); margin-bottom: 8px; display: block; }
+.detail-spec-card .val { font-size: 1rem; font-weight: 700; color: var(--slate); display: block; }
+.detail-spec-card .key { font-size: 11px; color: var(--silver); margin-top: 3px; letter-spacing: 0.05em; }
+.detail-features { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 40px; }
+.detail-feature { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--charcoal); }
+.detail-feature i { color: var(--blue); font-size: 13px; width: 18px; }
+
+/* Side panel */
+.detail-sidebar { }
+.sidebar-card { background: #fff; border-radius: var(--radius-lg); box-shadow: var(--card-shadow); border: 1.5px solid var(--border); padding: 28px; position: sticky; top: 90px; }
+.sidebar-card h4 { font-family: var(--serif); font-size: 1.2rem; color: var(--slate); margin-bottom: 6px; }
+.sidebar-card p { font-size: 13px; color: var(--silver); margin-bottom: 24px; }
+.form-field { margin-bottom: 14px; }
+.form-field label { display: block; font-size: 11.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--silver); margin-bottom: 6px; }
+.form-field input, .form-field textarea, .form-field select { width: 100%; border: 1.5px solid var(--border); border-radius: var(--radius); padding: 11px 14px; font-family: var(--sans); font-size: 14px; color: var(--slate); background: var(--off-white); transition: border-color 0.2s, background 0.2s; outline: none; resize: vertical; }
+.form-field input:focus, .form-field textarea:focus { border-color: var(--blue); background: #fff; }
+.sidebar-cta { width: 100%; background: var(--blue); color: #fff; border: none; border-radius: var(--radius); padding: 15px; font-size: 14.5px; font-weight: 700; letter-spacing: 0.04em; display: flex; align-items: center; justify-content: center; gap: 10px; transition: background 0.2s; margin-top: 6px; }
+.sidebar-cta:hover { background: var(--blue-dark); }
+.sidebar-divider { text-align: center; color: var(--silver); font-size: 12px; margin: 14px 0; position: relative; }
+.sidebar-divider::before, .sidebar-divider::after { content: ''; position: absolute; top: 50%; height: 1px; background: var(--border); width: calc(50% - 20px); }
+.sidebar-divider::before { left: 0; } .sidebar-divider::after { right: 0; }
+.sidebar-contact-btn { width: 100%; background: var(--off-white); color: var(--slate); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 13px; font-size: 13.5px; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 9px; transition: all 0.2s; }
+.sidebar-contact-btn:hover { background: var(--slate); color: #fff; border-color: var(--slate); }
+
+/* Thumbnail strip */
+.detail-thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 40px; }
+.detail-thumb { border-radius: var(--radius); overflow: hidden; aspect-ratio: 4/3; cursor: pointer; }
+.detail-thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+.detail-thumb:hover img { transform: scale(1.05); }
+
+/* ═══════════════════════════════════════════
+   PAGE TRANSITIONS
+═══════════════════════════════════════════ */
+#home-page { transition: opacity 0.3s; }
+#home-page.fade-out { opacity: 0; pointer-events: none; }
+#detail-page { animation: none; }
+#detail-page.visible { animation: fadeIn 0.4s ease forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .why-grid { grid-template-columns: 1fr; }
+  .why-img-collage { display: none; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .detail-body { grid-template-columns: 1fr; }
+  .detail-sidebar { order: -1; }
+  .sidebar-card { position: static; }
+}
+@media (max-width: 768px) {
+  .hero-h1 { font-size: 2.1rem; }
+  .nav-links, .nav-cats, .header-cta { display: none; }
+  .hamburger { display: block; }
+  .search-island-body { flex-direction: column; }
+  .si-field { border-right: none; border-bottom: 1px solid var(--border); padding: 14px 18px; }
+  .si-field:last-of-type { border-bottom: none; }
+  .stats-inner { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); padding-bottom: 24px; }
+  .stat-item:nth-child(2n) { border-bottom: none; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .contact-band-inner { flex-direction: column; text-align: center; }
+  .contact-band-actions { justify-content: center; }
+  .detail-specs-grid { grid-template-columns: repeat(2, 1fr); }
+  .detail-thumbs { grid-template-columns: repeat(2, 1fr); }
+  .detail-features { grid-template-columns: 1fr; }
+  .detail-hero-bottom { flex-direction: column; align-items: flex-start; }
+  .detail-hero-price { text-align: left; }
+}
+@media (max-width: 480px) {
+  .search-island { bottom: -40px; }
+  #property-grid { grid-template-columns: 1fr; }
+  .hero-sub { font-size: 14.5px; }
+}
 </style>
 </head>
 <body>
 
-<!-- HOME PAGE -->
-<div id="home-page">
+<!-- ═══════════════════════════════════════════════════
+     STICKY HEADER
+═══════════════════════════════════════════════════ -->
+<header id="header">
+  <div class="container">
+    <div class="header-inner">
 
-  <header class="site">
-    <div class="container nav">
-      <a href="#" class="brand" aria-label="Elite Residence">
-        <!-- Creative SVG Logo -->
-        <svg class="mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <defs>
-            <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#0b3d91"/>
-              <stop offset="100%" stop-color="#0a6b4a"/>
-            </linearGradient>
-          </defs>
-          <rect x="2" y="2" width="60" height="60" rx="12" fill="url(#lg)"/>
-          <path d="M16 36 L32 20 L48 36 L48 48 L36 48 L36 40 L28 40 L28 48 L16 48 Z"
-                fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/>
-          <circle cx="32" cy="14" r="2.2" fill="#e9d9b3"/>
+      <!-- SVG LOGO -->
+      <a href="#" class="logo-wrap" onclick="showHome(); return false;">
+        <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Elite Residence Icon">
+          <!-- Outer elegant frame -->
+          <rect width="38" height="38" rx="9" fill="#1B4FD8"/>
+          <!-- Abstract house geometry — minimalist diamond-roof monogram -->
+          <path d="M19 8 L30 17 L30 30 L8 30 L8 17 Z" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.2"/>
+          <!-- Solid stylised 'E' keyline -->
+          <path d="M13 13 L25 13" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M13 13 L13 25" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M13 19 L22 19" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <path d="M13 25 L25 25" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <!-- Gold accent dot — top-right corner for luxury feel -->
+          <circle cx="28.5" cy="9.5" r="3" fill="#F9C74F"/>
         </svg>
-        <div class="brand-text">
-          <span class="name">Elite Residence</span>
-          <span class="tag">Premium Properties</span>
+        <div class="logo-text-group">
+          <span class="logo-name">Elite Residence</span>
+          <span class="logo-tagline">Luxury Properties · Dhaka</span>
         </div>
       </a>
 
-      <nav class="primary">
+      <!-- Desktop Nav -->
+      <nav class="nav-links" aria-label="Main navigation">
         <a href="#listings">Properties</a>
-        <a href="#about">About</a>
-        <a href="#services">Services</a>
-        <a href="#agents">Agents</a>
-        <a href="#contact">Contact</a>
+        <a href="#why">About Us</a>
+        <a href="#contact-band">Contact</a>
       </nav>
 
-      <a href="tel:+8801518962973" class="cta-call">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        +880 1518-962973
-      </a>
-    </div>
-
-    <div class="cat-tabs container" id="catTabs">
-      <button class="active" data-cat="all">All Properties</button>
-      <button data-cat="Flat">Flat</button>
-      <button data-cat="Plot">Plot</button>
-      <button data-cat="House">House</button>
-    </div>
-  </header>
-
-  <!-- HERO -->
-  <section class="hero">
-    <div class="container hero-inner">
-      <span class="eyebrow">Trusted by 2,500+ Investors</span>
-      <h1 class="hero-title">Find Your Premium <em>Dream Property</em> in Dhaka</h1>
-      <p class="sub">Curated luxury flats, exclusive plots and signature houses in the city's most prestigious neighborhoods — backed by transparent dealings and an elite real estate network.</p>
-    </div>
-  </section>
-
-  <!-- SEARCH -->
-  <div class="container search-wrap">
-    <div class="search">
-      <div class="field">
-        <label>Keyword</label>
-        <input type="text" id="fKeyword" placeholder="e.g. Penthouse, Skyline Tower"/>
+      <!-- Category Tabs -->
+      <div class="nav-cats" id="nav-cats">
+        <span class="nav-cat active" data-cat="all">All</span>
+        <span class="nav-cat" data-cat="flat">Flat</span>
+        <span class="nav-cat" data-cat="plot">Plot</span>
+        <span class="nav-cat" data-cat="house">House</span>
       </div>
-      <div class="field">
-        <label>Property Type</label>
-        <select id="fType">
-          <option value="all">All Types</option>
-          <option value="Flat">Flat</option>
-          <option value="Plot">Plot</option>
-          <option value="House">House</option>
+
+      <button class="header-cta" onclick="document.getElementById('contact-band').scrollIntoView({behavior:'smooth'})">Get in Touch</button>
+      <button class="hamburger" id="hamburger-btn" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Nav -->
+<div id="mobile-nav">
+  <a href="#listings" onclick="closeMobileNav()">Properties</a>
+  <a href="#why" onclick="closeMobileNav()">About Us</a>
+  <a href="#contact-band" onclick="closeMobileNav()">Contact</a>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+    <span class="nav-cat active" data-cat="all" data-mob="1">All</span>
+    <span class="nav-cat" data-cat="flat" data-mob="1">Flat</span>
+    <span class="nav-cat" data-cat="plot" data-mob="1">Plot</span>
+    <span class="nav-cat" data-cat="house" data-mob="1">House</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     HOME PAGE WRAPPER
+═══════════════════════════════════════════════════ -->
+<div id="home-page">
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content container">
+    <div class="hero-eyebrow"><span></span> Dhaka's #1 Premium Real Estate Agency <span></span></div>
+    <h1 class="hero-h1">Find Your <em>Perfect Luxury</em><br/>Property in Dhaka</h1>
+    <p class="hero-sub">Discover curated, verified premium properties across Dhaka's finest addresses — handpicked for elite living and sound investment.</p>
+  </div>
+
+  <!-- HOUZEZ-STYLE SEARCH ISLAND -->
+  <div class="search-island">
+    <div class="search-island-tabs">
+      <button class="si-tab active" data-sitab="buy"><i class="fa-solid fa-key"></i> Buy</button>
+      <button class="si-tab" data-sitab="rent"><i class="fa-solid fa-building"></i> Rent</button>
+      <button class="si-tab" data-sitab="invest"><i class="fa-solid fa-chart-line"></i> Invest</button>
+    </div>
+    <div class="search-island-body">
+      <div class="si-field">
+        <span class="si-label">Location</span>
+        <select class="si-select" id="si-loc">
+          <option value="">All Locations</option>
+          <option value="Uttara">Uttara</option>
+          <option value="Gulshan">Gulshan</option>
+          <option value="Bashundhara">Bashundhara</option>
+          <option value="Badda">Badda</option>
+          <option value="Banani">Banani</option>
+          <option value="Mirpur">Mirpur</option>
         </select>
       </div>
-      <div class="field">
-        <label>Location</label>
-        <select id="fLocation">
-          <option value="all">All Locations</option>
-          <option>Uttara</option>
-          <option>Gulshan</option>
-          <option>Bashundhara</option>
-          <option>Badda</option>
-          <option>Banani</option>
-          <option>Mirpur</option>
+      <div class="si-field">
+        <span class="si-label">Property Type</span>
+        <select class="si-select" id="si-type">
+          <option value="">All Types</option>
+          <option value="flat">Flat / Apartment</option>
+          <option value="plot">Land / Plot</option>
+          <option value="house">House / Villa</option>
         </select>
       </div>
-      <button class="search-btn" id="searchBtn">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-        Search
+      <div class="si-field">
+        <span class="si-label">Budget Range</span>
+        <select class="si-select" id="si-budget">
+          <option value="">Any Budget</option>
+          <option value="50-100">BDT 50L – 1 Crore</option>
+          <option value="100-300">BDT 1–3 Crore</option>
+          <option value="300-700">BDT 3–7 Crore</option>
+          <option value="700+">BDT 7 Crore+</option>
+        </select>
+      </div>
+      <div class="si-field">
+        <span class="si-label">Keywords</span>
+        <input type="text" class="si-input" placeholder="e.g. Gulshan penthouse…" id="si-keyword"/>
+      </div>
+      <button class="si-search-btn" onclick="runSearch()">
+        <i class="fa-solid fa-magnifying-glass"></i> Search
       </button>
     </div>
   </div>
+</section>
 
-  <!-- LISTINGS -->
-  <section class="section" id="listings">
-    <div class="container">
-      <div class="section-head">
-        <span class="eyebrow-d">Featured Listings</span>
-        <h2>Handpicked Premium Properties</h2>
-        <p>Filter by Dhaka's most sought-after neighborhoods to explore residences that match your lifestyle.</p>
-      </div>
-
-      <div class="loc-pills" id="locPills">
-        <button class="active" data-loc="all">All Locations</button>
-        <button data-loc="Uttara">Uttara</button>
-        <button data-loc="Gulshan">Gulshan</button>
-        <button data-loc="Bashundhara">Bashundhara</button>
-        <button data-loc="Badda">Badda</button>
-        <button data-loc="Banani">Banani</button>
-        <button data-loc="Mirpur">Mirpur</button>
-      </div>
-
-      <div class="grid" id="propertyGrid"></div>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="site" id="contact">
-    <div class="container">
-      <div class="foot-grid">
-        <div class="foot-brand">
-          <div class="brand">
-            <svg class="mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
-              <rect x="2" y="2" width="60" height="60" rx="12" fill="url(#lg)"/>
-              <path d="M16 36 L32 20 L48 36 L48 48 L36 48 L36 40 L28 40 L28 48 L16 48 Z" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/>
-              <circle cx="32" cy="14" r="2.2" fill="#e9d9b3"/>
-            </svg>
-            <div class="brand-text"><span class="name" style="color:#fff">Elite Residence</span><span class="tag">Premium Properties</span></div>
-          </div>
-          <p>Dhaka's trusted name for premium real estate — connecting discerning buyers with extraordinary properties across the city.</p>
-          <div class="socials" id="socials">
-            <a data-url="https://facebook.com" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.5 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
-            <a data-url="https://instagram.com" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4z"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
-            <a data-url="https://linkedin.com" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.3A1.8 1.8 0 1 1 8.3 6.5 1.8 1.8 0 0 1 6.5 8.3zM19 19h-3v-4.7c0-1.1 0-2.6-1.6-2.6s-1.8 1.2-1.8 2.5V19h-3v-9h2.9v1.3a3.2 3.2 0 0 1 2.8-1.6c3 0 3.6 2 3.6 4.5z"/></svg></a>
-            <a data-url="https://youtube.com" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2s-.2-1.5-.9-2.2c-.8-.9-1.8-.9-2.2-1C16.7 3.7 12 3.7 12 3.7s-4.7 0-7.9.2c-.4.1-1.4.1-2.2 1C1.2 5.7 1 7.2 1 7.2S.8 8.9.8 10.7v1.6c0 1.7.2 3.5.2 3.5s.2 1.5.9 2.2c.8.9 1.9.8 2.4.9 1.7.2 7.7.2 7.7.2s4.7 0 7.9-.2c.4-.1 1.4-.1 2.2-1 .7-.7.9-2.2.9-2.2s.2-1.7.2-3.5v-1.6c0-1.7-.2-3.5-.2-3.5zM9.7 14.3V8.4l6.1 3z"/></svg></a>
-          </div>
-        </div>
-        <div>
-          <h4>Properties</h4>
-          <ul>
-            <li><a href="#listings">Flats</a></li>
-            <li><a href="#listings">Plots</a></li>
-            <li><a href="#listings">Houses</a></li>
-            <li><a href="#listings">Penthouses</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Locations</h4>
-          <ul>
-            <li><a href="#">Gulshan</a></li>
-            <li><a href="#">Banani</a></li>
-            <li><a href="#">Bashundhara</a></li>
-            <li><a href="#">Uttara</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Contact</h4>
-          <ul>
-            <li>Gulshan Avenue, Dhaka 1212</li>
-            <li>+880 1518-962973</li>
-            <li>hello@eliteresidence.com</li>
-          </ul>
-        </div>
-      </div>
-      <div class="foot-bottom">
-        <span>© <span id="year"></span> Elite Residence. All rights reserved.</span>
-        <div>
-          <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Sitemap</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-</div>
-
-<!-- DETAIL PAGE -->
-<div id="detail-page" class="detail">
+<!-- ── STATS STRIP ── -->
+<div class="stats-strip" style="margin-top:54px;">
   <div class="container">
-    <button class="back-btn" id="backBtn">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-      Back to Home
-    </button>
-    <div id="detailContent"></div>
+    <div class="stats-inner">
+      <div class="stat-item">
+        <div class="stat-num">500<span>+</span></div>
+        <div class="stat-label">Verified Properties</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">12<span>+</span></div>
+        <div class="stat-label">Years of Excellence</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">98<span>%</span></div>
+        <div class="stat-label">Client Satisfaction</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Prime Locations</div>
+      </div>
+    </div>
   </div>
 </div>
 
+<!-- ── PROPERTY LISTINGS ── -->
+<section id="listings">
+  <div class="container">
+    <div class="listings-head">
+      <div class="listings-head-left">
+        <div class="section-label">Featured Properties</div>
+        <h2 class="section-title">Handpicked <em>Luxury</em> Listings</h2>
+        <div class="divider"></div>
+      </div>
+      <!-- Location filter pills -->
+      <div class="loc-filters" id="loc-filters">
+        <button class="loc-btn active" data-loc="all">All Areas</button>
+        <button class="loc-btn" data-loc="Uttara">Uttara</button>
+        <button class="loc-btn" data-loc="Gulshan">Gulshan</button>
+        <button class="loc-btn" data-loc="Bashundhara">Bashundhara</button>
+        <button class="loc-btn" data-loc="Badda">Badda</button>
+        <button class="loc-btn" data-loc="Banani">Banani</button>
+        <button class="loc-btn" data-loc="Mirpur">Mirpur</button>
+      </div>
+    </div>
+
+    <div class="results-meta">
+      <p class="results-count"><strong id="result-count">8</strong> properties found</p>
+    </div>
+
+    <div id="property-grid"></div>
+    <div id="no-results">
+      <i class="fa-regular fa-folder-open"></i>
+      <p>No properties match your current filters. Try adjusting your search criteria.</p>
+    </div>
+
+    <div class="load-more-wrap">
+      <button class="btn-outline-blue" id="load-more-btn">
+        <i class="fa-solid fa-grid-2"></i> Load More Properties
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ── WHY CHOOSE US ── -->
+<section id="why">
+  <div class="container">
+    <div class="why-grid">
+      <div class="why-img-collage">
+        <div class="why-badge-float">
+          <span class="num">12<sup style="font-size:1rem">+</sup></span>
+          <span class="lbl">Years Trust</span>
+        </div>
+        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80" alt="Luxury interior" class="why-img-main"/>
+        <img src="https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?w=500&q=80" alt="Modern architecture" class="why-img-inset"/>
+      </div>
+      <div>
+        <div class="section-label">Why Elite Residence</div>
+        <h2 class="section-title">A Standard Built on<br/><em>Trust & Precision</em></h2>
+        <div class="divider"></div>
+        <p style="font-size:15px;color:var(--silver);line-height:1.8;margin-top:20px;margin-bottom:32px;">We don't just sell properties — we engineer life outcomes. Every listing is rigorously vetted, legally verified, and presented with the transparency that elite buyers deserve.</p>
+        <div class="why-features">
+          <div class="why-feature">
+            <div class="why-feature-icon"><i class="fa-solid fa-shield-check"></i></div>
+            <div class="why-feature-text"><h4>100% Legal Documentation</h4><p>All titles and deeds verified by senior legal counsel before listing.</p></div>
+          </div>
+          <div class="why-feature">
+            <div class="why-feature-icon"><i class="fa-solid fa-stamp"></i></div>
+            <div class="why-feature-text"><h4>RAJUK & RJSC Approved</h4><p>Every project carries full municipal and regulatory approval.</p></div>
+          </div>
+          <div class="why-feature">
+            <div class="why-feature-icon"><i class="fa-solid fa-headset"></i></div>
+            <div class="why-feature-text"><h4>Dedicated Client Advisors</h4><p>One-on-one advisor assigned from first inquiry to handover.</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT BAND ── -->
+<section id="contact-band">
+  <div class="container">
+    <div class="contact-band-inner">
+      <div class="contact-band-text">
+        <h2>Ready to Find Your Dream Property?</h2>
+        <p>Our expert consultants are available 7 days a week. Schedule a private consultation and we'll match you to the right property — no pressure, no rush.</p>
+      </div>
+      <div class="contact-band-actions">
+        <button class="btn-white" onclick="openWhatsApp('I would like to inquire about properties at Elite Residence.', '', '', '')">
+          <i class="fa-solid fa-comments"></i> Send a Message
+        </button>
+        <a href="tel:+8801518962973" class="btn-ghost-white">
+          <i class="fa-solid fa-phone"></i> +880 1518 962973
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <svg width="30" height="30" viewBox="0 0 38 38" fill="none"><rect width="38" height="38" rx="9" fill="#1B4FD8"/><path d="M13 13 L25 13" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M13 13 L13 25" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M13 19 L22 19" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M13 25 L25 25" stroke="white" stroke-width="2" stroke-linecap="round"/><circle cx="28.5" cy="9.5" r="3" fill="#F9C74F"/></svg>
+          <span style="font-family:var(--serif);font-size:17px;color:#fff;">Elite Residence</span>
+        </div>
+        <p>Dhaka's most trusted premium real estate consultancy — delivering curated luxury properties with full legal assurance since 2012.</p>
+        <div class="footer-social">
+          <button class="social-btn" onclick="openSocial('https://facebook.com')" title="Facebook"><i class="fab fa-facebook-f"></i></button>
+          <button class="social-btn" onclick="openSocial('https://instagram.com')" title="Instagram"><i class="fab fa-instagram"></i></button>
+          <button class="social-btn" onclick="openSocial('https://linkedin.com')" title="LinkedIn"><i class="fab fa-linkedin-in"></i></button>
+          <button class="social-btn" onclick="openSocial('https://youtube.com')" title="YouTube"><i class="fab fa-youtube"></i></button>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Properties</h4>
+        <ul>
+          <li><a href="#listings">Apartments / Flats</a></li>
+          <li><a href="#listings">Land & Plots</a></li>
+          <li><a href="#listings">Houses & Villas</a></li>
+          <li><a href="#listings">Commercial Spaces</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Locations</h4>
+        <ul>
+          <li><a href="#listings">Gulshan</a></li>
+          <li><a href="#listings">Banani</a></li>
+          <li><a href="#listings">Uttara</a></li>
+          <li><a href="#listings">Bashundhara</a></li>
+          <li><a href="#listings">Mirpur</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#why">About Us</a></li>
+          <li><a href="#contact-band">Contact</a></li>
+          <li><a href="#">Careers</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Elite Residence. All rights reserved. Dhaka, Bangladesh.</p>
+      <div class="footer-bottom-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</div><!-- /#home-page -->
+
+<!-- ═══════════════════════════════════════════════════
+     PROPERTY DETAIL PAGE (JS-rendered, simulated route)
+═══════════════════════════════════════════════════ -->
+<div id="detail-page">
+  <!-- Dynamically filled by JS -->
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════════ -->
 <script>
-/* ============================================================
-   ELITE RESIDENCE — Property Database
-   ------------------------------------------------------------
-   This array holds the property listings. It is built to scale
-   to 100+ properties. To add more:
+/* ══════════════════════════════════════════════════════
+   PROPERTY DATABASE
+   ────────────────────────────────────────────────────
+   SCALING TO 100 PROPERTIES:
+   ─────────────────────────
+   This array currently holds 8 premium sample listings.
+   To scale up to 100 properties, use any of these approaches:
 
-     properties.push({
-       id: 9,
-       type: 'Flat',                  // Flat | Plot | House
-       title: 'Skyline Penthouse',
-       location: 'Gulshan',
-       address: 'Road 41, Gulshan 2, Dhaka',
-       beds: 4, baths: 5, sqft: 3800,
-       price: 'BDT 6.5 Crore',
-       image: 'https://images.unsplash.com/...?w=1200',
-       gallery: ['url1','url2','url3'],
-       features: ['Private elevator','Smart home','Rooftop pool'],
-       description: 'Long description text...'
-     });
+   OPTION A — Static append (copy-paste additional objects):
+     properties.push({ id: 9, name: "...", ... });
 
-   You can also generate them programmatically:
-     for (let i = 9; i <= 100; i++) { properties.push({...}); }
-   The grid renders ALL items in `properties` automatically,
-   so any added items appear instantly after filter logic.
-   ============================================================ */
+   OPTION B — Dynamic loop (test/demo data):
+     const extras = Array.from({ length: 92 }, (_, i) => ({
+       id: i + 9,
+       name: `Property Suite ${i + 9}`,
+       type: ['flat','plot','house'][i % 3],
+       location: locations[i % locations.length],
+       address: `Sector ${(i % 12) + 1}, ${locations[i % locations.length]}, Dhaka`,
+       beds: (i % 3) + 2, baths: (i % 3) + 2, sqft: 1200 + i * 180,
+       price: `BDT ${(1.2 + i * 0.18).toFixed(1)} Crore`,
+       priceRaw: 12000000 + i * 1800000,
+       image: propertyImages[i % propertyImages.length],
+       status: i % 4 === 0 ? 'New Listing' : i % 5 === 0 ? 'Sold Out' : 'Available',
+       features: ['24/7 Security','Power Backup','Parking','Lift','RAJUK Approved'],
+       desc: `A premium ${['flat','plot','house'][i % 3]} in ${locations[i % locations.length]}, offering world-class amenities and full legal clearance.`
+     }));
+     properties.push(...extras);
+
+   OPTION C — API / Fetch:
+     fetch('/api/properties')
+       .then(r => r.json())
+       .then(data => { properties.push(...data); renderCards(); });
+══════════════════════════════════════════════════════ */
+
+const locations = ['Uttara','Gulshan','Bashundhara','Badda','Banani','Mirpur'];
+
+const propertyImages = [
+  'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=700&q=80',
+  'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=700&q=80',
+  'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=700&q=80',
+  'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=700&q=80',
+  'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=700&q=80',
+  'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=700&q=80',
+  'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=700&q=80',
+  'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=700&q=80',
+];
 
 const properties = [
   {
-    id:1, type:'Flat', title:'Skyline Penthouse Residence',
-    location:'Gulshan', address:'Road 41, Gulshan 2, Dhaka',
-    beds:4, baths:5, sqft:3800, price:'BDT 6.5 Crore',
-    image:'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80',
-    gallery:[
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=80'
+    id: 1,
+    name: 'Gulshan Grand Penthouse',
+    type: 'flat',
+    location: 'Gulshan',
+    address: 'Gulshan-2, Road 48, Dhaka 1212',
+    beds: 5, baths: 5, sqft: 5800,
+    price: 'BDT 12 Crore',
+    priceRaw: 120000000,
+    status: 'Exclusive',
+    image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=700&q=80',
+    thumbs: [
+      'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?w=400&q=80',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&q=80',
+      'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80',
+      'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=400&q=80',
     ],
-    features:['Private elevator access','Floor-to-ceiling windows','Smart home automation','Rooftop infinity pool','24/7 concierge','Italian marble flooring'],
-    description:'Set high above Gulshan, this signature penthouse offers panoramic skyline views, a private elevator entrance and meticulously crafted interiors. Designed for those who appreciate quiet luxury, every detail — from the imported stone to the bespoke joinery — has been considered.'
+    features: ['Private Elevator','Rooftop Pool','Home Automation','3-Car Garage','24/7 Concierge','Panoramic Lake View','RAJUK Approved','Earthquake Resistant'],
+    desc: `The crown jewel of Gulshan-2, this ultra-luxury penthouse redefines sophisticated living in Dhaka. Spanning 5,800 square feet across the top two floors of an iconic high-rise, the residence features floor-to-ceiling glazed facades framing uninterrupted views of Gulshan Lake and the city skyline.\n\nInteriors have been conceived by an internationally acclaimed design studio — Calacatta marble floors, bespoke Italian cabinetry, and a private rooftop terrace with a heated infinity pool. The building's smart-home ecosystem allows climate, lighting, security, and entertainment to be controlled from anywhere in the world. Full legal documentation, RAJUK approval, and a dedicated property manager included at handover.`
   },
   {
-    id:2, type:'House', title:'The Banani Garden Villa',
-    location:'Banani', address:'Road 11, Banani, Dhaka',
-    beds:5, baths:6, sqft:5600, price:'BDT 12.8 Crore',
-    image:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80',
-    gallery:[
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1600566753086-00f18fe6ba62?auto=format&fit=crop&w=900&q=80'
+    id: 2,
+    name: 'Uttara Skyline Residence',
+    type: 'flat',
+    location: 'Uttara',
+    address: 'Uttara Sector-11, Dhaka 1230',
+    beds: 3, baths: 3, sqft: 2200,
+    price: 'BDT 1.85 Crore',
+    priceRaw: 18500000,
+    status: 'Available',
+    image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=700&q=80',
+    thumbs: [
+      'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=400&q=80',
+      'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&q=80',
+      'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?w=400&q=80',
     ],
-    features:['Private landscaped garden','Double-height living room','Home theatre','Servant quarters','Covered parking for 4 cars','Generator backup'],
-    description:'A standalone luxury villa in the heart of Banani, blending contemporary architecture with timeless craftsmanship. Expansive entertaining spaces flow into a private garden — a rare offering in central Dhaka.'
+    features: ['Metro Rail Nearby','Community Gym','Power Backup','CCTV Security','Lift','Parking','RAJUK Approved','Rooftop Garden'],
+    desc: `Positioned steps from the Uttara Metro Station, this contemporary apartment is an ideal balance of connectivity and comfort. The 2,200 sqft layout includes three spacious bedrooms, each with attached baths, an open-plan kitchen-dining space, and a private balcony overlooking the sector's tree-lined boulevard.\n\nThe building offers 24/7 security, a community fitness centre, rooftop garden, and robust power-backup system. All legal documentation is clear and RAJUK-approved. Ideal for families and professionals seeking premium northern Dhaka living.`
   },
   {
-    id:3, type:'Flat', title:'Bashundhara Sky Apartments',
-    location:'Bashundhara', address:'Block J, Bashundhara R/A, Dhaka',
-    beds:3, baths:4, sqft:2400, price:'BDT 2.5 Crore',
-    image:'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80',
-    gallery:[
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=900&q=80'
+    id: 3,
+    name: 'Banani Prestige Villa',
+    type: 'house',
+    location: 'Banani',
+    address: 'Banani Road-17, Block-C, Dhaka',
+    beds: 6, baths: 6, sqft: 6200,
+    price: 'BDT 8.5 Crore',
+    priceRaw: 85000000,
+    status: 'New Listing',
+    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=700&q=80',
+    thumbs: [
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&q=80',
+      'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?w=400&q=80',
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&q=80',
+      'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80',
     ],
-    features:['Modular kitchen','Master suite with walk-in closet','Community gym','Children play area','Reserved parking','High-speed elevators'],
-    description:'A modern family residence in Bashundhara with a thoughtful layout, abundant natural light and a community designed around quiet, secure living.'
+    features: ['Private Garden','4-Car Garage','Rooftop Terrace','Private Pool','Staff Quarters','Generator Backup','Diplomatic Zone','RAJUK Approved'],
+    desc: `A distinguished detached villa in Banani's diplomatic enclave, offering the rare combination of privacy, grandeur, and urban convenience. Set on a 7-katha freehold plot with a lush private garden, the four-storey residence delivers 6,200 sqft of meticulously crafted living space.\n\nThe ground floor hosts a grand reception hall, formal dining, and a fully-equipped chef's kitchen. Upper floors feature six en-suite bedrooms — including a master suite with dressing room and spa bath. The rooftop terrace offers 360° city views and a private pool. All structural certifications, fire-safety compliance, and RAJUK approvals are in order.`
   },
   {
-    id:4, type:'Plot', title:'Premium Corner Plot — Uttara',
-    location:'Uttara', address:'Sector 18, Uttara, Dhaka',
-    beds:0, baths:0, sqft:4200, price:'BDT 4.2 Crore',
-    image:'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80',
-    gallery:[
-      'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&w=900&q=80'
+    id: 4,
+    name: 'Bashundhara Premium Plot — Block E',
+    type: 'plot',
+    location: 'Bashundhara',
+    address: 'Bashundhara R/A, Block-E, Dhaka',
+    beds: 0, baths: 0, sqft: 5000,
+    price: 'BDT 5 Crore',
+    priceRaw: 50000000,
+    status: 'Available',
+    image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=700&q=80',
+    thumbs: [
+      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=400&q=80',
+      'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=400&q=80',
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&q=80',
+      'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&q=80',
     ],
-    features:['Corner-facing','Wide approach road','Ready for construction','Clean title','Premium neighborhood','Utility connections nearby'],
-    description:'A rare corner plot in one of Uttara\'s most sought-after sectors. Ideal for building a custom residence or boutique low-rise development.'
+    features: ['Freehold Title','Gas Connection','Wide Road Frontage','Electricity Ready','Drainage System','Perimeter Wall','RAJUK Approved','Commercial Permitted'],
+    desc: `A rare 5-katha freehold plot in Bashundhara Residential Area's prestigious Block-E — one of Dhaka's fastest-appreciating micro-markets. The plot enjoys 30-ft road frontage, complete utility connectivity (gas, electricity, water, fibre), and a clear mutation with no encumbrance.\n\nBashundhara's master-planned grid, controlled development environment, and proximity to international schools, shopping centres, and the proposed metro extension make this an exceptional long-term investment. Full legal clearance with original CS, RS, and BS records available for due diligence.`
   },
   {
-    id:5, type:'Flat', title:'Mirpur Heights Family Flat',
-    location:'Mirpur', address:'Mirpur DOHS, Dhaka',
-    beds:3, baths:3, sqft:1850, price:'BDT 1.45 Crore',
-    image:'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=1200&q=80',
-    gallery:[
-      'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=900&q=80'
+    id: 5,
+    name: 'Mirpur Signature Residence',
+    type: 'house',
+    location: 'Mirpur',
+    address: 'Mirpur-10, Pallabi, Dhaka 1216',
+    beds: 4, baths: 4, sqft: 3200,
+    price: 'BDT 2.6 Crore',
+    priceRaw: 26000000,
+    status: 'Available',
+    image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=700&q=80',
+    thumbs: [
+      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&q=80',
+      'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=400&q=80',
+      'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=400&q=80',
+      'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?w=400&q=80',
     ],
-    features:['Spacious balcony','South facing','Secure community','Backup power','Lift access','Children park'],
-    description:'A bright, well-ventilated family home in the disciplined Mirpur DOHS community — offering comfort, security and excellent connectivity.'
+    features: ['Corner Plot','4 Bedrooms','Attached Baths','2-Car Parking','Generator','CCTV System','School Nearby','RAJUK Approved'],
+    desc: `A well-positioned residential house in the heart of Mirpur-10, offering 3,200 sqft of functional, contemporary living space on a corner plot. The home comprises four bedrooms (all en-suite), a large living and dining area, a modern modular kitchen, and two covered parking bays.\n\nMirpur-10 provides unmatched connectivity via the Dhaka Metro Rail, with Pallabi station a 5-minute walk. The neighbourhood hosts reputed schools, hospitals, and major retail centres. The property carries clean title documentation and all RAJUK-mandated approvals.`
   },
   {
-    id:6, type:'House', title:'Badda Modern Townhouse',
-    location:'Badda', address:'Pragati Sarani, Badda, Dhaka',
-    beds:4, baths:4, sqft:3200, price:'BDT 5.2 Crore',
-    image:'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?auto=format&fit=crop&w=1200&q=80',
-    gallery:[
-      'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=80'
+    id: 6,
+    name: 'Badda Corporate Apartment',
+    type: 'flat',
+    location: 'Badda',
+    address: 'Middle Badda, Link Road, Dhaka 1212',
+    beds: 3, baths: 2, sqft: 1750,
+    price: 'BDT 95 Lakh',
+    priceRaw: 9500000,
+    status: 'Available',
+    image: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=700&q=80',
+    thumbs: [
+      'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=400&q=80',
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&q=80',
+      'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&q=80',
+      'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=400&q=80',
     ],
-    features:['Three-story design','Rooftop terrace','Modular kitchen','Home office','Two-car garage','CCTV throughout'],
-    description:'Contemporary townhouse with clean lines, generous interiors and a rooftop terrace — ideal for modern families seeking privacy with connectivity.'
+    features: ['IT Hub Proximity','Modern Kitchen','Power Backup','CCTV','Lift','Parking','Fibre Internet Ready','RAJUK Approved'],
+    desc: `Smartly designed for Dhaka's professional class, this modern 3-bedroom apartment in Middle Badda sits at the intersection of the city's emerging IT corridor and established residential fabric.\n\nThe 1,750 sqft unit features an open-plan living area with natural light from floor-to-ceiling windows, a contemporary kitchen with quartz counters, three well-proportioned bedrooms, and two bathrooms finished with premium fittings. The building provides backup power, CCTV, and high-speed internet infrastructure. Ideal for young professionals or first-time premium buyers.`
   },
   {
-    id:7, type:'Flat', title:'Gulshan Lakeview Residence',
-    location:'Gulshan', address:'Road 79, Gulshan 2, Dhaka',
-    beds:3, baths:4, sqft:2950, price:'BDT 4.85 Crore',
-    image:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80',
-    gallery:[
-      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1600585152915-d208bec867a1?auto=format&fit=crop&w=900&q=80'
+    id: 7,
+    name: 'Gulshan Lakeview Tower — Suite 14A',
+    type: 'flat',
+    location: 'Gulshan',
+    address: 'Gulshan-1, Lake View Avenue, Dhaka',
+    beds: 4, baths: 4, sqft: 3800,
+    price: 'BDT 6.2 Crore',
+    priceRaw: 62000000,
+    status: 'Exclusive',
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=700&q=80',
+    thumbs: [
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&q=80',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&q=80',
+      'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?w=400&q=80',
+      'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80',
     ],
-    features:['Lakefront views','Private balcony','Imported fittings','Gymnasium','Swimming pool','Concierge service'],
-    description:'A boutique lakefront residence in Gulshan, offering uninterrupted lake views, refined interiors and access to premium building amenities.'
+    features: ['Lake Views','Private Balcony','Concierge Service','Gym & Spa','Parking x2','Smart Home System','Earthquake Resistant','RAJUK Approved'],
+    desc: `Suite 14A at Gulshan Lakeview Tower represents an exceptional opportunity to acquire a trophy apartment with permanent, unobstructed views across Gulshan Lake. The 3,800 sqft residence occupies the full eastern wing of the 14th floor, capturing sunrise light and cool prevailing breezes.\n\nThe interior palette blends warm American walnut millwork with cool Venetian plaster walls and honed stone floors — a restrained, sophisticated aesthetic. The building's podium-level amenities include a 25m lap pool, fully equipped gym, spa suite, and a residents' lounge. All utilities, legal documents, and handover checklist are prepared for immediate transfer.`
   },
   {
-    id:8, type:'Plot', title:'Bashundhara Investment Plot',
-    location:'Bashundhara', address:'Block L, Bashundhara R/A, Dhaka',
-    beds:0, baths:0, sqft:3000, price:'BDT 2.9 Crore',
-    image:'https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1200&q=80',
-    gallery:[
-      'https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1600&q=80',
-      'https://images.unsplash.com/photo-1448630360428-65456885c650?auto=format&fit=crop&w=900&q=80',
-      'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=900&q=80'
+    id: 8,
+    name: 'Uttara Commercial Plot — Sector 7',
+    type: 'plot',
+    location: 'Uttara',
+    address: 'Uttara Sector-7, Jasimuddin Road, Dhaka',
+    beds: 0, baths: 0, sqft: 8000,
+    price: 'BDT 15 Crore',
+    priceRaw: 150000000,
+    status: 'Investment',
+    image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=700&q=80',
+    thumbs: [
+      'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&q=80',
+      'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=400&q=80',
+      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&q=80',
+      'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=400&q=80',
     ],
-    features:['Ready plot','Clear documents','Wide road frontage','Premium block','Excellent ROI','Near international school'],
-    description:'A blue-chip investment plot in a rapidly appreciating block of Bashundhara, with strong long-term value and ready-to-build status.'
-  }
-  // ---- Add more properties here, up to 100, using the same shape ----
+    features: ['Main Road Frontage','Commercial Zone','Metro Access','8 Katha Freehold','Utility Ready','No Encumbrance','Development Permit','RAJUK Approved'],
+    desc: `A landmark 8-katha commercial freehold plot on Jasimuddin Road, Uttara Sector-7 — one of Dhaka's highest-demand commercial corridors with direct frontage onto the Airport Road arterial and a 3-minute walk from the Uttara North Metro Station.\n\nZoned for commercial and mixed-use development up to 12 storeys (FAR 4.0 per RAJUK guidelines), this plot carries immediate development potential. The current land registry is fully mutation-complete with no judicial lien or third-party encumbrance. An exceptional holding for developers or institutional investors seeking long-term capital appreciation in Dhaka's northern growth belt.`
+  },
+  { id: 9, name: "Luxury Flat", address: "Baridhara, Dhaka", price: "2.8 Crore", type: "Apartment", img: "https://picsum.photos/400/300?random=9" },
+  { id: 10, name: "Commercial Land", address: "Purbachal, Dhaka", price: "1.5 Crore", type: "Land", img: "https://picsum.photos/400/300?random=10" },
+  // পরবর্তী ১০০টি আইটেম
+  { id: 11, name: "Elegant Villa", address: "Uttara Sector 10", price: "4.5 Crore", type: "Villa", img: "https://picsum.photos/400/300?random=11" },
+  { id: 12, name: "Modern Office Suite", address: "Gulshan 2", price: "2.1 Crore", type: "Office", img: "https://picsum.photos/400/300?random=12" },
+  { id: 13, name: "Garden Facing Flat", address: "Banani DOHS", price: "1.8 Crore", type: "Apartment", img: "https://picsum.photos/400/300?random=13" },
+  { id: 14, name: "Duplex Haven", address: "Bashundhara R/A", price: "3.5 Crore", type: "Duplex", img: "https://picsum.photos/400/300?random=14" },
+  { id: 15, name: "Premium Commercial Plot", address: "Purbachal", price: "2.5 Crore", type: "Land", img: "https://picsum.photos/400/300?random=15" },
+  { id: 16, name: "Cozy Studio", address: "Mirpur DOHS", price: "25 Lac", type: "Apartment", img: "https://picsum.photos/400/300?random=16" },
+  { id: 17, name: "Grand Penthouse", address: "Dhanmondi 27", price: "6 Crore", type: "Apartment", img: "https://picsum.photos/400/300?random=17" },
+  { id: 18, name: "Business Hub", address: "Motijheel", price: "3 Crore", type: "Office", img: "https://picsum.photos/400/300?random=18" },
+  { id: 19, name: "Skyline Villa", address: "Nikunja", price: "5.2 Crore", type: "Villa", img: "https://picsum.photos/400/300?random=19" },
+  { id: 20, name: "City Plaza Plot", address: "Keraniganj", price: "80 Lac", type: "Land", img: "https://picsum.photos/400/300?random=20" },
+  { id: 21, name: "Refined Duplex", address: "Uttara Sector 13", price: "3.8 Crore", type: "Duplex", img: "https://picsum.photos/400/300?random=21" },
+  { id: 22, name: "Urban Office", address: "Mohakhali", price: "1.5 Crore", type: "Office", img: "https://picsum.photos/400/300?random=22" },
+  { id: 23, name: "Sunrise Apartment", address: "Shyamoli", price: "95 Lac", type: "Apartment", img: "https://picsum.photos/400/300?random=23" },
+  { id: 24, name: "Royal Villa", address: "Gulshan 1", price: "7 Crore", type: "Villa", img: "https://picsum.photos/400/300?random=24" },
+  { id: 25, name: "Industrial Land", address: "Gazipur", price: "4 Crore", type: "Land", img: "https://picsum.photos/400/300?random=25" },
+  { id: 26, name: "Smart Office Suite", address: "Banani", price: "1.9 Crore", type: "Office", img: "https://picsum.photos/400/300?random=26" },
+  { id: 27, name: "Family Duplex", address: "Bashundhara", price: "4.2 Crore", type: "Duplex", img: "https://picsum.photos/400/300?random=27" },
+  { id: 28, name: "Elite Apartment", address: "Baridhara", price: "3.5 Crore", type: "Apartment", img: "https://picsum.photos/400/300?random=28" },
+  { id: 29, name: "Corner Plot", address: "Purbachal", price: "1.2 Crore", type: "Land", img: "https://picsum.photos/400/300?random=29" },
+  { id: 30, name: "Studio Loft", address: "Dhanmondi", price: "40 Lac", type: "Apartment", img: "https://picsum.photos/400/300?random=30" },
+  { id: 31, name: "Spacious Villa", address: "Uttara Sector 3", price: "5.5 Crore", type: "Villa", img: "https://picsum.photos/400/300?random=31" },
+  { id: 32, name: "Main Road Office", address: "Karwan Bazar", price: "2.8 Crore", type: "Office", img: "https://picsum.photos/400/300?random=32" },
+  { id: 33, name: "Riverside Flat", address: "Keraniganj", price: "70 Lac", type: "Apartment", img: "https://picsum.photos/400/300?random=33" },
+  { id: 34, name: "Luxury Duplex", address: "Gulshan 2", price: "8 Crore", type: "Duplex", img: "https://picsum.photos/400/300?random=34" },
+  { id: 35, name: "Residential Plot", address: "Jhilmil", price: "1 Crore", type: "Land", img: "https://picsum.photos/400/300?random=35" },
+  { id: 36, name: "Modern Flat", address: "Mirpur 11", price: "65 Lac", type: "Apartment", img: "https://picsum.photos/400/300?random=36" },
+  { id: 37, name: "Corporate Office", address: "Gulshan", price: "3.5 Crore", type: "Office", img: "https://picsum.photos/400/300?random=37" },
+  { id: 38, name: "Classic Villa", address: "Banani", price: "4.8 Crore", type: "Villa", img: "https://picsum.photos/400/300?random=38" },
+  { id: 39, name: "Dream Duplex", address: "Bashundhara", price: "5 Crore", type: "Duplex", img: "https://picsum.photos/400/300?random=39" },
+  { id: 40, name: "Small Land", address: "Purbachal", price: "50 Lac", type: "Land", img: "https://picsum.photos/400/300?random=40" },
+  { id: 41, name: "City View Flat", address: "Dhanmondi", price: "1.5 Crore", type: "Apartment", img: "https://picsum.photos/400/300?random=41" },
+  { id: 42, name: "Prime Office", address: "Motijheel", price: "2.2 Crore", type: "Office", img: "https://picsum.photos/400/300?random=42" },
+  { id: 43, name: "Green Villa", address: "Uttara", price: "4 Crore", type: "Villa", img: "https://picsum.photos/400/300?random=43" },
+  { id: 44, name: "Corner Duplex", address: "Banani DOHS", price: "6.5 Crore", type: "Duplex", img: "https://picsum.photos/400/300?random=44" },
+  { id: 45, name: "Wide Plot", address: "Jhilmil", price: "1.8 Crore", type: "Land", img: "https://picsum.photos/400/300?random=45" },
+  { id: 46, name: "Comfort Flat", address: "Mirpur 2", price: "55 Lac", type: "Apartment", img: "https://picsum.photos/400/300?random=46" },
+  { id: 47, name: "Big Office", address: "Mohakhali", price: "3 Crore", type: "Office", img: "https://picsum.photos/400/300?random=47" },
+  { id: 48, name: "Masterpiece Villa", address: "Gulshan", price: "10 Crore", type: "Villa", img: "https://picsum.photos/400/300?random=48" },
+  { id: 49, name: "Garden Duplex", address: "Bashundhara", price: "3.8 Crore", type: "Duplex", img: "https://picsum.photos/400/300?random=49" },
+  { id: 50, name: "Strategic Land", address: "Purbachal", price: "2 Crore", type: "Land", img: "https://picsum.photos/400/300?random=50" },
+  { id: 51, name: "Luxury Studio", address: "Banani", price: "75 Lac", type: "Apartment", img: "https://picsum.photos/400/300?random=51" },
+  { id: 52, name: "Tech Office", address: "Karwan Bazar", price: "2.5 Crore", type: "Office", img: "https://picsum.photos/400/300?random=52" },
+  { id: 53, name: "Royal Villa", address: "Dhanmondi", price: "5.5 Crore", type: "Villa", img: "https://picsum.photos/400/300?random=53" },
+  { id: 54, name: "Grand Duplex", address: "Uttara", price: "4.5 Crore", type: "Duplex", img: "https://picsum.photos/400/300?random=54" },
+  { id: 55, name: "Development Land", address: "Keraniganj", price: "1.2 Crore", type: "Land", img: "https://picsum.photos/400/300?random=55" },
+  { id: 56, name: "Modern Apartment", address: "Gulshan", price: "2.2 Crore", type: "Apartment", img: "https://picsum.photos/400/300?random=56" },
+  { id: 57, name: "Executive Office", address: "Motijheel", price: "1.8 Crore", type: "Office", img: "https://picsum.photos/400/300?random=57" },
+  { id: 58, name: "Elite Villa", address: "Bashundhara", price: "6 Crore", type: "Villa", img: "https://picsum.photos/400/300?random=58" },
+  { id: 59, name: "Family Duplex", address: "Mirpur", price: "2.8 Crore", type: "Duplex", img: "https://picsum.photos/400/300?random=59" },
+  { id: 60, name: "Vacant Land", address: "Purbachal", price: "90 Lac", type: "Land", img: "https://picsum.photos/400/300?random=60" },
+  { id: 61, name: "Cozy Flat", address: "Dhanmondi", price: "1.1 Crore", type: "Apartment", img: "https://picsum.photos/400/300?random=61" },
+  { id: 62, name: "Smart Office", address: "Gulshan", price: "2.7 Crore", type: "Office", img: "https://picsum.photos/400/300?random=62" },
+  { id: 63, name: "Classic Villa", address: "Uttara", price: "3.5 Crore", type: "Villa", img: "https://picsum.photos/400/300?random=63" },
+  { id: 64, name: "Dream Duplex", address: "Banani", price: "4.2 Crore", type: "Duplex", img: "https://picsum.photos/400/300?random=64" },
+  { id: 65, name: "Ideal Land", address: "Gazipur", price: "1.5 Crore", type: "Land", img: "https://picsum.photos/400/300?random=65" },
+  { id: 66, name: "Compact Apartment", address: "Mirpur 12", price: "40 Lac", type: "Apartment", img: "https://picsum.photos/400/300?random=66" },
+  { id: 67, name: "Business Center", address: "Banani", price: "3.2 Crore", type: "Office", img: "https://picsum.photos/400/300?random=67" },
+  { id: 68, name: "Sunny Villa", address: "Bashundhara", price: "4.8 Crore", type: "Villa", img: "https://picsum.photos/400/300?random=68" },
+  { id: 69, name: "Modern Duplex", address: "Dhanmondi", price: "5.5 Crore", type: "Duplex", img: "https://picsum.photos/400/300?random=69" },
+  { id: 70, name: "Small Plot", address: "Jhilmil", price: "70 Lac", type: "Land", img: "https://picsum.photos/400/300?random=70" },
+  { id: 71, name: "Luxury Apartment", address: "Gulshan", price: "3.8 Crore", type: "Apartment", img: "https://picsum.photos/400/300?random=71" },
+  { id: 72, name: "Creative Office", address: "Mohakhali", price: "2 Crore", type: "Office", img: "https://picsum.photos/400/300?random=72" },
+  { id: 73, name: "Heritage Villa", address: "Uttara", price: "7 Crore", type: "Villa", img: "https://picsum.photos/400/300?random=73" },
+  { id: 74, name: "Elite Duplex", address: "Baridhara", price: "8 Crore", type: "Duplex", img: "https://picsum.photos/400/300?random=74" },
+  { id: 75, name: "Plain Land", address: "Purbachal", price: "1.1 Crore", type: "Land", img: "https://picsum.photos/400/300?random=75" },
+  { id: 76, name: "Nice Apartment", address: "Dhanmondi", price: "1.8 Crore", type: "Apartment", img: "https://picsum.photos/400/300?random=76" },
+  { id: 77, name: "Work Station", address: "Karwan Bazar", price: "1.5 Crore", type: "Office", img: "https://picsum.photos/400/300?random=77" },
+  { id: 78, name: "Grand Villa", address: "Bashundhara", price: "5 Crore", type: "Villa", img: "https://picsum.photos/400/300?random=78" },
+  { id: 79, name: "Spacious Duplex", address: "Gulshan", price: "6.5 Crore", type: "Duplex", img: "https://picsum.photos/400/300?random=79" },
+  { id: 80, name: "Farm Land", address: "Gazipur", price: "2.5 Crore", type: "Land", img: "https://picsum.photos/400/300?random=80" },
+  { id: 81, name: "Modern Studio", address: "Mirpur", price: "45 Lac", type: "Apartment", img: "https://picsum.photos/400/300?random=81" },
+  { id: 82, name: "HQ Office", address: "Gulshan", price: "4 Crore", type: "Office", img: "https://picsum.photos/400/300?random=82" },
+  { id: 83, name: "Elegant Villa", address: "Uttara", price: "4.2 Crore", type: "Villa", img: "https://picsum.photos/400/300?random=83" },
+  { id: 84, name: "Family Duplex", address: "Banani", price: "3.9 Crore", type: "Duplex", img: "https://picsum.photos/400/300?random=84" },
+  { id: 85, name: "Corner Land", address: "Purbachal", price: "1.7 Crore", type: "Land", img: "https://picsum.photos/400/300?random=85" },
+  { id: 86, name: "Bright Apartment", address: "Dhanmondi", price: "2.5 Crore", type: "Apartment", img: "https://picsum.photos/400/300?random=86" },
+  { id: 87, name: "Retail Office", address: "Motijheel", price: "1.2 Crore", type: "Office", img: "https://picsum.photos/400/300?random=87" },
+  { id: 88, name: "Royal Villa", address: "Bashundhara", price: "7.5 Crore", type: "Villa", img: "https://picsum.photos/400/300?random=88" },
+  { id: 89, name: "Modern Duplex", address: "Uttara", price: "4.8 Crore", type: "Duplex", img: "https://picsum.photos/400/300?random=89" },
+  { id: 90, name: "Plain Plot", address: "Jhilmil", price: "95 Lac", type: "Land", img: "https://picsum.photos/400/300?random=90" },
+  { id: 91, name: "Charming Apartment", address: "Mirpur", price: "80 Lac", type: "Apartment", img: "https://picsum.photos/400/300?random=91" },
+  { id: 92, name: "Global Office", address: "Gulshan", price: "3.3 Crore", type: "Office", img: "https://picsum.photos/400/300?random=92" },
+  { id: 93, name: "Elite Villa", address: "Baridhara", price: "9 Crore", type: "Villa", img: "https://picsum.photos/400/300?random=93" },
+  { id: 94, name: "Classic Duplex", address: "Dhanmondi", price: "4.5 Crore", type: "Duplex", img: "https://picsum.photos/400/300?random=94" },
+  { id: 95, name: "Main Plot", address: "Purbachal", price: "2.2 Crore", type: "Land", img: "https://picsum.photos/400/300?random=95" },
+  { id: 96, name: "Penthouse", address: "Banani", price: "5.5 Crore", type: "Apartment", img: "https://picsum.photos/400/300?random=96" },
+  { id: 97, name: "Tech Hub", address: "Karwan Bazar", price: "2 Crore", type: "Office", img: "https://picsum.photos/400/300?random=97" },
+  { id: 98, name: "Luxury Villa", address: "Uttara", price: "6 Crore", type: "Villa", img: "https://picsum.photos/400/300?random=98" },
+  { id: 99, name: "Grand Duplex", address: "Bashundhara", price: "5.5 Crore", type: "Duplex", img: "https://picsum.photos/400/300?random=99" },
+  { id: 100, name: "Prime Land", address: "Keraniganj", price: "1.4 Crore", type: "Land", img: "https://picsum.photos/400/300?random=100" },
+
+  /* ─── APPEND PROPERTIES 9–100 HERE ───
+     Follow the object schema above. Each property needs:
+     id, name, type, location, address, beds, baths, sqft,
+     price, priceRaw, status, image, thumbs (array of 4),
+     features (array of 8), desc (string)
+  ─────────────────────────────────────── */
 ];
 
-const WHATSAPP_NUMBER = '8801518962973';
+/* ═══════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════ */
+let activeType = 'all';
+let activeLoc  = 'all';
+let searchKeyword = '';
 
-let currentCat = 'all';
-let currentLoc = 'all';
-let currentType = 'all';
-let currentKeyword = '';
+/* ═══════════════════════════════════════════════
+   RENDER CARDS
+═══════════════════════════════════════════════ */
+function typeLabel(t) { return t === 'flat' ? 'Flat' : t === 'plot' ? 'Plot' : 'House'; }
+function typeBadge(t) { return t === 'flat' ? 'badge-flat' : t === 'plot' ? 'badge-plot' : 'badge-house'; }
 
-const grid = document.getElementById('propertyGrid');
+function renderCards() {
+  const grid = document.getElementById('property-grid');
+  const noRes = document.getElementById('no-results');
+  grid.innerHTML = '';
 
-function buildCard(p){
-  const specs = p.type === 'Plot'
-    ? `<span>📐 ${p.sqft} sqft</span><span>📍 Plot</span><span>✓ Ready</span>`
-    : `<span>🛏 ${p.beds} Beds</span><span>🛁 ${p.baths} Baths</span><span>📐 ${p.sqft} sqft</span>`;
-  return `
-    <article class="card" data-id="${p.id}">
-      <div class="img">
-        <img src="${p.image}" alt="${p.title}" loading="lazy"/>
-        <span class="tag">${p.type}</span>
-        <span class="fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
-      </div>
-      <div class="body">
-        <h3>${p.title}</h3>
-        <div class="loc">📍 ${p.address}</div>
-        <div class="specs">${specs}</div>
-        <div class="foot">
-          <span class="price">${p.price}</span>
-          <button class="btn-visit" data-action="visit" data-id="${p.id}">Schedule a Visit</button>
+  const filtered = properties.filter(p => {
+    const typeOk = activeType === 'all' || p.type === activeType;
+    const locOk  = activeLoc  === 'all' || p.location === activeLoc;
+    const kw = searchKeyword.toLowerCase();
+    const kwOk = !kw || p.name.toLowerCase().includes(kw) || p.address.toLowerCase().includes(kw) || p.location.toLowerCase().includes(kw);
+    return typeOk && locOk && kwOk;
+  });
+
+  document.getElementById('result-count').textContent = filtered.length;
+  noRes.style.display = filtered.length ? 'none' : 'block';
+  grid.style.display  = filtered.length ? 'grid' : 'none';
+
+  filtered.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'prop-card';
+    const specRow = p.type !== 'plot'
+      ? `<div class="card-spec"><i class="fa-solid fa-bed"></i>${p.beds} Beds</div>
+         <div class="card-spec"><i class="fa-solid fa-bath"></i>${p.baths} Baths</div>
+         <div class="card-spec"><i class="fa-solid fa-ruler-combined"></i>${p.sqft.toLocaleString()} sqft</div>`
+      : `<div class="card-spec"><i class="fa-solid fa-ruler-combined"></i>${p.sqft.toLocaleString()} sqft</div>
+         <div class="card-spec"><i class="fa-solid fa-layer-group"></i>Freehold</div>`;
+    card.innerHTML = `
+      <div class="card-img-wrap" onclick="openDetail(${p.id})">
+        <img src="${p.image}" alt="${p.name}" loading="lazy"/>
+        <div class="card-overlay-actions">
+          <button class="card-action-btn" title="Save" onclick="event.stopPropagation();toggleSave(this)"><i class="fa-regular fa-heart"></i></button>
+          <button class="card-action-btn" title="Share" onclick="event.stopPropagation();shareProperty(${p.id})"><i class="fa-solid fa-share-nodes"></i></button>
+        </div>
+        <div class="card-badge-wrap">
+          <span class="badge ${typeBadge(p.type)}">${typeLabel(p.type)}</span>
+          ${p.status ? `<span class="card-status">${p.status}</span>` : ''}
         </div>
       </div>
-    </article>`;
-}
-
-function renderGrid(){
-  const list = properties.filter(p=>{
-    if(currentCat !== 'all' && p.type !== currentCat) return false;
-    if(currentType !== 'all' && p.type !== currentType) return false;
-    if(currentLoc !== 'all' && p.location !== currentLoc) return false;
-    if(currentKeyword){
-      const k = currentKeyword.toLowerCase();
-      if(!(p.title.toLowerCase().includes(k) || p.address.toLowerCase().includes(k) || p.location.toLowerCase().includes(k))) return false;
-    }
-    return true;
+      <div class="card-body">
+        <div class="card-location"><i class="fa-solid fa-location-dot"></i>${p.address}</div>
+        <div class="card-title" onclick="openDetail(${p.id})">${p.name}</div>
+        <div class="card-specs">${specRow}</div>
+      </div>
+      <div class="card-footer">
+        <div class="card-price">${p.price}<sub>Negotiable</sub></div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn-view" onclick="openDetail(${p.id})">View</button>
+          <button class="btn-contact" onclick="scheduleVisit(${p.id})"><i class="fa-solid fa-calendar-check"></i> Schedule</button>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
   });
-  if(!list.length){
-    grid.innerHTML = `<div class="empty"><h3 style="font-family:var(--serif);font-size:22px;margin-bottom:6px">No properties match your filters</h3><p>Try adjusting the location or property type.</p></div>`;
-    return;
-  }
-  grid.innerHTML = list.map(buildCard).join('');
 }
 
-/* Category tabs */
-document.getElementById('catTabs').addEventListener('click', e=>{
-  const b = e.target.closest('button'); if(!b) return;
-  document.querySelectorAll('#catTabs button').forEach(x=>x.classList.remove('active'));
-  b.classList.add('active');
-  currentCat = b.dataset.cat;
-  renderGrid();
-});
-
-/* Location pills */
-document.getElementById('locPills').addEventListener('click', e=>{
-  const b = e.target.closest('button'); if(!b) return;
-  document.querySelectorAll('#locPills button').forEach(x=>x.classList.remove('active'));
-  b.classList.add('active');
-  currentLoc = b.dataset.loc;
-  document.getElementById('fLocation').value = currentLoc === 'all' ? 'all' : currentLoc;
-  renderGrid();
-});
-
-/* Search button */
-document.getElementById('searchBtn').addEventListener('click', ()=>{
-  currentKeyword = document.getElementById('fKeyword').value.trim();
-  currentType = document.getElementById('fType').value;
-  currentLoc = document.getElementById('fLocation').value;
-  // sync location pills
-  document.querySelectorAll('#locPills button').forEach(x=>{
-    x.classList.toggle('active', x.dataset.loc === currentLoc);
-  });
-  document.getElementById('listings').scrollIntoView({behavior:'smooth'});
-  renderGrid();
-});
-
-/* WhatsApp action */
-function whatsappLink(p){
-  const msg = `Hello Elite Residence,\n\nI am interested in scheduling a visit for the following property:\n\n• Property: ${p.title}\n• Type: ${p.type}\n• Location: ${p.address}\n• Price: ${p.price}\n\nPlease share availability. Thank you.`;
-  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+function toggleSave(btn) {
+  const ico = btn.querySelector('i');
+  if (ico.classList.contains('fa-regular')) {
+    ico.classList.replace('fa-regular','fa-solid');
+    btn.style.background = '#FEE2E2';
+    btn.style.color = '#DC2626';
+  } else {
+    ico.classList.replace('fa-solid','fa-regular');
+    btn.style.background = '';
+    btn.style.color = '';
+  }
 }
 
-/* Card clicks (open detail OR visit button) */
-grid.addEventListener('click', e=>{
-  const visitBtn = e.target.closest('[data-action="visit"]');
-  if(visitBtn){
-    e.stopPropagation();
-    const p = properties.find(x=>x.id == visitBtn.dataset.id);
-    window.open(whatsappLink(p), '_blank', 'noopener');
-    return;
+function shareProperty(id) {
+  const p = properties.find(x => x.id === id);
+  if (navigator.share) {
+    navigator.share({ title: p.name, text: `Check out: ${p.name} — ${p.price}`, url: window.location.href });
+  } else {
+    navigator.clipboard.writeText(`${p.name} — ${p.price} — ${p.address}`);
+    showToast('Property link copied!');
   }
-  const card = e.target.closest('.card');
-  if(card){ openDetail(card.dataset.id); }
-});
+}
 
-/* DETAIL PAGE */
-const detailPage = document.getElementById('detail-page');
-const homePage = document.getElementById('home-page');
-const detailContent = document.getElementById('detailContent');
+function showToast(msg) {
+  const t = document.createElement('div');
+  t.textContent = msg;
+  Object.assign(t.style, { position:'fixed', bottom:'28px', left:'50%', transform:'translateX(-50%)', background:var_blue(), color:'#fff', padding:'12px 24px', borderRadius:'8px', fontSize:'13px', fontWeight:'600', zIndex:9999, boxShadow:'0 8px 24px rgba(0,0,0,0.2)', fontFamily:'var(--sans)' });
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2800);
+}
+function var_blue() { return '#1B4FD8'; }
 
-function openDetail(id){
-  const p = properties.find(x=>x.id == id);
-  if(!p) return;
-  const specsHTML = p.type === 'Plot'
-    ? `<div><div class="k">Plot Area</div><div class="v">${p.sqft} sqft</div></div>
-       <div><div class="k">Type</div><div class="v">${p.type}</div></div>
-       <div><div class="k">Status</div><div class="v">Ready</div></div>`
-    : `<div><div class="k">Bedrooms</div><div class="v">${p.beds}</div></div>
-       <div><div class="k">Bathrooms</div><div class="v">${p.baths}</div></div>
-       <div><div class="k">Area</div><div class="v">${p.sqft} sqft</div></div>
-       <div><div class="k">Type</div><div class="v">${p.type}</div></div>`;
+/* ═══════════════════════════════════════════════
+   DETAIL PAGE
+═══════════════════════════════════════════════ */
+function openDetail(id) {
+  const p = properties.find(x => x.id === id);
+  if (!p) return;
 
-  detailContent.innerHTML = `
+  const home   = document.getElementById('home-page');
+  const detail = document.getElementById('detail-page');
+
+  const specRows = p.type !== 'plot' ? `
+    <div class="detail-spec-card"><i class="fa-solid fa-bed"></i><span class="val">${p.beds}</span><span class="key">Bedrooms</span></div>
+    <div class="detail-spec-card"><i class="fa-solid fa-bath"></i><span class="val">${p.baths}</span><span class="key">Bathrooms</span></div>
+    <div class="detail-spec-card"><i class="fa-solid fa-ruler-combined"></i><span class="val">${p.sqft.toLocaleString()}</span><span class="key">Square Feet</span></div>
+  ` : `
+    <div class="detail-spec-card"><i class="fa-solid fa-ruler-combined"></i><span class="val">${p.sqft.toLocaleString()}</span><span class="key">Square Feet</span></div>
+    <div class="detail-spec-card"><i class="fa-solid fa-file-contract"></i><span class="val">Freehold</span><span class="key">Ownership</span></div>
+    <div class="detail-spec-card"><i class="fa-solid fa-stamp"></i><span class="val">RAJUK</span><span class="key">Approved</span></div>
+  `;
+
+  const featureItems = p.features.map(f => `<div class="detail-feature"><i class="fa-solid fa-circle-check"></i>${f}</div>`).join('');
+  const thumbItems   = p.thumbs.map(src => `<div class="detail-thumb"><img src="${src}" alt="Interior" loading="lazy"/></div>`).join('');
+  const descPara = p.desc.split('\n\n').map(para => `<p style="margin-bottom:14px;">${para}</p>`).join('');
+
+  detail.innerHTML = `
     <div class="detail-hero">
-      <img src="${p.gallery[0]}" alt="${p.title}"/>
-      <div class="side">
-        <img src="${p.gallery[1]||p.gallery[0]}" alt=""/>
-        <img src="${p.gallery[2]||p.gallery[0]}" alt=""/>
+      <img src="${p.image}" alt="${p.name}"/>
+      <div class="detail-hero-overlay"></div>
+      <div class="detail-breadcrumb">
+        <button onclick="closeDetail()"><i class="fa-solid fa-arrow-left"></i> Back to Listings</button>
+        <span style="color:rgba(255,255,255,0.45);">›</span>
+        <span>${p.location}</span>
+        <span style="color:rgba(255,255,255,0.45);">›</span>
+        <span>${p.name}</span>
+      </div>
+      <div class="detail-hero-bottom">
+        <div>
+          <span class="badge ${typeBadge(p.type)}" style="margin-bottom:10px;">${typeLabel(p.type)}</span>
+          <div class="detail-hero-title">${p.name}</div>
+          <div style="color:rgba(255,255,255,0.65);font-size:13px;margin-top:8px;display:flex;align-items:center;gap:6px;"><i class="fa-solid fa-location-dot" style="color:#7BA7F7;"></i>${p.address}</div>
+        </div>
+        <div class="detail-hero-price"><span>Asking Price</span>${p.price}</div>
       </div>
     </div>
-    <div class="detail-grid">
-      <div class="detail-main">
-        <span class="eyebrow-d" style="font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);font-weight:600">${p.type} · For Sale</span>
-        <h1 style="margin-top:10px">${p.title}</h1>
-        <div class="loc-line">📍 ${p.address}</div>
-        <div class="specs-row">${specsHTML}</div>
 
-        <h3 class="dh">About this property</h3>
-        <p class="desc">${p.description}</p>
+    <div class="container">
+      <div class="detail-body">
+        <div class="detail-main">
+          <h3>Property Highlights</h3>
+          <div class="detail-specs-grid">${specRows}</div>
 
-        <h3 class="dh">Property features</h3>
-        <ul class="features">
-          ${p.features.map(f=>`<li>${f}</li>`).join('')}
-        </ul>
+          <h3>Included Amenities</h3>
+          <div class="detail-features" style="margin-bottom:36px;">${featureItems}</div>
+
+          <h3>Property Overview</h3>
+          <div class="detail-description">${descPara}</div>
+
+          <h3>Interior Gallery</h3>
+          <div class="detail-thumbs">${thumbItems}</div>
+
+          <div style="background:var(--blue-tint);border:1.5px solid #C7D7F9;border-radius:var(--radius);padding:20px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+            <i class="fa-solid fa-shield-check" style="color:var(--blue);font-size:1.5rem;"></i>
+            <div><strong style="color:var(--slate);display:block;margin-bottom:3px;">Verified Listing</strong><span style="font-size:13px;color:var(--silver);">All documentation has been reviewed by certified legal counsel. Title is clear with no encumbrances.</span></div>
+          </div>
+        </div>
+
+        <div class="detail-sidebar">
+          <div class="sidebar-card">
+            <h4>Schedule a Visit</h4>
+            <p>Fill in your details and we'll confirm a private viewing at your preferred time.</p>
+            <div class="form-field"><label>Full Name</label><input type="text" placeholder="Your full name"/></div>
+            <div class="form-field"><label>Phone Number</label><input type="tel" placeholder="+880 1XXX XXX XXX"/></div>
+            <div class="form-field"><label>Preferred Date</label><input type="date"/></div>
+            <div class="form-field"><label>Message (optional)</label><textarea rows="3" placeholder="Any specific requirements?"></textarea></div>
+            <button class="sidebar-cta" onclick="scheduleVisit(${p.id})"><i class="fa-solid fa-calendar-check"></i> Confirm Visit Request</button>
+            <div class="sidebar-divider">or contact directly</div>
+            <button class="sidebar-contact-btn" onclick="scheduleVisit(${p.id})"><i class="fa-solid fa-comment-dots"></i> Contact Agent</button>
+
+            <div style="margin-top:22px;padding-top:18px;border-top:1px solid var(--border);">
+              <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--silver);margin-bottom:12px;">Property Details</div>
+              <div style="display:flex;flex-direction:column;gap:9px;">
+                <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--silver);">Reference</span><span style="color:var(--slate);font-weight:600;">ER-${String(p.id).padStart(4,'0')}</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--silver);">Type</span><span style="color:var(--slate);font-weight:600;">${typeLabel(p.type)}</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--silver);">Location</span><span style="color:var(--slate);font-weight:600;">${p.location}</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:13px;"><span style="color:var(--silver);">Status</span><span style="color:var(--blue);font-weight:600;">${p.status || 'Available'}</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-
-      <aside class="booking">
-        <div class="price-big">${p.price}</div>
-        <div class="price-sub">Inclusive of registration assistance</div>
-        <input type="text" placeholder="Full name"/>
-        <input type="tel" placeholder="Phone number"/>
-        <input type="email" placeholder="Email address"/>
-        <textarea placeholder="I'd like to schedule a visit..."></textarea>
-        <button class="btn-primary" id="bookBtn">Schedule a Visit</button>
-        <button class="btn-outline" id="contactAgent">Contact Agent</button>
-      </aside>
     </div>
   `;
-  homePage.style.display = 'none';
-  detailPage.classList.add('active');
-  window.scrollTo({top:0,behavior:'instant'});
 
-  document.getElementById('bookBtn').onclick = ()=> window.open(whatsappLink(p),'_blank','noopener');
-  document.getElementById('contactAgent').onclick = ()=> window.open(whatsappLink(p),'_blank','noopener');
+  home.classList.add('fade-out');
+  setTimeout(() => {
+    home.style.display = 'none';
+    detail.classList.add('visible');
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, 280);
 }
 
-document.getElementById('backBtn').addEventListener('click', ()=>{
-  detailPage.classList.remove('active');
-  homePage.style.display = '';
-  window.scrollTo({top:0,behavior:'smooth'});
+function closeDetail() {
+  const home   = document.getElementById('home-page');
+  const detail = document.getElementById('detail-page');
+  detail.classList.remove('visible');
+  home.style.display = 'block';
+  setTimeout(() => home.classList.remove('fade-out'), 10);
+  window.scrollTo({ top: document.getElementById('listings').offsetTop - 80, behavior: 'smooth' });
+}
+
+function showHome() {
+  const home   = document.getElementById('home-page');
+  const detail = document.getElementById('detail-page');
+  if (!home.style.display || home.style.display === 'none') {
+    detail.classList.remove('visible');
+    home.style.display = 'block';
+    setTimeout(() => home.classList.remove('fade-out'), 10);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   WHATSAPP INTEGRATION
+   ─────────────────────────────────────────────
+   Clicking "Schedule a Visit" or "Contact Agent"
+   formats a structured message and opens WhatsApp.
+   The WhatsApp number is: +8801518962973
+═══════════════════════════════════════════════ */
+function openWhatsApp(customMsg, name, address, price) {
+  const num = '8801518962973';
+  let msg = customMsg;
+  if (name) {
+    msg = `Hello, I would like to schedule a viewing for the following property:\n\n🏠 *Property:* ${name}\n📍 *Location:* ${address}\n💰 *Listed Price:* ${price}\n\nPlease confirm availability. Thank you.`;
+  }
+  window.open(`https://wa.me/${num}?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function scheduleVisit(id) {
+  const p = properties.find(x => x.id === id);
+  if (!p) return;
+  openWhatsApp('', p.name, p.address, p.price);
+}
+
+/* ═══════════════════════════════════════════════
+   SOCIAL ICONS
+═══════════════════════════════════════════════ */
+function openSocial(url) {
+  window.open(url, '_blank', 'noopener,noreferrer');
+}
+
+/* ═══════════════════════════════════════════════
+   FILTERS
+═══════════════════════════════════════════════ */
+// Nav category tabs (desktop + mobile)
+document.querySelectorAll('[data-cat]').forEach(el => {
+  el.addEventListener('click', () => {
+    document.querySelectorAll('[data-cat]').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll(`[data-cat="${el.dataset.cat}"]`).forEach(b => b.classList.add('active'));
+    activeType = el.dataset.cat;
+    renderCards();
+    document.getElementById('listings').scrollIntoView({ behavior: 'smooth' });
+  });
 });
 
-/* Social icons */
-document.getElementById('socials').addEventListener('click', e=>{
-  const a = e.target.closest('a'); if(!a) return;
-  e.preventDefault();
-  window.open(a.dataset.url,'_blank','noopener');
+// Location filter pills
+document.querySelectorAll('[data-loc]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('[data-loc]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeLoc = btn.dataset.loc;
+    renderCards();
+  });
 });
 
-document.getElementById('year').textContent = new Date().getFullYear();
+// Search island
+function runSearch() {
+  const loc  = document.getElementById('si-loc').value;
+  const type = document.getElementById('si-type').value;
+  const kw   = document.getElementById('si-keyword').value.trim();
+  if (loc)  { activeLoc = loc; document.querySelectorAll('[data-loc]').forEach(b => { b.classList.toggle('active', b.dataset.loc === loc); }); }
+  if (type) { activeType = type; document.querySelectorAll('[data-cat]').forEach(b => { b.classList.toggle('active', b.dataset.cat === type); }); }
+  searchKeyword = kw;
+  renderCards();
+  document.getElementById('listings').scrollIntoView({ behavior: 'smooth' });
+}
+document.getElementById('si-keyword').addEventListener('keydown', e => { if (e.key === 'Enter') runSearch(); });
 
-renderGrid();
+// Search island tabs
+document.querySelectorAll('[data-sitab]').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('[data-sitab]').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+  });
+});
+
+/* ═══════════════════════════════════════════════
+   HEADER SCROLL
+═══════════════════════════════════════════════ */
+window.addEventListener('scroll', () => {
+  document.getElementById('header').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+/* ═══════════════════════════════════════════════
+   MOBILE MENU
+═══════════════════════════════════════════════ */
+document.getElementById('hamburger-btn').addEventListener('click', () => {
+  document.getElementById('mobile-nav').classList.toggle('open');
+});
+function closeMobileNav() { document.getElementById('mobile-nav').classList.remove('open'); }
+
+/* ═══════════════════════════════════════════════
+   LOAD MORE (placeholder)
+═══════════════════════════════════════════════ */
+document.getElementById('load-more-btn').addEventListener('click', () => {
+  showToast('Connect an API or append to the properties array to load more.');
+});
+
+/* ═══════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════ */
+renderCards();
 </script>
 </body>
 </html>

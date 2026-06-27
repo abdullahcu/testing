@@ -185,7 +185,7 @@ ul { list-style: none; }
 .stat-label { font-size: 12px; color: rgba(255,255,255,0.45); margin-top: 6px; font-weight: 500; letter-spacing: 0.06em; }
 
 /* ═══════════════════════════════════════════
-   LISTINGS SECTION
+   LISTINGS SECTION (HOME PAGE DISPLAY)
 ═══════════════════════════════════════════ */
 #listings { padding: 100px 0 80px; background: var(--off-white); }
 
@@ -257,10 +257,175 @@ ul { list-style: none; }
 #no-results i { font-size: 3rem; color: var(--border); margin-bottom: 16px; }
 #no-results p { color: var(--silver); font-size: 15px; }
 
-/* Load more */
-.load-more-wrap { text-align: center; margin-top: 56px; }
-.btn-outline-blue { background: transparent; border: 2px solid var(--blue); color: var(--blue); padding: 14px 40px; border-radius: var(--radius); font-size: 14px; font-weight: 700; letter-spacing: 0.05em; transition: all 0.2s; display: inline-flex; align-items: center; gap: 10px; }
-.btn-outline-blue:hover { background: var(--blue); color: #fff; }
+/* ── VIEW MORE PROPERTIES (Home Page Navigation Container) ── */
+.more-properties-gate {
+  text-align: center;
+  margin-top: 56px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  box-shadow: var(--card-shadow);
+}
+.more-properties-gate h3 {
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  color: var(--slate);
+  margin-bottom: 8px;
+}
+.more-properties-gate p {
+  color: var(--silver);
+  font-size: 14.5px;
+  max-width: 580px;
+  margin: 0 auto 24px;
+  line-height: 1.6;
+}
+.btn-premium-action {
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  padding: 16px 42px;
+  border-radius: var(--radius);
+  font-size: 14.5px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  transition: all 0.25s;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 18px rgba(27, 79, 216, 0.25);
+}
+.btn-premium-action:hover {
+  background: var(--blue-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(27, 79, 216, 0.4);
+}
+
+/* ═══════════════════════════════════════════
+   ALL PRODUCTS VIEW (THE SECOND PAGE)
+═══════════════════════════════════════════ */
+#all-products-view {
+  display: none;
+  min-height: 100vh;
+  padding-top: 100px;
+  background: var(--off-white);
+  padding-bottom: 80px;
+}
+#all-products-view.visible {
+  display: block;
+}
+.catalog-header {
+  background: var(--white);
+  padding: 40px 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 40px;
+}
+.catalog-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+.catalog-title h2 {
+  font-family: var(--serif);
+  font-size: 2.2rem;
+  color: var(--slate);
+}
+.catalog-title p {
+  color: var(--silver);
+  font-size: 14px;
+  margin-top: 4px;
+}
+.catalog-filter-bar {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: center;
+  background: var(--off-white);
+  padding: 14px 20px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+.catalog-control {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.catalog-control label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--silver);
+}
+.catalog-select {
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-family: var(--sans);
+  font-size: 13px;
+  background: var(--white);
+  color: var(--charcoal);
+  outline: none;
+}
+
+/* Grid for Catalog */
+#catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 28px;
+}
+.back-btn-top {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  color: var(--charcoal);
+  padding: 8px 18px;
+  border-radius: var(--radius);
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+.back-btn-top:hover {
+  background: var(--slate);
+  color: #fff;
+  border-color: var(--slate);
+}
+
+/* Pagination container */
+.pagination-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 56px;
+}
+.pg-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: #fff;
+  color: var(--charcoal);
+  font-weight: 600;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.pg-btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+.pg-btn.active {
+  background: var(--blue);
+  color: #fff;
+  border-color: var(--blue);
+}
 
 /* ═══════════════════════════════════════════
    WHY CHOOSE US
@@ -431,16 +596,12 @@ footer { background: var(--slate); padding: 72px 0 0; }
       <!-- SVG LOGO -->
       <a href="#" class="logo-wrap" onclick="showHome(); return false;">
         <svg width="38" height="38" viewBox="0 0 38 38" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Elite Residence Icon">
-          <!-- Outer elegant frame -->
           <rect width="38" height="38" rx="9" fill="#1B4FD8"/>
-          <!-- Abstract house geometry — minimalist diamond-roof monogram -->
           <path d="M19 8 L30 17 L30 30 L8 30 L8 17 Z" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.2"/>
-          <!-- Solid stylised 'E' keyline -->
           <path d="M13 13 L25 13" stroke="white" stroke-width="2" stroke-linecap="round"/>
           <path d="M13 13 L13 25" stroke="white" stroke-width="2" stroke-linecap="round"/>
           <path d="M13 19 L22 19" stroke="white" stroke-width="2" stroke-linecap="round"/>
           <path d="M13 25 L25 25" stroke="white" stroke-width="2" stroke-linecap="round"/>
-          <!-- Gold accent dot — top-right corner for luxury feel -->
           <circle cx="28.5" cy="9.5" r="3" fill="#F9C74F"/>
         </svg>
         <div class="logo-text-group">
@@ -451,12 +612,13 @@ footer { background: var(--slate); padding: 72px 0 0; }
 
       <!-- Desktop Nav -->
       <nav class="nav-links" aria-label="Main navigation">
-        <a href="#listings">Properties</a>
+        <a href="#listings" onclick="showHome();">Featured Properties</a>
+        <a href="#" onclick="showAllProducts(); return false;">Browse All (100)</a>
         <a href="#why">About Us</a>
         <a href="#contact-band">Contact</a>
       </nav>
 
-      <!-- Category Tabs -->
+      <!-- Category Tabs (Desktop Home Navigation Context) -->
       <div class="nav-cats" id="nav-cats">
         <span class="nav-cat active" data-cat="all">All</span>
         <span class="nav-cat" data-cat="flat">Flat</span>
@@ -472,7 +634,8 @@ footer { background: var(--slate); padding: 72px 0 0; }
 
 <!-- Mobile Nav -->
 <div id="mobile-nav">
-  <a href="#listings" onclick="closeMobileNav()">Properties</a>
+  <a href="#listings" onclick="showHome(); closeMobileNav();">Featured Properties</a>
+  <a href="#" onclick="showAllProducts(); closeMobileNav(); return false;">Browse All (100)</a>
   <a href="#why" onclick="closeMobileNav()">About Us</a>
   <a href="#contact-band" onclick="closeMobileNav()">Contact</a>
   <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
@@ -530,7 +693,7 @@ footer { background: var(--slate); padding: 72px 0 0; }
         <span class="si-label">Budget Range</span>
         <select class="si-select" id="si-budget">
           <option value="">Any Budget</option>
-          <option value="50-100">BDT 50L – 1 Crore</option>
+          <option value="45-100">BDT 45L – 1 Crore</option>
           <option value="100-300">BDT 1–3 Crore</option>
           <option value="300-700">BDT 3–7 Crore</option>
           <option value="700+">BDT 7 Crore+</option>
@@ -552,7 +715,7 @@ footer { background: var(--slate); padding: 72px 0 0; }
   <div class="container">
     <div class="stats-inner">
       <div class="stat-item">
-        <div class="stat-num">500<span>+</span></div>
+        <div class="stat-num">100<span>+</span></div>
         <div class="stat-label">Verified Properties</div>
       </div>
       <div class="stat-item">
@@ -564,20 +727,20 @@ footer { background: var(--slate); padding: 72px 0 0; }
         <div class="stat-label">Client Satisfaction</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">6</div>
+        <div class="stat-num">8</div>
         <div class="stat-label">Prime Locations</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ── PROPERTY LISTINGS ── -->
+<!-- ── PROPERTY LISTINGS (FEATURED SECTION / MAIN PORTFOLIO) ── -->
 <section id="listings">
   <div class="container">
     <div class="listings-head">
       <div class="listings-head-left">
         <div class="section-label">Featured Properties</div>
-        <h2 class="section-title">Handpicked <em>Luxury</em> Listings</h2>
+        <h2 class="section-title">Handpicked <em>Premium</em> Listings</h2>
         <div class="divider"></div>
       </div>
       <!-- Location filter pills -->
@@ -593,7 +756,7 @@ footer { background: var(--slate); padding: 72px 0 0; }
     </div>
 
     <div class="results-meta">
-      <p class="results-count"><strong id="result-count">8</strong> properties found</p>
+      <p class="results-count">Showing <strong id="result-count">8</strong> exclusive items</p>
     </div>
 
     <div id="property-grid"></div>
@@ -602,9 +765,12 @@ footer { background: var(--slate); padding: 72px 0 0; }
       <p>No properties match your current filters. Try adjusting your search criteria.</p>
     </div>
 
-    <div class="load-more-wrap">
-      <button class="btn-outline-blue" id="load-more-btn">
-        <i class="fa-solid fa-grid-2"></i> Load More Properties
+    <!-- MORE PRODUCTS CALL TO ACTION CONTAINER -->
+    <div class="more-properties-gate">
+      <h3>Explore Full Catalog (100+ Properties)</h3>
+      <p>Amader kache ache somosto Dhaka shohor er shobcheye reasonable ebong premium flat, plot ebong house options. Nicher button e click kore check korun amader shob product details shoho.</p>
+      <button class="btn-premium-action" onclick="showAllProducts()">
+        <i class="fa-solid fa-rectangle-list"></i> View All 100 Properties
       </button>
     </div>
   </div>
@@ -686,20 +852,20 @@ footer { background: var(--slate); padding: 72px 0 0; }
       <div class="footer-col">
         <h4>Properties</h4>
         <ul>
-          <li><a href="#listings">Apartments / Flats</a></li>
-          <li><a href="#listings">Land & Plots</a></li>
-          <li><a href="#listings">Houses & Villas</a></li>
-          <li><a href="#listings">Commercial Spaces</a></li>
+          <li><a href="#listings" onclick="showHome();">Apartments / Flats</a></li>
+          <li><a href="#listings" onclick="showHome();">Land & Plots</a></li>
+          <li><a href="#listings" onclick="showHome();">Houses & Villas</a></li>
+          <li><a href="#" onclick="showAllProducts(); return false;">Browse Catalog</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4>Locations</h4>
         <ul>
-          <li><a href="#listings">Gulshan</a></li>
-          <li><a href="#listings">Banani</a></li>
-          <li><a href="#listings">Uttara</a></li>
-          <li><a href="#listings">Bashundhara</a></li>
-          <li><a href="#listings">Mirpur</a></li>
+          <li><a href="#listings" onclick="showHome();">Gulshan</a></li>
+          <li><a href="#listings" onclick="showHome();">Banani</a></li>
+          <li><a href="#listings" onclick="showHome();">Uttara</a></li>
+          <li><a href="#listings" onclick="showHome();">Bashundhara</a></li>
+          <li><a href="#listings" onclick="showHome();">Mirpur</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -707,14 +873,13 @@ footer { background: var(--slate); padding: 72px 0 0; }
         <ul>
           <li><a href="#why">About Us</a></li>
           <li><a href="#contact-band">Contact</a></li>
-          <li><a href="#">Careers</a></li>
           <li><a href="#">Privacy Policy</a></li>
           <li><a href="#">Terms of Service</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p>© 2025 Elite Residence. All rights reserved. Dhaka, Bangladesh.</p>
+      <p>© 2026 Elite Residence. All rights reserved. Dhaka, Bangladesh.</p>
       <div class="footer-bottom-links">
         <a href="#">Privacy</a>
         <a href="#">Terms</a>
@@ -725,6 +890,68 @@ footer { background: var(--slate); padding: 72px 0 0; }
 </footer>
 
 </div><!-- /#home-page -->
+
+<!-- ═══════════════════════════════════════════════════
+     ALL PRODUCTS CATALOG VIEW (Redirection Page)
+═══════════════════════════════════════════════════ -->
+<div id="all-products-view">
+  <div class="catalog-header">
+    <div class="container catalog-header-inner">
+      <div class="catalog-title">
+        <button class="back-btn-top" onclick="showHome()"><i class="fa-solid fa-arrow-left"></i> Home Page</button>
+        <h2 style="margin-top:14px;">All Premium Properties</h2>
+        <p>Browse through our complete portfolio of 100 affordable & premium handpicked properties in Dhaka.</p>
+      </div>
+
+      <!-- Filters on All-Products Catalog Page -->
+      <div class="catalog-filter-bar">
+        <div class="catalog-control">
+          <label>Category Type</label>
+          <select id="cat-type-filter" class="catalog-select" onchange="runCatalogFilter()">
+            <option value="all">All Properties</option>
+            <option value="flat">Flat / Apartment</option>
+            <option value="plot">Land / Plot</option>
+            <option value="house">House / Villa</option>
+          </select>
+        </div>
+        <div class="catalog-control">
+          <label>Sort By Price</label>
+          <select id="cat-sort-filter" class="catalog-select" onchange="runCatalogFilter()">
+            <option value="default">Default</option>
+            <option value="low-high">Price: Low to High</option>
+            <option value="high-low">Price: High to Low</option>
+          </select>
+        </div>
+        <div class="catalog-control">
+          <label>District Area</label>
+          <select id="cat-loc-filter" class="catalog-select" onchange="runCatalogFilter()">
+            <option value="all">All Locations</option>
+            <option value="Gulshan">Gulshan</option>
+            <option value="Banani">Banani</option>
+            <option value="Uttara">Uttara</option>
+            <option value="Bashundhara">Bashundhara</option>
+            <option value="Dhanmondi">Dhanmondi</option>
+            <option value="Baridhara">Baridhara</option>
+            <option value="Mohammadpur">Mohammadpur</option>
+            <option value="Mirpur">Mirpur</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="catalog-grid"></div>
+
+    <div id="catalog-no-results" style="display:none; text-align:center; padding:80px 0;">
+      <i class="fa-regular fa-folder-open" style="font-size:3rem; color:var(--border); margin-bottom:16px; display:block;"></i>
+      <p style="color:var(--silver); font-size:15px;">Kono property khuje paoa jayni. Onno filter diye chesta korun.</p>
+    </div>
+
+    <!-- Catalog Pagination -->
+    <div class="pagination-wrap" id="catalog-pagination"></div>
+  </div>
+</div>
 
 <!-- ═══════════════════════════════════════════════════
      PROPERTY DETAIL PAGE (JS-rendered, simulated route)
@@ -738,40 +965,9 @@ footer { background: var(--slate); padding: 72px 0 0; }
 ═══════════════════════════════════════════════════ -->
 <script>
 /* ══════════════════════════════════════════════════════
-   PROPERTY DATABASE
-   ────────────────────────────────────────────────────
-   SCALING TO 100 PROPERTIES:
-   ─────────────────────────
-   This array currently holds 8 premium sample listings.
-   To scale up to 100 properties, use any of these approaches:
-
-   OPTION A — Static append (copy-paste additional objects):
-     properties.push({ id: 9, name: "...", ... });
-
-   OPTION B — Dynamic loop (test/demo data):
-     const extras = Array.from({ length: 92 }, (_, i) => ({
-       id: i + 9,
-       name: `Property Suite ${i + 9}`,
-       type: ['flat','plot','house'][i % 3],
-       location: locations[i % locations.length],
-       address: `Sector ${(i % 12) + 1}, ${locations[i % locations.length]}, Dhaka`,
-       beds: (i % 3) + 2, baths: (i % 3) + 2, sqft: 1200 + i * 180,
-       price: `BDT ${(1.2 + i * 0.18).toFixed(1)} Crore`,
-       priceRaw: 12000000 + i * 1800000,
-       image: propertyImages[i % propertyImages.length],
-       status: i % 4 === 0 ? 'New Listing' : i % 5 === 0 ? 'Sold Out' : 'Available',
-       features: ['24/7 Security','Power Backup','Parking','Lift','RAJUK Approved'],
-       desc: `A premium ${['flat','plot','house'][i % 3]} in ${locations[i % locations.length]}, offering world-class amenities and full legal clearance.`
-     }));
-     properties.push(...extras);
-
-   OPTION C — API / Fetch:
-     fetch('/api/properties')
-       .then(r => r.json())
-       .then(data => { properties.push(...data); renderCards(); });
-══════════════════════════════════════════════════════ */
-
-const locations = ['Uttara','Gulshan','Bashundhara','Badda','Banani','Mirpur'];
+   PROPERTY DATABASE (REASONABLE BANGLADESHI MARKET VALUE)
+   ────────────────────────────────────────────────────── */
+const locations = ['Uttara','Gulshan','Bashundhara','Badda','Banani','Mirpur','Dhanmondi','Baridhara','Mohammadpur'];
 
 const propertyImages = [
   'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=700&q=80',
@@ -786,111 +982,125 @@ const propertyImages = [
 
 const properties = [];
 
-// ══════════════ DYNAMICALLY ACCUMULATED 100 PREMIUM REAL ESTATE LISTINGS ══════════════
-const luxuryImages = [
-  'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80',
-  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80',
-  'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80',
-  'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80',
-  'https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?w=800&q=80',
-  'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&q=80',
-  'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80',
-  'https://images.unsplash.com/photo-1513584684374-8bab748fbf90?w=800&q=80',
-  'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=800&q=80',
-  'https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=800&q=80',
-  'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80',
-  'https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80',
-  'https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?w=800&q=80',
-  'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&q=80',
-  'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=800&q=80'
-];
+/* ══════════════════════════════════════════════════════
+   DYNAMIC GENERATOR FOR 100 BANGLADESHI REAL ESTATE ITEMS
+   - Reasonable prices (Starts at BDT 45 Lakhs to BDT 15 Crore range)
+   - Uniform distribution (flat, plot, house)
+   - Balanced locations
+   ────────────────────────────────────────────────────── */
+const targetTotal = 100;
+const types = ['flat', 'plot', 'house'];
+const statuses = ['Available', 'New Listing', 'Exclusive', 'Investment'];
 
-const mockThumbs = [
-  'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&q=80',
-  'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80',
-  'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?w=400&q=80',
-  'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=400&q=80'
-];
-
-const mockLocations = ['Gulshan', 'Banani', 'Uttara', 'Dhanmondi', 'Bashundhara', 'Baridhara', 'Mohammadpur', 'Mirpur'];
-const mockCategories = ['flat', 'plot', 'house'];
-const mockStatuses = ['Available', 'New Listing', 'Exclusive', 'Investment Property', 'Price Reduced'];
-
-// Reset array to populate exactly 100 perfectly balanced items or push up to 100 items
-properties.length = 0; // Clear existing to prevent mixed index collision and maintain precise 100 entries
-
-for (let i = 1; i <= 100; i++) {
-  // Balanced allocation of categories (33 flats, 33 plots, 34 houses approximately)
-  const type = mockCategories[i % mockCategories.length];
-  const location = mockLocations[i % mockLocations.length];
-  const status = mockStatuses[i % mockStatuses.length];
-  const image = luxuryImages[i % luxuryImages.length];
+// Build 100 robust items dynamically
+for (let i = 1; i <= targetTotal; i++) {
+  const itemType = types[i % types.length];
+  const itemLocation = locations[i % locations.length];
+  const itemStatus = statuses[i % statuses.length];
   
-  let name = '';
+  let name = "";
+  let address = "";
   let beds = 0;
   let baths = 0;
   let sqft = 0;
   let priceRaw = 0;
-  let priceStr = '';
+  let priceText = "";
   let features = [];
-  
-  const baseFactor = (i * 7) % 25;
-  
-  if (type === 'flat') {
-    name = `${location} Elite Residence — Apt ${200 + i}`;
-    beds = (i % 3) + 3; // 3 to 5 beds
-    baths = (i % 2) + 3; // 3 to 4 baths
-    sqft = 1800 + (baseFactor * 60);
-    priceRaw = Math.floor((2.5 + (i * 0.12)) * 10000000);
-    priceStr = `BDT ${(priceRaw / 10000000).toFixed(2)} Crore`;
-    features = ['Smart Home Automation', 'CCTV Surveillance', 'Rooftop Infinity Pool', 'Fully Equipped Gym', '24/7 Power Backup', 'Elevator Access'];
-  } else if (type === 'plot') {
-    name = `Premium Freehold Plot — ${location} Block ${String.fromCharCode(65 + (i % 6))}`;
-    beds = 0;
-    baths = 0;
-    sqft = 2160 + (baseFactor * 144); // Measured in sqft equivalent to Kathas
-    priceRaw = Math.floor((3.0 + (i * 0.25)) * 10000000);
-    priceStr = `BDT ${(priceRaw / 10000000).toFixed(2)} Crore`;
-    features = ['Corner Plot', '30ft Wide Road Frontage', 'RAJUK Approved Plot', 'Demarcated Boundary Wall', 'Immediate Registration Ready'];
-  } else {
-    name = `Imperial Luxury Villa at ${location}`;
-    beds = (i % 3) + 4; // 4 to 6 beds
-    baths = (i % 2) + 4; // 4 to 5 baths
-    sqft = 3500 + (baseFactor * 150);
-    priceRaw = Math.floor((6.0 + (i * 0.45)) * 10000000);
-    priceStr = `BDT ${(priceRaw / 10000000).toFixed(2)} Crore`;
-    features = ['Private Landscaped Garden', 'Multi-Car Secure Garage', 'Double Height Ceiling Living Room', 'Home Theater Lounge', 'Servants Quarters', 'Solar Panel Array'];
+  let desc = "";
+
+  // Dynamic values generation optimized for BD Market standard
+  if (itemType === 'flat') {
+    // 1300 to 2800 sqft apartment
+    sqft = 1100 + ((i * 17) % 16) * 100;
+    beds = (sqft < 1500) ? 3 : (sqft < 2200) ? 3 : 4;
+    baths = beds;
+    // BDT 45 Lakhs up to 3.5 Crore range (highly reasonable for standard middle & upper class in BD)
+    const multiplier = (i % 2 === 0) ? 0.95 : 1.25;
+    priceRaw = Math.floor((45 + (i * 2.8) * multiplier) * 100000); 
+    if (priceRaw >= 10000000) {
+      priceText = `BDT ${(priceRaw / 10000000).toFixed(2)} Crore`;
+    } else {
+      priceText = `BDT ${(priceRaw / 100000).toFixed(0)} Lakh`;
+    }
+    name = `${itemLocation} Premium Skyline Suite ${100 + i}`;
+    address = `Road ${10 + (i % 12)}, Sector ${(i % 14) + 1}, ${itemLocation}, Dhaka`;
+    features = ['Continuous Lift Service', 'Rooftop Community Room', 'Secure Parking Space', '24/7 Security Staff', 'Intercom Connection', 'Standby Power Generator'];
+    desc = `Dhaka-r shobcheye shundor ebong secure area ${itemLocation}-e modern layout-er ekti flat. Flat-ti te thakche modern architectural standard features, spacious balconies ebong clear air space.\n\nAll documents, RAJUK clearance ebong ownership mutations clear kora ache handover processing safe rakhar jonno. Ideal investment choice.`;
+  } 
+  else if (itemType === 'plot') {
+    // 3 Katha to 10 Katha plots (represented in sqft equivalents: 1 katha = 720 sqft)
+    const katha = 3 + (i % 7);
+    sqft = katha * 720;
+    // Plot prices: 50 Lakhs up to 6.8 Crore based on locations (Dhanmondi/Gulshan is higher, Badda/Mirpur is lower)
+    const factor = (itemLocation === 'Gulshan' || itemLocation === 'Banani' || itemLocation === 'Baridhara') ? 5.5 : 2.2;
+    priceRaw = Math.floor((40 + (katha * 14) * factor) * 100000);
+    if (priceRaw >= 10000000) {
+      priceText = `BDT ${(priceRaw / 10000000).toFixed(2)} Crore`;
+    } else {
+      priceText = `BDT ${(priceRaw / 100000).toFixed(0)} Lakh`;
+    }
+    name = `${katha} Katha Prime Land — ${itemLocation} Block ${String.fromCharCode(65 + (i % 5))}`;
+    address = `Block ${String.fromCharCode(65 + (i % 5))}, Line ${i % 4 + 1}, ${itemLocation} R/A, Dhaka`;
+    features = ['30-Feet Wide Front Road', 'Demarcated Boundary Walls', 'Full Utilities Connection', 'Clean Registry mutation', 'Near Main Boulevard', 'Commercial Allowed'];
+    desc = `Excellent investment option ${itemLocation}-e high development value-shoho freehold katha plot. Plot-ti sompurno clear boundaries and ready registry paper-shoho listed.\n\nPlot connection area high progress track-e ache, residential o specialized commercial projects design korar jonno areati khub e upolobdho standard standard layout structure.`;
+  } 
+  else if (itemType === 'house') {
+    // Duplex or Single Unit houses
+    sqft = 2400 + (i % 5) * 600;
+    beds = 4 + (i % 3);
+    baths = beds;
+    // Duplex pricing: 1.5 Crore to 12 Crore standard value
+    const regionWeight = (itemLocation === 'Gulshan' || itemLocation === 'Banani' || itemLocation === 'Dhanmondi') ? 6.2 : 2.5;
+    priceRaw = Math.floor((110 + (i * 9) * regionWeight) * 100000);
+    if (priceRaw >= 10000000) {
+      priceText = `BDT ${(priceRaw / 10000000).toFixed(2)} Crore`;
+    } else {
+      priceText = `BDT ${(priceRaw / 100000).toFixed(0)} Lakh`;
+    }
+    name = `${itemLocation} Premium Duplex Villa — ${String.fromCharCode(65 + (i % 4))}`;
+    address = `Road ${15 + (i % 10)}, Sector ${i % 11 + 1}, ${itemLocation}, Dhaka`;
+    features = ['Landscaped Side Garden', 'Covered Double Garage', 'Smart Home Security Gates', 'Servants Quarters Room', 'Rooftop Lounge Patio', 'Solar System Powered'];
+    desc = `Premium luxurious architectural duplex villa in ${itemLocation}. Highly suitable for extended families seeking privacy, elegant security system, and luxury landscape designs inside Dhaka city boundaries.\n\nRAJUK blueprint approved design with structural engineering certifications fully ready for next owner validation sequence and legal checking.`;
   }
 
   properties.push({
     id: i,
     name: name,
-    type: type,
-    location: location,
-    address: `Road No. ${12 + (i % 18)}, Sector ${1 + (i % 11)}, ${location}, Dhaka`,
+    type: itemType,
+    location: itemLocation,
+    address: address,
     beds: beds,
     baths: baths,
     sqft: sqft,
-    price: priceStr,
+    price: priceText,
     priceRaw: priceRaw,
-    status: status,
-    image: image,
-    thumbs: [...mockThumbs],
+    status: itemStatus,
+    image: propertyImages[i % propertyImages.length],
+    thumbs: [
+      'https://images.unsplash.com/photo-1618219908412-a29a1bb7b86e?w=400&q=80',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&q=80',
+      'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80',
+      'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=400&q=80',
+    ],
     features: features,
-    desc: `This ultra-premium property is located in one of the most secured and prestigious neighborhoods of ${location}, Dhaka. Designed by award-winning architects, it maximizes standard airflow, natural ambient light distribution, and offers highly state-of-the-art infrastructure fixtures.\n\nAll administrative documents, RAJUK approvals, mutation clearances, and land registry archives are verified and pristine for a direct and hassle-free ownership handover. An exceptional asset for elite lifestyle seekers.`
+    desc: desc
   });
 }
 
-
 /* ═══════════════════════════════════════════════
-   STATE
+   STATE VARIABLES
 ═══════════════════════════════════════════════ */
 let activeType = 'all';
 let activeLoc  = 'all';
 let searchKeyword = '';
 
+// Catalog Specific State
+let catalogCurrentPage = 1;
+const catalogItemsPerPage = 12;
+let filteredCatalogProperties = [];
+
 /* ═══════════════════════════════════════════════
-   RENDER CARDS
+   RENDER CARDS (HOME PAGE: LIMIT TO 8 BEST SELECTIONS)
 ═══════════════════════════════════════════════ */
 function typeLabel(t) { return t === 'flat' ? 'Flat' : t === 'plot' ? 'Plot' : 'House'; }
 function typeBadge(t) { return t === 'flat' ? 'badge-flat' : t === 'plot' ? 'badge-plot' : 'badge-house'; }
@@ -908,11 +1118,14 @@ function renderCards() {
     return typeOk && locOk && kwOk;
   });
 
+  // Limit Home Page viewing to 8 items to keep it clean, encouraging "View More" transition
+  const homeDisplayItems = filtered.slice(0, 8);
+
   document.getElementById('result-count').textContent = filtered.length;
   noRes.style.display = filtered.length ? 'none' : 'block';
   grid.style.display  = filtered.length ? 'grid' : 'none';
 
-  filtered.forEach(p => {
+  homeDisplayItems.forEach(p => {
     const card = document.createElement('div');
     card.className = 'prop-card';
     const specRow = p.type !== 'plot'
@@ -950,6 +1163,146 @@ function renderCards() {
   });
 }
 
+/* ═══════════════════════════════════════════════
+   CATALOG FILTER & RENDER ENGINE (THE SECOND PAGE)
+═══════════════════════════════════════════════ */
+function runCatalogFilter() {
+  const catType = document.getElementById('cat-type-filter').value;
+  const catSort = document.getElementById('cat-sort-filter').value;
+  const catLoc  = document.getElementById('cat-loc-filter').value;
+
+  filteredCatalogProperties = properties.filter(p => {
+    const typeOk = catType === 'all' || p.type === catType;
+    const locOk  = catLoc === 'all' || p.location === catLoc;
+    return typeOk && locOk;
+  });
+
+  // Sort logically
+  if (catSort === 'low-high') {
+    filteredCatalogProperties.sort((a, b) => a.priceRaw - b.priceRaw);
+  } else if (catSort === 'high-low') {
+    filteredCatalogProperties.sort((a, b) => b.priceRaw - a.priceRaw);
+  }
+
+  catalogCurrentPage = 1; // reset to page 1 on filter trigger
+  renderCatalogPage();
+}
+
+function renderCatalogPage() {
+  const grid = document.getElementById('catalog-grid');
+  const noRes = document.getElementById('catalog-no-results');
+  grid.innerHTML = '';
+
+  const totalItems = filteredCatalogProperties.length;
+  const startIndex = (catalogCurrentPage - 1) * catalogItemsPerPage;
+  const endIndex   = Math.min(startIndex + catalogItemsPerPage, totalItems);
+
+  noRes.style.display = totalItems ? 'none' : 'block';
+  grid.style.display  = totalItems ? 'grid' : 'none';
+
+  const pageItems = filteredCatalogProperties.slice(startIndex, endIndex);
+
+  pageItems.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'prop-card';
+    const specRow = p.type !== 'plot'
+      ? `<div class="card-spec"><i class="fa-solid fa-bed"></i>${p.beds} Beds</div>
+         <div class="card-spec"><i class="fa-solid fa-bath"></i>${p.baths} Baths</div>
+         <div class="card-spec"><i class="fa-solid fa-ruler-combined"></i>${p.sqft.toLocaleString()} sqft</div>`
+      : `<div class="card-spec"><i class="fa-solid fa-ruler-combined"></i>${p.sqft.toLocaleString()} sqft</div>
+         <div class="card-spec"><i class="fa-solid fa-layer-group"></i>Freehold</div>`;
+    
+    card.innerHTML = `
+      <div class="card-img-wrap" onclick="openDetail(${p.id})">
+        <img src="${p.image}" alt="${p.name}" loading="lazy"/>
+        <div class="card-overlay-actions">
+          <button class="card-action-btn" title="Save" onclick="event.stopPropagation();toggleSave(this)"><i class="fa-regular fa-heart"></i></button>
+          <button class="card-action-btn" title="Share" onclick="event.stopPropagation();shareProperty(${p.id})"><i class="fa-solid fa-share-nodes"></i></button>
+        </div>
+        <div class="card-badge-wrap">
+          <span class="badge ${typeBadge(p.type)}">${typeLabel(p.type)}</span>
+          ${p.status ? `<span class="card-status">${p.status}</span>` : ''}
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-location"><i class="fa-solid fa-location-dot"></i>${p.address}</div>
+        <div class="card-title" onclick="openDetail(${p.id})">${p.name}</div>
+        <div class="card-specs">${specRow}</div>
+      </div>
+      <div class="card-footer">
+        <div class="card-price">${p.price}<sub>Negotiable</sub></div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn-view" onclick="openDetail(${p.id})">View</button>
+          <button class="btn-contact" onclick="scheduleVisit(${p.id})"><i class="fa-solid fa-calendar-check"></i> Schedule</button>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  renderPaginationControls(totalItems);
+}
+
+function renderPaginationControls(totalItems) {
+  const container = document.getElementById('catalog-pagination');
+  container.innerHTML = '';
+
+  const totalPages = Math.ceil(totalItems / catalogItemsPerPage);
+  if (totalPages <= 1) return;
+
+  for (let i = 1; i <= totalPages; i++) {
+    const btn = document.createElement('button');
+    btn.className = `pg-btn ${catalogCurrentPage === i ? 'active' : ''}`;
+    btn.textContent = i;
+    btn.addEventListener('click', () => {
+      catalogCurrentPage = i;
+      renderCatalogPage();
+      window.scrollTo({ top: document.getElementById('all-products-view').offsetTop - 20, behavior: 'smooth' });
+    });
+    container.appendChild(btn);
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   PAGE VIEW TRANSITION MECHANIC
+═══════════════════════════════════════════════ */
+function showAllProducts() {
+  const home = document.getElementById('home-page');
+  const catalog = document.getElementById('all-products-view');
+  const detail = document.getElementById('detail-page');
+
+  detail.classList.remove('visible');
+  detail.style.display = 'none';
+
+  home.classList.add('fade-out');
+  setTimeout(() => {
+    home.style.display = 'none';
+    catalog.classList.add('visible');
+    catalog.style.display = 'block';
+    
+    // Initialise and render complete list on redirection
+    runCatalogFilter();
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, 280);
+}
+
+function showHome() {
+  const home = document.getElementById('home-page');
+  const catalog = document.getElementById('all-products-view');
+  const detail = document.getElementById('detail-page');
+
+  detail.classList.remove('visible');
+  detail.style.display = 'none';
+  catalog.classList.remove('visible');
+  catalog.style.display = 'none';
+
+  home.style.display = 'block';
+  setTimeout(() => {
+    home.classList.remove('fade-out');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, 10);
+}
+
 function toggleSave(btn) {
   const ico = btn.querySelector('i');
   if (ico.classList.contains('fa-regular')) {
@@ -976,20 +1329,20 @@ function shareProperty(id) {
 function showToast(msg) {
   const t = document.createElement('div');
   t.textContent = msg;
-  Object.assign(t.style, { position:'fixed', bottom:'28px', left:'50%', transform:'translateX(-50%)', background:var_blue(), color:'#fff', padding:'12px 24px', borderRadius:'8px', fontSize:'13px', fontWeight:'600', zIndex:9999, boxShadow:'0 8px 24px rgba(0,0,0,0.2)', fontFamily:'var(--sans)' });
+  Object.assign(t.style, { position:'fixed', bottom:'28px', left:'50%', transform:'translateX(-50%)', background: '#1B4FD8', color:'#fff', padding:'12px 24px', borderRadius:'8px', fontSize:'13px', fontWeight:'600', zIndex:9999, boxShadow:'0 8px 24px rgba(0,0,0,0.2)', fontFamily:'var(--sans)' });
   document.body.appendChild(t);
   setTimeout(() => t.remove(), 2800);
 }
-function var_blue() { return '#1B4FD8'; }
 
 /* ═══════════════════════════════════════════════
-   DETAIL PAGE
+   DETAIL PAGE POPULATOR
 ═══════════════════════════════════════════════ */
 function openDetail(id) {
   const p = properties.find(x => x.id === id);
   if (!p) return;
 
   const home   = document.getElementById('home-page');
+  const catalog = document.getElementById('all-products-view');
   const detail = document.getElementById('detail-page');
 
   const specRows = p.type !== 'plot' ? `
@@ -1011,7 +1364,7 @@ function openDetail(id) {
       <img src="${p.image}" alt="${p.name}"/>
       <div class="detail-hero-overlay"></div>
       <div class="detail-breadcrumb">
-        <button onclick="closeDetail()"><i class="fa-solid fa-arrow-left"></i> Back to Listings</button>
+        <button onclick="closeDetail()"><i class="fa-solid fa-arrow-left"></i> Back to Previous View</button>
         <span style="color:rgba(255,255,255,0.45);">›</span>
         <span>${p.location}</span>
         <span style="color:rgba(255,255,255,0.45);">›</span>
@@ -1075,40 +1428,43 @@ function openDetail(id) {
     </div>
   `;
 
+  // Track the source screen to implement intuitive "Back" transition
+  detail.setAttribute('data-source-view', home.style.display === 'none' ? 'catalog' : 'home');
+
   home.classList.add('fade-out');
+  catalog.classList.remove('visible');
+  catalog.style.display = 'none';
+
   setTimeout(() => {
     home.style.display = 'none';
     detail.classList.add('visible');
+    detail.style.display = 'block';
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, 280);
 }
 
 function closeDetail() {
-  const home   = document.getElementById('home-page');
+  const home = document.getElementById('home-page');
+  const catalog = document.getElementById('all-products-view');
   const detail = document.getElementById('detail-page');
-  detail.classList.remove('visible');
-  home.style.display = 'block';
-  setTimeout(() => home.classList.remove('fade-out'), 10);
-  window.scrollTo({ top: document.getElementById('listings').offsetTop - 80, behavior: 'smooth' });
-}
 
-function showHome() {
-  const home   = document.getElementById('home-page');
-  const detail = document.getElementById('detail-page');
-  if (!home.style.display || home.style.display === 'none') {
-    detail.classList.remove('visible');
+  const sourceView = detail.getAttribute('data-source-view') || 'home';
+  detail.classList.remove('visible');
+  detail.style.display = 'none';
+
+  if (sourceView === 'catalog') {
+    catalog.classList.add('visible');
+    catalog.style.display = 'block';
+    window.scrollTo({ top: document.getElementById('all-products-view').offsetTop - 20, behavior: 'smooth' });
+  } else {
     home.style.display = 'block';
     setTimeout(() => home.classList.remove('fade-out'), 10);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: document.getElementById('listings').offsetTop - 80, behavior: 'smooth' });
   }
 }
 
 /* ═══════════════════════════════════════════════
    WHATSAPP INTEGRATION
-   ─────────────────────────────────────────────
-   Clicking "Schedule a Visit" or "Contact Agent"
-   formats a structured message and opens WhatsApp.
-   The WhatsApp number is: +8801518962973
 ═══════════════════════════════════════════════ */
 function openWhatsApp(customMsg, name, address, price) {
   const num = '8801518962973';
@@ -1126,17 +1482,16 @@ function scheduleVisit(id) {
 }
 
 /* ═══════════════════════════════════════════════
-   SOCIAL ICONS
+   SOCIAL MEDIA ICONS NAVIGATION
 ═══════════════════════════════════════════════ */
 function openSocial(url) {
   window.open(url, '_blank', 'noopener,noreferrer');
 }
 
 /* ═══════════════════════════════════════════════
-   FILTERS
+   HOME FILTERS SYSTEM
 ═══════════════════════════════════════════════ */
-// Nav category tabs (desktop + mobile)
-document.querySelectorAll('[data-cat]').forEach(el => {
+document.querySelectorAll('#nav-cats [data-cat], #mobile-nav [data-cat]').forEach(el => {
   el.addEventListener('click', () => {
     document.querySelectorAll('[data-cat]').forEach(b => b.classList.remove('active'));
     document.querySelectorAll(`[data-cat="${el.dataset.cat}"]`).forEach(b => b.classList.add('active'));
@@ -1146,7 +1501,6 @@ document.querySelectorAll('[data-cat]').forEach(el => {
   });
 });
 
-// Location filter pills
 document.querySelectorAll('[data-loc]').forEach(btn => {
   btn.addEventListener('click', () => {
     document.querySelectorAll('[data-loc]').forEach(b => b.classList.remove('active'));
@@ -1156,11 +1510,11 @@ document.querySelectorAll('[data-loc]').forEach(btn => {
   });
 });
 
-// Search island
 function runSearch() {
   const loc  = document.getElementById('si-loc').value;
   const type = document.getElementById('si-type').value;
   const kw   = document.getElementById('si-keyword').value.trim();
+
   if (loc)  { activeLoc = loc; document.querySelectorAll('[data-loc]').forEach(b => { b.classList.toggle('active', b.dataset.loc === loc); }); }
   if (type) { activeType = type; document.querySelectorAll('[data-cat]').forEach(b => { b.classList.toggle('active', b.dataset.cat === type); }); }
   searchKeyword = kw;
@@ -1169,7 +1523,6 @@ function runSearch() {
 }
 document.getElementById('si-keyword').addEventListener('keydown', e => { if (e.key === 'Enter') runSearch(); });
 
-// Search island tabs
 document.querySelectorAll('[data-sitab]').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('[data-sitab]').forEach(t => t.classList.remove('active'));
@@ -1193,18 +1546,9 @@ document.getElementById('hamburger-btn').addEventListener('click', () => {
 function closeMobileNav() { document.getElementById('mobile-nav').classList.remove('open'); }
 
 /* ═══════════════════════════════════════════════
-   LOAD MORE (placeholder)
-═══════════════════════════════════════════════ */
-document.getElementById('load-more-btn').addEventListener('click', () => {
-  showToast('Connect an API or append to the properties array to load more.');
-});
-
-/* ═══════════════════════════════════════════════
-   INIT
+   INITIALIZE CORE PORTFOLIO
 ═══════════════════════════════════════════════ */
 renderCards();
 </script>
 </body>
 </html>
-elite-residence-100-properties.html
-Displaying elite-residence-100-properties.html.

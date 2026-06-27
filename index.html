@@ -1,783 +1,733 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useScroll, useTransform, animate } from "motion/react";
-import {
-  ArrowRight, ArrowUpRight, Menu, X, Moon, Sun, Star, Mail, Phone,
-  Linkedin, Facebook, MessageCircle, MapPin, ChevronUp,
-  Target, TrendingUp, Search, Megaphone, MapPinned, Share2,
-  MousePointerClick, LineChart, BarChart3, Sparkles,
-} from "lucide-react";
-import portrait from "@/assets/portrait.jpg";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Elite Residence — Premium Real Estate in Dhaka</title>
+<meta name="description" content="Discover premium flats, plots and houses in Dhaka's most elite neighborhoods — Gulshan, Banani, Bashundhara and more."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#fbfaf7;
+    --surface:#ffffff;
+    --ink:#0f1c2e;
+    --ink-soft:#3a475a;
+    --muted:#7a8699;
+    --line:#e7e3dc;
+    --accent:#0b3d91;       /* Elite Royal Blue */
+    --accent-2:#0a6b4a;     /* Emerald */
+    --gold:#b6924a;
+    --radius:14px;
+    --shadow:0 10px 30px rgba(15,28,46,.08);
+    --shadow-lg:0 30px 60px rgba(15,28,46,.18);
+    --serif:'Cormorant Garamond', serif;
+    --sans:'Inter', system-ui, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.55;-webkit-font-smoothing:antialiased}
+  img{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  .container{max-width:1240px;margin:0 auto;padding:0 24px}
 
-const NAV = [
-  { id: "home", label: "Home" },
-  { id: "about", label: "About" },
-  { id: "services", label: "Services" },
-  { id: "portfolio", label: "Portfolio" },
-  { id: "skills", label: "Skills" },
-  { id: "blog", label: "Blog" },
-  { id: "contact", label: "Contact" },
-];
+  /* HEADER */
+  header.site{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,.85);
+    backdrop-filter:saturate(180%) blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:78px;gap:24px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand .mark{width:42px;height:42px}
+  .brand-text{display:flex;flex-direction:column;line-height:1}
+  .brand-text .name{font-family:var(--serif);font-weight:700;font-size:22px;letter-spacing:.5px}
+  .brand-text .tag{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-top:4px}
+  nav.primary{display:flex;gap:32px}
+  nav.primary a{font-size:14px;font-weight:500;color:var(--ink-soft);position:relative;padding:6px 0;transition:color .2s}
+  nav.primary a:hover{color:var(--accent)}
+  nav.primary a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .25s}
+  nav.primary a:hover::after{transform:scaleX(1)}
+  .cta-call{display:inline-flex;align-items:center;gap:10px;padding:10px 18px;border:1px solid var(--ink);border-radius:999px;font-size:13px;font-weight:600;transition:all .2s}
+  .cta-call:hover{background:var(--ink);color:#fff}
 
-const SERVICES = [
-  { icon: Facebook, title: "Facebook & Instagram Ads", desc: "Full-funnel Meta campaigns engineered for ROAS, from creative testing to scale." },
-  { icon: Target, title: "Google Ads", desc: "Search, Performance Max and YouTube campaigns dialed in for high-intent conversions." },
-  { icon: MousePointerClick, title: "Lead Generation", desc: "Predictable B2B and B2C lead pipelines with qualified, sales-ready prospects." },
-  { icon: MapPinned, title: "Local Business Marketing", desc: "Google Business Profile, local SEO and geo-targeted ads that fill your calendar." },
-  { icon: Search, title: "SEO", desc: "Technical SEO, content strategy and link building for compounding organic growth." },
-  { icon: Share2, title: "Social Media Marketing", desc: "Brand-building content systems that turn followers into customers." },
-  { icon: TrendingUp, title: "Conversion Rate Optimization", desc: "Landing pages and funnels A/B tested to lift conversion without raising spend." },
-  { icon: Megaphone, title: "Marketing Strategy", desc: "Positioning, messaging and a 90-day roadmap built around your business goals." },
-  { icon: BarChart3, title: "Analytics & Reporting", desc: "GA4, GTM and dashboards that turn data into clear, profitable decisions." },
-];
+  /* CATEGORY TABS */
+  .cat-tabs{display:flex;justify-content:center;gap:8px;padding:18px 0;border-bottom:1px solid var(--line);background:#fff}
+  .cat-tabs button{
+    background:transparent;border:1px solid var(--line);padding:9px 22px;border-radius:999px;
+    font-family:var(--sans);font-size:13px;font-weight:500;color:var(--ink-soft);cursor:pointer;transition:all .2s;letter-spacing:.5px
+  }
+  .cat-tabs button:hover{border-color:var(--accent);color:var(--accent)}
+  .cat-tabs button.active{background:var(--ink);color:#fff;border-color:var(--ink)}
 
-const SKILLS = [
-  { name: "Meta Ads", level: 95 },
-  { name: "Google Ads", level: 93 },
-  { name: "Google Analytics", level: 92 },
-  { name: "Google Tag Manager", level: 88 },
-  { name: "SEO", level: 90 },
-  { name: "Email Marketing", level: 85 },
-  { name: "Copywriting", level: 87 },
-  { name: "Canva", level: 82 },
-  { name: "WordPress", level: 84 },
-  { name: "HubSpot", level: 88 },
-  { name: "CRM", level: 86 },
-  { name: "Marketing Automation", level: 89 },
-];
+  /* HERO */
+  .hero{
+    position:relative;min-height:640px;display:flex;align-items:center;
+    background:
+      linear-gradient(135deg, rgba(11,28,46,.72), rgba(11,28,46,.45)),
+      url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;
+    color:#fff;
+  }
+  .hero-inner{padding:120px 0 160px;max-width:860px}
+  .eyebrow{display:inline-block;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:#e9d9b3;border:1px solid rgba(233,217,179,.4);padding:6px 14px;border-radius:999px;margin-bottom:24px}
+  h1.hero-title{font-family:var(--serif);font-weight:600;font-size:clamp(38px,5.5vw,68px);line-height:1.08;letter-spacing:-.5px;margin-bottom:18px}
+  h1.hero-title em{font-style:italic;color:#e9d9b3;font-weight:500}
+  .hero p.sub{font-size:17px;color:#dde3ec;max-width:620px;font-weight:300}
 
-const CASES = [
+  /* SEARCH BAR */
+  .search-wrap{position:relative;margin-top:-70px;z-index:10}
+  .search{
+    background:#fff;border-radius:var(--radius);box-shadow:var(--shadow-lg);
+    padding:22px;display:grid;grid-template-columns:1.2fr 1fr 1fr auto;gap:14px;align-items:end;
+  }
+  .field label{display:block;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:600}
+  .field select,.field input{
+    width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:8px;
+    font-family:var(--sans);font-size:14px;color:var(--ink);background:#fff;
+    transition:border-color .2s
+  }
+  .field select:focus,.field input:focus{outline:none;border-color:var(--accent)}
+  .search button.search-btn{
+    background:var(--accent);color:#fff;border:none;padding:14px 30px;border-radius:8px;
+    font-weight:600;font-size:14px;letter-spacing:.5px;cursor:pointer;height:46px;
+    display:flex;align-items:center;gap:8px;transition:background .2s
+  }
+  .search button.search-btn:hover{background:#082e6b}
+
+  /* SECTION */
+  section.section{padding:90px 0}
+  .section-head{text-align:center;max-width:680px;margin:0 auto 50px}
+  .section-head .eyebrow-d{display:inline-block;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:14px}
+  .section-head h2{font-family:var(--serif);font-size:clamp(32px,3.6vw,46px);font-weight:600;line-height:1.15;margin-bottom:14px}
+  .section-head p{color:var(--muted);font-size:16px}
+
+  /* LOCATION FILTER PILLS */
+  .loc-pills{display:flex;justify-content:center;flex-wrap:wrap;gap:10px;margin-bottom:48px}
+  .loc-pills button{
+    padding:10px 22px;border-radius:999px;background:#fff;border:1px solid var(--line);
+    font-family:var(--sans);font-size:13px;font-weight:500;color:var(--ink-soft);cursor:pointer;
+    transition:all .2s;letter-spacing:.3px
+  }
+  .loc-pills button:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
+  .loc-pills button.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+  /* PROPERTY GRID */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:30px}
+  .card{
+    background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);
+    transition:transform .35s, box-shadow .35s;cursor:pointer;display:flex;flex-direction:column;
+    border:1px solid var(--line)
+  }
+  .card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg)}
+  .card .img{position:relative;aspect-ratio:4/3;overflow:hidden}
+  .card .img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+  .card:hover .img img{transform:scale(1.06)}
+  .card .tag{
+    position:absolute;top:14px;left:14px;background:rgba(255,255,255,.95);
+    color:var(--accent);padding:5px 12px;border-radius:4px;font-size:11px;font-weight:600;
+    letter-spacing:1px;text-transform:uppercase
+  }
+  .card .fav{
+    position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;
+    background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;color:var(--ink-soft)
+  }
+  .card .body{padding:22px;display:flex;flex-direction:column;gap:12px;flex:1}
+  .card h3{font-family:var(--serif);font-size:22px;font-weight:600;line-height:1.25}
+  .card .loc{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px}
+  .card .specs{display:flex;gap:14px;font-size:13px;color:var(--ink-soft);padding:12px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:auto}
+  .card .specs span{display:flex;align-items:center;gap:5px}
+  .card .foot{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .price{font-family:var(--serif);font-size:22px;font-weight:700;color:var(--accent)}
+  .btn-visit{
+    background:var(--ink);color:#fff;border:none;padding:9px 16px;border-radius:6px;
+    font-size:12px;font-weight:600;cursor:pointer;letter-spacing:.5px;transition:background .2s
+  }
+  .btn-visit:hover{background:var(--accent)}
+
+  .empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--muted)}
+
+  /* DETAIL PAGE */
+  .detail{display:none;padding:40px 0 90px;background:var(--bg);min-height:100vh}
+  .detail.active{display:block;animation:fadeIn .4s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .back-btn{
+    display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);
+    padding:10px 18px;border-radius:999px;font-size:13px;font-weight:500;cursor:pointer;margin-bottom:30px;
+    transition:all .2s
+  }
+  .back-btn:hover{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .detail-hero{display:grid;grid-template-columns:2fr 1fr;gap:14px;height:520px;margin-bottom:40px;border-radius:var(--radius);overflow:hidden}
+  .detail-hero img{width:100%;height:100%;object-fit:cover}
+  .detail-hero .side{display:grid;grid-template-rows:1fr 1fr;gap:14px}
+  .detail-grid{display:grid;grid-template-columns:1.7fr 1fr;gap:50px}
+  .detail-main h1{font-family:var(--serif);font-size:42px;font-weight:600;line-height:1.15;margin-bottom:8px}
+  .detail-main .loc-line{color:var(--muted);font-size:15px;margin-bottom:24px}
+  .detail-main .specs-row{display:flex;gap:30px;padding:22px;background:#fff;border-radius:var(--radius);border:1px solid var(--line);margin-bottom:36px}
+  .detail-main .specs-row > div{display:flex;flex-direction:column}
+  .detail-main .specs-row .k{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+  .detail-main .specs-row .v{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--ink)}
+  .detail-main h3.dh{font-family:var(--serif);font-size:26px;font-weight:600;margin:30px 0 14px}
+  .detail-main p.desc{color:var(--ink-soft);font-size:15px;line-height:1.8}
+  .features{display:grid;grid-template-columns:repeat(2,1fr);gap:12px 20px;margin-top:14px}
+  .features li{list-style:none;display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ink-soft)}
+  .features li::before{content:"";width:18px;height:18px;border-radius:50%;background:var(--accent-2);display:inline-flex;flex-shrink:0;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+    background-size:12px;background-position:center;background-repeat:no-repeat}
+  .booking{
+    background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:30px;
+    position:sticky;top:100px;box-shadow:var(--shadow)
+  }
+  .booking .price-big{font-family:var(--serif);font-size:34px;font-weight:700;color:var(--accent);margin-bottom:4px}
+  .booking .price-sub{font-size:12px;color:var(--muted);margin-bottom:24px}
+  .booking input,.booking textarea{
+    width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:8px;font-family:var(--sans);
+    font-size:14px;margin-bottom:12px;color:var(--ink)
+  }
+  .booking input:focus,.booking textarea:focus{outline:none;border-color:var(--accent)}
+  .booking textarea{resize:vertical;min-height:90px}
+  .booking .btn-primary{
+    width:100%;background:var(--accent);color:#fff;border:none;padding:14px;border-radius:8px;
+    font-weight:600;font-size:14px;cursor:pointer;letter-spacing:.5px;margin-bottom:10px;transition:background .2s
+  }
+  .booking .btn-primary:hover{background:#082e6b}
+  .booking .btn-outline{
+    width:100%;background:transparent;color:var(--ink);border:1px solid var(--ink);padding:14px;border-radius:8px;
+    font-weight:600;font-size:14px;cursor:pointer;letter-spacing:.5px;transition:all .2s
+  }
+  .booking .btn-outline:hover{background:var(--ink);color:#fff}
+
+  /* FOOTER */
+  footer.site{background:#0a1322;color:#c4ccd8;padding:80px 0 30px;margin-top:80px}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:50px;margin-bottom:50px}
+  .foot-grid h4{font-family:var(--serif);font-size:18px;color:#fff;margin-bottom:18px;font-weight:600}
+  .foot-grid ul{list-style:none}
+  .foot-grid li{margin-bottom:10px;font-size:14px}
+  .foot-grid a:hover{color:#fff}
+  .foot-brand p{font-size:14px;line-height:1.7;margin:14px 0 20px;color:#8b95a7;max-width:300px}
+  .socials{display:flex;gap:10px}
+  .socials a{
+    width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.06);
+    display:flex;align-items:center;justify-content:center;color:#c4ccd8;transition:all .2s;cursor:pointer
+  }
+  .socials a:hover{background:var(--accent);color:#fff;transform:translateY(-2px)}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,.08);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:#8b95a7}
+  .foot-bottom a{margin-left:20px}
+
+  @media (max-width:900px){
+    nav.primary{display:none}
+    .search{grid-template-columns:1fr 1fr;gap:12px;padding:18px}
+    .search button.search-btn{grid-column:1/-1;width:100%}
+    .detail-hero{grid-template-columns:1fr;height:auto}
+    .detail-hero .side{grid-template-rows:auto auto;grid-template-columns:1fr 1fr}
+    .detail-hero img{height:240px}
+    .detail-grid{grid-template-columns:1fr;gap:30px}
+    .booking{position:static}
+    .foot-grid{grid-template-columns:1fr 1fr;gap:30px}
+    .detail-main .specs-row{flex-wrap:wrap;gap:18px}
+  }
+</style>
+</head>
+<body>
+
+<!-- HOME PAGE -->
+<div id="home-page">
+
+  <header class="site">
+    <div class="container nav">
+      <a href="#" class="brand" aria-label="Elite Residence">
+        <!-- Creative SVG Logo -->
+        <svg class="mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#0b3d91"/>
+              <stop offset="100%" stop-color="#0a6b4a"/>
+            </linearGradient>
+          </defs>
+          <rect x="2" y="2" width="60" height="60" rx="12" fill="url(#lg)"/>
+          <path d="M16 36 L32 20 L48 36 L48 48 L36 48 L36 40 L28 40 L28 48 L16 48 Z"
+                fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/>
+          <circle cx="32" cy="14" r="2.2" fill="#e9d9b3"/>
+        </svg>
+        <div class="brand-text">
+          <span class="name">Elite Residence</span>
+          <span class="tag">Premium Properties</span>
+        </div>
+      </a>
+
+      <nav class="primary">
+        <a href="#listings">Properties</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#agents">Agents</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <a href="tel:+8801518962973" class="cta-call">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        +880 1518-962973
+      </a>
+    </div>
+
+    <div class="cat-tabs container" id="catTabs">
+      <button class="active" data-cat="all">All Properties</button>
+      <button data-cat="Flat">Flat</button>
+      <button data-cat="Plot">Plot</button>
+      <button data-cat="House">House</button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <span class="eyebrow">Trusted by 2,500+ Investors</span>
+      <h1 class="hero-title">Find Your Premium <em>Dream Property</em> in Dhaka</h1>
+      <p class="sub">Curated luxury flats, exclusive plots and signature houses in the city's most prestigious neighborhoods — backed by transparent dealings and an elite real estate network.</p>
+    </div>
+  </section>
+
+  <!-- SEARCH -->
+  <div class="container search-wrap">
+    <div class="search">
+      <div class="field">
+        <label>Keyword</label>
+        <input type="text" id="fKeyword" placeholder="e.g. Penthouse, Skyline Tower"/>
+      </div>
+      <div class="field">
+        <label>Property Type</label>
+        <select id="fType">
+          <option value="all">All Types</option>
+          <option value="Flat">Flat</option>
+          <option value="Plot">Plot</option>
+          <option value="House">House</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Location</label>
+        <select id="fLocation">
+          <option value="all">All Locations</option>
+          <option>Uttara</option>
+          <option>Gulshan</option>
+          <option>Bashundhara</option>
+          <option>Badda</option>
+          <option>Banani</option>
+          <option>Mirpur</option>
+        </select>
+      </div>
+      <button class="search-btn" id="searchBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        Search
+      </button>
+    </div>
+  </div>
+
+  <!-- LISTINGS -->
+  <section class="section" id="listings">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow-d">Featured Listings</span>
+        <h2>Handpicked Premium Properties</h2>
+        <p>Filter by Dhaka's most sought-after neighborhoods to explore residences that match your lifestyle.</p>
+      </div>
+
+      <div class="loc-pills" id="locPills">
+        <button class="active" data-loc="all">All Locations</button>
+        <button data-loc="Uttara">Uttara</button>
+        <button data-loc="Gulshan">Gulshan</button>
+        <button data-loc="Bashundhara">Bashundhara</button>
+        <button data-loc="Badda">Badda</button>
+        <button data-loc="Banani">Banani</button>
+        <button data-loc="Mirpur">Mirpur</button>
+      </div>
+
+      <div class="grid" id="propertyGrid"></div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site" id="contact">
+    <div class="container">
+      <div class="foot-grid">
+        <div class="foot-brand">
+          <div class="brand">
+            <svg class="mark" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="2" width="60" height="60" rx="12" fill="url(#lg)"/>
+              <path d="M16 36 L32 20 L48 36 L48 48 L36 48 L36 40 L28 40 L28 48 L16 48 Z" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/>
+              <circle cx="32" cy="14" r="2.2" fill="#e9d9b3"/>
+            </svg>
+            <div class="brand-text"><span class="name" style="color:#fff">Elite Residence</span><span class="tag">Premium Properties</span></div>
+          </div>
+          <p>Dhaka's trusted name for premium real estate — connecting discerning buyers with extraordinary properties across the city.</p>
+          <div class="socials" id="socials">
+            <a data-url="https://facebook.com" aria-label="Facebook"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12h2.8l-.5 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg></a>
+            <a data-url="https://instagram.com" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.4A4 4 0 1 1 12.6 8 4 4 0 0 1 16 11.4z"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
+            <a data-url="https://linkedin.com" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 0 0 2 3.5v17A1.5 1.5 0 0 0 3.5 22h17a1.5 1.5 0 0 0 1.5-1.5v-17A1.5 1.5 0 0 0 20.5 2zM8 19H5v-9h3zM6.5 8.3A1.8 1.8 0 1 1 8.3 6.5 1.8 1.8 0 0 1 6.5 8.3zM19 19h-3v-4.7c0-1.1 0-2.6-1.6-2.6s-1.8 1.2-1.8 2.5V19h-3v-9h2.9v1.3a3.2 3.2 0 0 1 2.8-1.6c3 0 3.6 2 3.6 4.5z"/></svg></a>
+            <a data-url="https://youtube.com" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23 7.2s-.2-1.5-.9-2.2c-.8-.9-1.8-.9-2.2-1C16.7 3.7 12 3.7 12 3.7s-4.7 0-7.9.2c-.4.1-1.4.1-2.2 1C1.2 5.7 1 7.2 1 7.2S.8 8.9.8 10.7v1.6c0 1.7.2 3.5.2 3.5s.2 1.5.9 2.2c.8.9 1.9.8 2.4.9 1.7.2 7.7.2 7.7.2s4.7 0 7.9-.2c.4-.1 1.4-.1 2.2-1 .7-.7.9-2.2.9-2.2s.2-1.7.2-3.5v-1.6c0-1.7-.2-3.5-.2-3.5zM9.7 14.3V8.4l6.1 3z"/></svg></a>
+          </div>
+        </div>
+        <div>
+          <h4>Properties</h4>
+          <ul>
+            <li><a href="#listings">Flats</a></li>
+            <li><a href="#listings">Plots</a></li>
+            <li><a href="#listings">Houses</a></li>
+            <li><a href="#listings">Penthouses</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Locations</h4>
+          <ul>
+            <li><a href="#">Gulshan</a></li>
+            <li><a href="#">Banani</a></li>
+            <li><a href="#">Bashundhara</a></li>
+            <li><a href="#">Uttara</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li>Gulshan Avenue, Dhaka 1212</li>
+            <li>+880 1518-962973</li>
+            <li>hello@eliteresidence.com</li>
+          </ul>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>© <span id="year"></span> Elite Residence. All rights reserved.</span>
+        <div>
+          <a href="#">Privacy</a><a href="#">Terms</a><a href="#">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<!-- DETAIL PAGE -->
+<div id="detail-page" class="detail">
+  <div class="container">
+    <button class="back-btn" id="backBtn">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+      Back to Home
+    </button>
+    <div id="detailContent"></div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   ELITE RESIDENCE — Property Database
+   ------------------------------------------------------------
+   This array holds the property listings. It is built to scale
+   to 100+ properties. To add more:
+
+     properties.push({
+       id: 9,
+       type: 'Flat',                  // Flat | Plot | House
+       title: 'Skyline Penthouse',
+       location: 'Gulshan',
+       address: 'Road 41, Gulshan 2, Dhaka',
+       beds: 4, baths: 5, sqft: 3800,
+       price: 'BDT 6.5 Crore',
+       image: 'https://images.unsplash.com/...?w=1200',
+       gallery: ['url1','url2','url3'],
+       features: ['Private elevator','Smart home','Rooftop pool'],
+       description: 'Long description text...'
+     });
+
+   You can also generate them programmatically:
+     for (let i = 9; i <= 100; i++) { properties.push({...}); }
+   The grid renders ALL items in `properties` automatically,
+   so any added items appear instantly after filter logic.
+   ============================================================ */
+
+const properties = [
   {
-    title: "Scaling a DTC Skincare Brand",
-    industry: "E-commerce / Beauty",
-    challenge: "Stagnant revenue with rising ad costs and inconsistent ROAS.",
-    strategy: "Restructured Meta and Google accounts, launched UGC creative testing, rebuilt funnel.",
-    before: { label: "Monthly Revenue", value: "$42K" },
-    after: { label: "Monthly Revenue", value: "$187K" },
-    metric: "+345% ROAS",
+    id:1, type:'Flat', title:'Skyline Penthouse Residence',
+    location:'Gulshan', address:'Road 41, Gulshan 2, Dhaka',
+    beds:4, baths:5, sqft:3800, price:'BDT 6.5 Crore',
+    image:'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80',
+    gallery:[
+      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=900&q=80'
+    ],
+    features:['Private elevator access','Floor-to-ceiling windows','Smart home automation','Rooftop infinity pool','24/7 concierge','Italian marble flooring'],
+    description:'Set high above Gulshan, this signature penthouse offers panoramic skyline views, a private elevator entrance and meticulously crafted interiors. Designed for those who appreciate quiet luxury, every detail — from the imported stone to the bespoke joinery — has been considered.'
   },
   {
-    title: "B2B SaaS Lead Engine",
-    industry: "SaaS / B2B",
-    challenge: "High CPL and unqualified demo requests draining the sales pipeline.",
-    strategy: "LinkedIn + Google intent campaigns paired with lead scoring and nurture sequences.",
-    before: { label: "Cost per Lead", value: "$184" },
-    after: { label: "Cost per Lead", value: "$47" },
-    metric: "-74% CPL",
+    id:2, type:'House', title:'The Banani Garden Villa',
+    location:'Banani', address:'Road 11, Banani, Dhaka',
+    beds:5, baths:6, sqft:5600, price:'BDT 12.8 Crore',
+    image:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80',
+    gallery:[
+      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1600566753086-00f18fe6ba62?auto=format&fit=crop&w=900&q=80'
+    ],
+    features:['Private landscaped garden','Double-height living room','Home theatre','Servant quarters','Covered parking for 4 cars','Generator backup'],
+    description:'A standalone luxury villa in the heart of Banani, blending contemporary architecture with timeless craftsmanship. Expansive entertaining spaces flow into a private garden — a rare offering in central Dhaka.'
   },
   {
-    title: "Local Dental Practice Growth",
-    industry: "Healthcare / Local",
-    challenge: "Empty appointment book and weak local visibility against competitors.",
-    strategy: "Local SEO overhaul, GBP optimization, and geo-targeted Meta lead ads.",
-    before: { label: "New Patients / mo", value: "12" },
-    after: { label: "New Patients / mo", value: "68" },
-    metric: "+466% Bookings",
+    id:3, type:'Flat', title:'Bashundhara Sky Apartments',
+    location:'Bashundhara', address:'Block J, Bashundhara R/A, Dhaka',
+    beds:3, baths:4, sqft:2400, price:'BDT 2.5 Crore',
+    image:'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1200&q=80',
+    gallery:[
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?auto=format&fit=crop&w=900&q=80'
+    ],
+    features:['Modular kitchen','Master suite with walk-in closet','Community gym','Children play area','Reserved parking','High-speed elevators'],
+    description:'A modern family residence in Bashundhara with a thoughtful layout, abundant natural light and a community designed around quiet, secure living.'
   },
+  {
+    id:4, type:'Plot', title:'Premium Corner Plot — Uttara',
+    location:'Uttara', address:'Sector 18, Uttara, Dhaka',
+    beds:0, baths:0, sqft:4200, price:'BDT 4.2 Crore',
+    image:'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=80',
+    gallery:[
+      'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&w=900&q=80'
+    ],
+    features:['Corner-facing','Wide approach road','Ready for construction','Clean title','Premium neighborhood','Utility connections nearby'],
+    description:'A rare corner plot in one of Uttara\'s most sought-after sectors. Ideal for building a custom residence or boutique low-rise development.'
+  },
+  {
+    id:5, type:'Flat', title:'Mirpur Heights Family Flat',
+    location:'Mirpur', address:'Mirpur DOHS, Dhaka',
+    beds:3, baths:3, sqft:1850, price:'BDT 1.45 Crore',
+    image:'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=1200&q=80',
+    gallery:[
+      'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1560448204-603b3fc33ddc?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=900&q=80'
+    ],
+    features:['Spacious balcony','South facing','Secure community','Backup power','Lift access','Children park'],
+    description:'A bright, well-ventilated family home in the disciplined Mirpur DOHS community — offering comfort, security and excellent connectivity.'
+  },
+  {
+    id:6, type:'House', title:'Badda Modern Townhouse',
+    location:'Badda', address:'Pragati Sarani, Badda, Dhaka',
+    beds:4, baths:4, sqft:3200, price:'BDT 5.2 Crore',
+    image:'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?auto=format&fit=crop&w=1200&q=80',
+    gallery:[
+      'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=900&q=80'
+    ],
+    features:['Three-story design','Rooftop terrace','Modular kitchen','Home office','Two-car garage','CCTV throughout'],
+    description:'Contemporary townhouse with clean lines, generous interiors and a rooftop terrace — ideal for modern families seeking privacy with connectivity.'
+  },
+  {
+    id:7, type:'Flat', title:'Gulshan Lakeview Residence',
+    location:'Gulshan', address:'Road 79, Gulshan 2, Dhaka',
+    beds:3, baths:4, sqft:2950, price:'BDT 4.85 Crore',
+    image:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80',
+    gallery:[
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1600585152915-d208bec867a1?auto=format&fit=crop&w=900&q=80'
+    ],
+    features:['Lakefront views','Private balcony','Imported fittings','Gymnasium','Swimming pool','Concierge service'],
+    description:'A boutique lakefront residence in Gulshan, offering uninterrupted lake views, refined interiors and access to premium building amenities.'
+  },
+  {
+    id:8, type:'Plot', title:'Bashundhara Investment Plot',
+    location:'Bashundhara', address:'Block L, Bashundhara R/A, Dhaka',
+    beds:0, baths:0, sqft:3000, price:'BDT 2.9 Crore',
+    image:'https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1200&q=80',
+    gallery:[
+      'https://images.unsplash.com/photo-1486325212027-8081e485255e?auto=format&fit=crop&w=1600&q=80',
+      'https://images.unsplash.com/photo-1448630360428-65456885c650?auto=format&fit=crop&w=900&q=80',
+      'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=900&q=80'
+    ],
+    features:['Ready plot','Clear documents','Wide road frontage','Premium block','Excellent ROI','Near international school'],
+    description:'A blue-chip investment plot in a rapidly appreciating block of Bashundhara, with strong long-term value and ready-to-build status.'
+  }
+  // ---- Add more properties here, up to 100, using the same shape ----
 ];
 
-const TESTIMONIALS = [
-  { name: "Sarah Chen", role: "Founder", company: "Luma Skincare", rating: 5, quote: "Alex turned our ads from a money pit into our most reliable growth channel. We 4x'd revenue in six months." },
-  { name: "Marcus Reid", role: "VP Marketing", company: "Northwind SaaS", rating: 5, quote: "The strategic clarity and execution speed are unmatched. Our pipeline has never been healthier." },
-  { name: "Dr. Priya Shah", role: "Owner", company: "Bright Smile Dental", rating: 5, quote: "We finally have a predictable flow of new patients. Worth every dollar, ten times over." },
-];
+const WHATSAPP_NUMBER = '8801518962973';
 
-const STATS = [
-  { label: "Campaigns Managed", value: 320, suffix: "+" },
-  { label: "Leads Generated", value: 48000, suffix: "+" },
-  { label: "Ad Spend Managed", value: 12, prefix: "$", suffix: "M+" },
-  { label: "Average ROI", value: 410, suffix: "%" },
-  { label: "Happy Clients", value: 140, suffix: "+" },
-];
+let currentCat = 'all';
+let currentLoc = 'all';
+let currentType = 'all';
+let currentKeyword = '';
 
-const POSTS = [
-  { title: "The 2026 Performance Marketing Playbook", excerpt: "How AI-assisted creative testing is reshaping paid media efficiency.", tag: "Strategy", date: "May 28, 2026" },
-  { title: "Why Your CPL Keeps Climbing (And How to Fix It)", excerpt: "A diagnostic framework for restoring lead-gen efficiency in saturated markets.", tag: "Lead Gen", date: "May 12, 2026" },
-  { title: "GA4 + Server-Side Tracking: A Practical Guide", excerpt: "Reclaim attribution accuracy with a clean, privacy-first measurement stack.", tag: "Analytics", date: "April 30, 2026" },
-];
+const grid = document.getElementById('propertyGrid');
 
-function useDarkMode() {
-  const [dark, setDark] = useState(false);
-  useEffect(() => {
-    const root = document.documentElement;
-    dark ? root.classList.add("dark") : root.classList.remove("dark");
-  }, [dark]);
-  return [dark, setDark] as const;
+function buildCard(p){
+  const specs = p.type === 'Plot'
+    ? `<span>📐 ${p.sqft} sqft</span><span>📍 Plot</span><span>✓ Ready</span>`
+    : `<span>🛏 ${p.beds} Beds</span><span>🛁 ${p.baths} Baths</span><span>📐 ${p.sqft} sqft</span>`;
+  return `
+    <article class="card" data-id="${p.id}">
+      <div class="img">
+        <img src="${p.image}" alt="${p.title}" loading="lazy"/>
+        <span class="tag">${p.type}</span>
+        <span class="fav"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
+      </div>
+      <div class="body">
+        <h3>${p.title}</h3>
+        <div class="loc">📍 ${p.address}</div>
+        <div class="specs">${specs}</div>
+        <div class="foot">
+          <span class="price">${p.price}</span>
+          <button class="btn-visit" data-action="visit" data-id="${p.id}">Schedule a Visit</button>
+        </div>
+      </div>
+    </article>`;
 }
 
-function Counter({ value, prefix = "", suffix = "" }: { value: number; prefix?: string; suffix?: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-50px" });
-  const [display, setDisplay] = useState(0);
-  useEffect(() => {
-    if (!inView) return;
-    const controls = animate(0, value, {
-      duration: 2,
-      ease: "easeOut",
-      onUpdate: (v) => setDisplay(Math.round(v)),
-    });
-    return () => controls.stop();
-  }, [inView, value]);
-  return (
-    <span ref={ref}>
-      {prefix}{display.toLocaleString()}{suffix}
-    </span>
-  );
+function renderGrid(){
+  const list = properties.filter(p=>{
+    if(currentCat !== 'all' && p.type !== currentCat) return false;
+    if(currentType !== 'all' && p.type !== currentType) return false;
+    if(currentLoc !== 'all' && p.location !== currentLoc) return false;
+    if(currentKeyword){
+      const k = currentKeyword.toLowerCase();
+      if(!(p.title.toLowerCase().includes(k) || p.address.toLowerCase().includes(k) || p.location.toLowerCase().includes(k))) return false;
+    }
+    return true;
+  });
+  if(!list.length){
+    grid.innerHTML = `<div class="empty"><h3 style="font-family:var(--serif);font-size:22px;margin-bottom:6px">No properties match your filters</h3><p>Try adjusting the location or property type.</p></div>`;
+    return;
+  }
+  grid.innerHTML = list.map(buildCard).join('');
 }
 
-function Section({ id, children, className = "" }: { id?: string; children: React.ReactNode; className?: string }) {
-  return (
-    <section id={id} className={`scroll-mt-24 px-6 py-24 sm:py-32 md:px-10 ${className}`}>
-      <div className="mx-auto max-w-7xl">{children}</div>
-    </section>
-  );
+/* Category tabs */
+document.getElementById('catTabs').addEventListener('click', e=>{
+  const b = e.target.closest('button'); if(!b) return;
+  document.querySelectorAll('#catTabs button').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  currentCat = b.dataset.cat;
+  renderGrid();
+});
+
+/* Location pills */
+document.getElementById('locPills').addEventListener('click', e=>{
+  const b = e.target.closest('button'); if(!b) return;
+  document.querySelectorAll('#locPills button').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  currentLoc = b.dataset.loc;
+  document.getElementById('fLocation').value = currentLoc === 'all' ? 'all' : currentLoc;
+  renderGrid();
+});
+
+/* Search button */
+document.getElementById('searchBtn').addEventListener('click', ()=>{
+  currentKeyword = document.getElementById('fKeyword').value.trim();
+  currentType = document.getElementById('fType').value;
+  currentLoc = document.getElementById('fLocation').value;
+  // sync location pills
+  document.querySelectorAll('#locPills button').forEach(x=>{
+    x.classList.toggle('active', x.dataset.loc === currentLoc);
+  });
+  document.getElementById('listings').scrollIntoView({behavior:'smooth'});
+  renderGrid();
+});
+
+/* WhatsApp action */
+function whatsappLink(p){
+  const msg = `Hello Elite Residence,\n\nI am interested in scheduling a visit for the following property:\n\n• Property: ${p.title}\n• Type: ${p.type}\n• Location: ${p.address}\n• Price: ${p.price}\n\nPlease share availability. Thank you.`;
+  return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
 }
 
-function Eyebrow({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/60 px-3 py-1 text-xs font-medium uppercase tracking-[0.18em] text-muted-foreground backdrop-blur">
-      <span className="size-1.5 rounded-full bg-primary" />
-      {children}
+/* Card clicks (open detail OR visit button) */
+grid.addEventListener('click', e=>{
+  const visitBtn = e.target.closest('[data-action="visit"]');
+  if(visitBtn){
+    e.stopPropagation();
+    const p = properties.find(x=>x.id == visitBtn.dataset.id);
+    window.open(whatsappLink(p), '_blank', 'noopener');
+    return;
+  }
+  const card = e.target.closest('.card');
+  if(card){ openDetail(card.dataset.id); }
+});
+
+/* DETAIL PAGE */
+const detailPage = document.getElementById('detail-page');
+const homePage = document.getElementById('home-page');
+const detailContent = document.getElementById('detailContent');
+
+function openDetail(id){
+  const p = properties.find(x=>x.id == id);
+  if(!p) return;
+  const specsHTML = p.type === 'Plot'
+    ? `<div><div class="k">Plot Area</div><div class="v">${p.sqft} sqft</div></div>
+       <div><div class="k">Type</div><div class="v">${p.type}</div></div>
+       <div><div class="k">Status</div><div class="v">Ready</div></div>`
+    : `<div><div class="k">Bedrooms</div><div class="v">${p.beds}</div></div>
+       <div><div class="k">Bathrooms</div><div class="v">${p.baths}</div></div>
+       <div><div class="k">Area</div><div class="v">${p.sqft} sqft</div></div>
+       <div><div class="k">Type</div><div class="v">${p.type}</div></div>`;
+
+  detailContent.innerHTML = `
+    <div class="detail-hero">
+      <img src="${p.gallery[0]}" alt="${p.title}"/>
+      <div class="side">
+        <img src="${p.gallery[1]||p.gallery[0]}" alt=""/>
+        <img src="${p.gallery[2]||p.gallery[0]}" alt=""/>
+      </div>
     </div>
-  );
-}
+    <div class="detail-grid">
+      <div class="detail-main">
+        <span class="eyebrow-d" style="font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);font-weight:600">${p.type} · For Sale</span>
+        <h1 style="margin-top:10px">${p.title}</h1>
+        <div class="loc-line">📍 ${p.address}</div>
+        <div class="specs-row">${specsHTML}</div>
 
-function FadeUp({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay }}
-    >
-      {children}
-    </motion.div>
-  );
-}
+        <h3 class="dh">About this property</h3>
+        <p class="desc">${p.description}</p>
 
-export default function Portfolio() {
-  const [dark, setDark] = useDarkMode();
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [showTop, setShowTop] = useState(false);
-  const { scrollYProgress } = useScroll();
-  const progressWidth = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+        <h3 class="dh">Property features</h3>
+        <ul class="features">
+          ${p.features.map(f=>`<li>${f}</li>`).join('')}
+        </ul>
+      </div>
 
-  useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 24);
-      setShowTop(window.scrollY > 600);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-    setOpen(false);
-  };
-
-  return (
-    <div className="min-h-screen bg-background text-foreground">
-      {/* Scroll progress */}
-      <motion.div
-        style={{ width: progressWidth }}
-        className="fixed inset-x-0 top-0 z-[60] h-0.5 origin-left bg-primary"
-      />
-
-      {/* Nav */}
-      <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-          scrolled ? "py-3" : "py-5"
-        }`}
-      >
-        <div className="mx-auto max-w-7xl px-6 md:px-10">
-          <nav
-            className={`flex items-center justify-between rounded-2xl px-4 py-3 transition-all duration-300 ${
-              scrolled ? "glass-card" : ""
-            }`}
-          >
-            <button onClick={() => scrollTo("home")} className="flex items-center gap-2 font-display text-lg font-bold tracking-tight">
-              <span className="grid size-8 place-items-center rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground shadow-[var(--shadow-glow)]">
-                <Sparkles className="size-4" />
-              </span>
-              Alex Morgan
-            </button>
-            <div className="hidden items-center gap-1 lg:flex">
-              {NAV.map((n) => (
-                <button
-                  key={n.id}
-                  onClick={() => scrollTo(n.id)}
-                  className="rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
-                >
-                  {n.label}
-                </button>
-              ))}
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setDark(!dark)}
-                aria-label="Toggle theme"
-                className="grid size-9 place-items-center rounded-lg border border-border bg-surface/60 text-muted-foreground transition-colors hover:text-foreground"
-              >
-                {dark ? <Sun className="size-4" /> : <Moon className="size-4" />}
-              </button>
-              <button
-                onClick={() => scrollTo("contact")}
-                className="hidden rounded-lg bg-foreground px-4 py-2 text-sm font-medium text-background transition-transform hover:scale-[1.03] sm:inline-flex"
-              >
-                Let's talk
-              </button>
-              <button
-                onClick={() => setOpen((o) => !o)}
-                aria-label="Menu"
-                className="grid size-9 place-items-center rounded-lg border border-border bg-surface/60 lg:hidden"
-              >
-                {open ? <X className="size-4" /> : <Menu className="size-4" />}
-              </button>
-            </div>
-          </nav>
-          {open && (
-            <motion.div
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="glass-card mt-2 grid gap-1 rounded-2xl p-3 lg:hidden"
-            >
-              {NAV.map((n) => (
-                <button
-                  key={n.id}
-                  onClick={() => scrollTo(n.id)}
-                  className="rounded-lg px-3 py-3 text-left text-sm font-medium text-foreground hover:bg-accent"
-                >
-                  {n.label}
-                </button>
-              ))}
-            </motion.div>
-          )}
-        </div>
-      </header>
-
-      {/* Hero */}
-      <Section id="home" className="relative pt-36 sm:pt-44">
-        <div
-          className="pointer-events-none absolute inset-0 -z-10"
-          style={{ background: "var(--gradient-hero)" }}
-        />
-        <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
-          <div>
-            <FadeUp>
-              <Eyebrow>Digital Marketing Specialist</Eyebrow>
-            </FadeUp>
-            <FadeUp delay={0.05}>
-              <h1 className="mt-6 font-display text-4xl font-bold leading-[1.05] tracking-tight sm:text-6xl lg:text-7xl">
-                Helping businesses grow through{" "}
-                <span className="gradient-text">data-driven</span> digital marketing.
-              </h1>
-            </FadeUp>
-            <FadeUp delay={0.1}>
-              <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
-                I build performance marketing systems that turn ad spend into predictable, profitable
-                pipelines — across Meta, Google, SEO and lead generation.
-              </p>
-            </FadeUp>
-            <FadeUp delay={0.15}>
-              <div className="mt-8 flex flex-wrap items-center gap-3">
-                <button
-                  onClick={() => scrollTo("portfolio")}
-                  className="group inline-flex items-center gap-2 rounded-xl bg-[image:var(--gradient-primary)] px-5 py-3 text-sm font-semibold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform hover:scale-[1.03]"
-                >
-                  View my work
-                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-0.5" />
-                </button>
-                <button
-                  onClick={() => scrollTo("contact")}
-                  className="inline-flex items-center gap-2 rounded-xl border border-border bg-surface/60 px-5 py-3 text-sm font-semibold text-foreground backdrop-blur transition-colors hover:bg-accent"
-                >
-                  Get in touch
-                </button>
-              </div>
-            </FadeUp>
-            <FadeUp delay={0.25}>
-              <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 text-sm text-muted-foreground">
-                <div><span className="font-display text-2xl font-bold text-foreground">8+</span> years experience</div>
-                <div className="h-4 w-px bg-border" />
-                <div><span className="font-display text-2xl font-bold text-foreground">140+</span> clients served</div>
-                <div className="h-4 w-px bg-border" />
-                <div><span className="font-display text-2xl font-bold text-foreground">$12M+</span> ad spend</div>
-              </div>
-            </FadeUp>
-          </div>
-          <FadeUp delay={0.1}>
-            <div className="relative mx-auto w-full max-w-md">
-              <div className="absolute -inset-4 rounded-[2rem] bg-[image:var(--gradient-primary)] opacity-20 blur-2xl" />
-              <div className="glass-card relative overflow-hidden rounded-[2rem] p-2">
-                <img
-                  src={portrait}
-                  alt="Alex Morgan portrait"
-                  width={896}
-                  height={1152}
-                  className="aspect-[4/5] w-full rounded-[1.5rem] object-cover"
-                />
-              </div>
-              <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="glass-card absolute -bottom-4 -left-4 hidden rounded-2xl p-4 sm:block"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="grid size-10 place-items-center rounded-xl bg-[image:var(--gradient-primary)] text-primary-foreground">
-                    <TrendingUp className="size-5" />
-                  </div>
-                  <div>
-                    <div className="font-display text-lg font-bold leading-none">+345%</div>
-                    <div className="text-xs text-muted-foreground">avg ROAS lift</div>
-                  </div>
-                </div>
-              </motion.div>
-              <motion.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut" }}
-                className="glass-card absolute -right-4 top-10 hidden rounded-2xl p-4 sm:block"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="grid size-10 place-items-center rounded-xl bg-accent text-accent-foreground">
-                    <LineChart className="size-5" />
-                  </div>
-                  <div>
-                    <div className="font-display text-lg font-bold leading-none">48K+</div>
-                    <div className="text-xs text-muted-foreground">leads generated</div>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </FadeUp>
-        </div>
-      </Section>
-
-      {/* About */}
-      <Section id="about" className="bg-surface/50">
-        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
-          <FadeUp>
-            <Eyebrow>About</Eyebrow>
-            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight sm:text-5xl">
-              Strategy, execution and measurable growth — under one roof.
-            </h2>
-          </FadeUp>
-          <div className="space-y-6 text-lg leading-relaxed text-muted-foreground">
-            <FadeUp delay={0.05}>
-              <p>
-                I'm a senior digital marketing consultant with <span className="font-semibold text-foreground">8+ years</span> of
-                experience scaling brands across e-commerce, SaaS, healthcare, real estate and local services.
-              </p>
-            </FadeUp>
-            <FadeUp delay={0.1}>
-              <p>
-                My philosophy is simple: <span className="font-semibold text-foreground">marketing should make money</span>.
-                Every campaign, landing page and email I build is tied to a clear business metric — revenue, qualified leads
-                or customer lifetime value.
-              </p>
-            </FadeUp>
-            <FadeUp delay={0.15}>
-              <div className="grid grid-cols-2 gap-4 pt-4 sm:grid-cols-3">
-                {["E-commerce", "SaaS", "Healthcare", "Real Estate", "Local Services", "B2B"].map((i) => (
-                  <div key={i} className="rounded-xl border border-border bg-surface-elevated px-4 py-3 text-sm font-medium text-foreground">
-                    {i}
-                  </div>
-                ))}
-              </div>
-            </FadeUp>
-          </div>
-        </div>
-      </Section>
-
-      {/* Services */}
-      <Section id="services">
-        <div className="mb-14 max-w-2xl">
-          <FadeUp><Eyebrow>Services</Eyebrow></FadeUp>
-          <FadeUp delay={0.05}>
-            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight sm:text-5xl">
-              Full-stack marketing, built for outcomes.
-            </h2>
-          </FadeUp>
-          <FadeUp delay={0.1}>
-            <p className="mt-4 text-lg text-muted-foreground">
-              Nine capabilities, one accountable partner. Engage me for a single channel or an end-to-end growth engine.
-            </p>
-          </FadeUp>
-        </div>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {SERVICES.map((s, i) => (
-            <FadeUp key={s.title} delay={i * 0.04}>
-              <div className="group h-full rounded-2xl border border-border bg-surface-elevated p-6 shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-elevated)]">
-                <div className="mb-5 inline-grid size-12 place-items-center rounded-xl bg-accent text-accent-foreground transition-colors group-hover:bg-[image:var(--gradient-primary)] group-hover:text-primary-foreground">
-                  <s.icon className="size-5" />
-                </div>
-                <h3 className="font-display text-lg font-semibold tracking-tight">{s.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
-              </div>
-            </FadeUp>
-          ))}
-        </div>
-      </Section>
-
-      {/* Stats */}
-      <Section className="bg-surface/50">
-        <div className="grid grid-cols-2 gap-y-10 sm:grid-cols-3 lg:grid-cols-5">
-          {STATS.map((s, i) => (
-            <FadeUp key={s.label} delay={i * 0.05}>
-              <div className="text-center sm:text-left">
-                <div className="font-display text-4xl font-bold tracking-tight sm:text-5xl">
-                  <Counter value={s.value} prefix={s.prefix} suffix={s.suffix} />
-                </div>
-                <div className="mt-2 text-sm text-muted-foreground">{s.label}</div>
-              </div>
-            </FadeUp>
-          ))}
-        </div>
-      </Section>
-
-      {/* Portfolio */}
-      <Section id="portfolio">
-        <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
-          <div className="max-w-2xl">
-            <FadeUp><Eyebrow>Case Studies</Eyebrow></FadeUp>
-            <FadeUp delay={0.05}>
-              <h2 className="mt-4 font-display text-3xl font-bold tracking-tight sm:text-5xl">
-                Selected work that moved the needle.
-              </h2>
-            </FadeUp>
-          </div>
-        </div>
-        <div className="grid gap-6 lg:grid-cols-3">
-          {CASES.map((c, i) => (
-            <FadeUp key={c.title} delay={i * 0.08}>
-              <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface-elevated shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-elevated)]">
-                <div className="relative aspect-[16/10] overflow-hidden bg-[image:var(--gradient-hero)]">
-                  <div className="absolute inset-0 bg-[image:var(--gradient-primary)] opacity-10" />
-                  <div className="absolute left-5 top-5">
-                    <span className="rounded-full bg-background/80 px-3 py-1 text-xs font-medium text-foreground backdrop-blur">
-                      {c.industry}
-                    </span>
-                  </div>
-                  <div className="absolute bottom-5 right-5 rounded-xl bg-foreground px-4 py-2 font-display text-lg font-bold text-background">
-                    {c.metric}
-                  </div>
-                </div>
-                <div className="flex flex-1 flex-col p-6">
-                  <h3 className="font-display text-xl font-semibold tracking-tight">{c.title}</h3>
-                  <dl className="mt-4 space-y-3 text-sm">
-                    <div>
-                      <dt className="font-semibold text-foreground">Challenge</dt>
-                      <dd className="mt-1 text-muted-foreground">{c.challenge}</dd>
-                    </div>
-                    <div>
-                      <dt className="font-semibold text-foreground">Strategy</dt>
-                      <dd className="mt-1 text-muted-foreground">{c.strategy}</dd>
-                    </div>
-                  </dl>
-                  <div className="mt-5 grid grid-cols-2 gap-3 rounded-xl bg-surface p-4">
-                    <div>
-                      <div className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground">Before</div>
-                      <div className="mt-1 font-display text-lg font-bold text-muted-foreground line-through decoration-1">{c.before.value}</div>
-                      <div className="text-xs text-muted-foreground">{c.before.label}</div>
-                    </div>
-                    <div>
-                      <div className="text-[10px] font-medium uppercase tracking-wider text-primary">After</div>
-                      <div className="mt-1 font-display text-lg font-bold text-foreground">{c.after.value}</div>
-                      <div className="text-xs text-muted-foreground">{c.after.label}</div>
-                    </div>
-                  </div>
-                  <button className="mt-6 inline-flex items-center gap-2 self-start text-sm font-semibold text-primary transition-transform group-hover:translate-x-1">
-                    View details <ArrowUpRight className="size-4" />
-                  </button>
-                </div>
-              </article>
-            </FadeUp>
-          ))}
-        </div>
-      </Section>
-
-      {/* Skills */}
-      <Section id="skills" className="bg-surface/50">
-        <div className="mb-14 max-w-2xl">
-          <FadeUp><Eyebrow>Skills & Tools</Eyebrow></FadeUp>
-          <FadeUp delay={0.05}>
-            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight sm:text-5xl">
-              The stack behind the results.
-            </h2>
-          </FadeUp>
-        </div>
-        <div className="grid gap-x-10 gap-y-6 sm:grid-cols-2 lg:grid-cols-3">
-          {SKILLS.map((s, i) => (
-            <FadeUp key={s.name} delay={i * 0.03}>
-              <div>
-                <div className="mb-2 flex items-baseline justify-between">
-                  <span className="font-medium text-foreground">{s.name}</span>
-                  <span className="font-display text-sm font-semibold text-muted-foreground">{s.level}%</span>
-                </div>
-                <div className="h-2 overflow-hidden rounded-full bg-accent">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${s.level}%` }}
-                    viewport={{ once: true, margin: "-50px" }}
-                    transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-                    className="h-full rounded-full bg-[image:var(--gradient-primary)]"
-                  />
-                </div>
-              </div>
-            </FadeUp>
-          ))}
-        </div>
-      </Section>
-
-      {/* Testimonials */}
-      <Section>
-        <div className="mb-14 max-w-2xl">
-          <FadeUp><Eyebrow>Testimonials</Eyebrow></FadeUp>
-          <FadeUp delay={0.05}>
-            <h2 className="mt-4 font-display text-3xl font-bold tracking-tight sm:text-5xl">
-              Trusted by founders and marketing leaders.
-            </h2>
-          </FadeUp>
-        </div>
-        <div className="grid gap-6 md:grid-cols-3">
-          {TESTIMONIALS.map((t, i) => (
-            <FadeUp key={t.name} delay={i * 0.08}>
-              <div className="flex h-full flex-col rounded-2xl border border-border bg-surface-elevated p-6 shadow-[var(--shadow-soft)]">
-                <div className="flex gap-1 text-primary">
-                  {Array.from({ length: t.rating }).map((_, k) => (
-                    <Star key={k} className="size-4 fill-current" />
-                  ))}
-                </div>
-                <p className="mt-4 flex-1 text-base leading-relaxed text-foreground">"{t.quote}"</p>
-                <div className="mt-6 flex items-center gap-3 border-t border-border pt-5">
-                  <div className="grid size-11 place-items-center rounded-full bg-[image:var(--gradient-primary)] font-display font-bold text-primary-foreground">
-                    {t.name.split(" ").map((n) => n[0]).join("")}
-                  </div>
-                  <div>
-                    <div className="font-semibold text-foreground">{t.name}</div>
-                    <div className="text-xs text-muted-foreground">{t.role}, {t.company}</div>
-                  </div>
-                </div>
-              </div>
-            </FadeUp>
-          ))}
-        </div>
-      </Section>
-
-      {/* Blog */}
-      <Section id="blog" className="bg-surface/50">
-        <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
-          <div className="max-w-2xl">
-            <FadeUp><Eyebrow>Blog</Eyebrow></FadeUp>
-            <FadeUp delay={0.05}>
-              <h2 className="mt-4 font-display text-3xl font-bold tracking-tight sm:text-5xl">
-                Notes from the field.
-              </h2>
-            </FadeUp>
-          </div>
-          <FadeUp delay={0.1}>
-            <button className="inline-flex items-center gap-2 text-sm font-semibold text-primary">
-              All articles <ArrowRight className="size-4" />
-            </button>
-          </FadeUp>
-        </div>
-        <div className="grid gap-6 md:grid-cols-3">
-          {POSTS.map((p, i) => (
-            <FadeUp key={p.title} delay={i * 0.08}>
-              <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface-elevated shadow-[var(--shadow-soft)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-elevated)]">
-                <div className="aspect-[16/9] bg-[image:var(--gradient-hero)] relative">
-                  <div className="absolute inset-0 bg-[image:var(--gradient-primary)] opacity-15" />
-                  <span className="absolute left-5 top-5 rounded-full bg-background/80 px-3 py-1 text-xs font-medium backdrop-blur">{p.tag}</span>
-                </div>
-                <div className="flex flex-1 flex-col p-6">
-                  <div className="text-xs text-muted-foreground">{p.date}</div>
-                  <h3 className="mt-2 font-display text-lg font-semibold leading-snug tracking-tight">{p.title}</h3>
-                  <p className="mt-2 flex-1 text-sm text-muted-foreground">{p.excerpt}</p>
-                  <button className="mt-4 inline-flex items-center gap-2 self-start text-sm font-semibold text-primary transition-transform group-hover:translate-x-1">
-                    Read more <ArrowRight className="size-4" />
-                  </button>
-                </div>
-              </article>
-            </FadeUp>
-          ))}
-        </div>
-      </Section>
-
-      {/* Contact */}
-      <Section id="contact">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr]">
-          <div>
-            <FadeUp><Eyebrow>Contact</Eyebrow></FadeUp>
-            <FadeUp delay={0.05}>
-              <h2 className="mt-4 font-display text-3xl font-bold tracking-tight sm:text-5xl">
-                Let's build your growth engine.
-              </h2>
-            </FadeUp>
-            <FadeUp delay={0.1}>
-              <p className="mt-4 text-lg text-muted-foreground">
-                Tell me about your business and what you'd like to achieve. I'll respond within one business day.
-              </p>
-            </FadeUp>
-            <FadeUp delay={0.15}>
-              <ul className="mt-8 space-y-4 text-sm">
-                {[
-                  { icon: Mail, label: "hello@alexmorgan.co" },
-                  { icon: Phone, label: "+1 (415) 555-0142" },
-                  { icon: MapPin, label: "San Francisco, CA — Remote worldwide" },
-                ].map((x) => (
-                  <li key={x.label} className="flex items-center gap-3">
-                    <span className="grid size-10 place-items-center rounded-xl bg-accent text-accent-foreground">
-                      <x.icon className="size-4" />
-                    </span>
-                    <span className="font-medium text-foreground">{x.label}</span>
-                  </li>
-                ))}
-              </ul>
-            </FadeUp>
-            <FadeUp delay={0.2}>
-              <div className="mt-8 flex gap-3">
-                {[Linkedin, Facebook, MessageCircle].map((Icon, i) => (
-                  <a
-                    key={i}
-                    href="#"
-                    aria-label="Social"
-                    className="grid size-11 place-items-center rounded-xl border border-border bg-surface-elevated text-foreground transition-all hover:-translate-y-0.5 hover:bg-[image:var(--gradient-primary)] hover:text-primary-foreground"
-                  >
-                    <Icon className="size-4" />
-                  </a>
-                ))}
-              </div>
-            </FadeUp>
-            <FadeUp delay={0.25}>
-              <div className="mt-8 aspect-[16/9] overflow-hidden rounded-2xl border border-border bg-surface-elevated">
-                <div className="relative h-full w-full bg-[image:var(--gradient-hero)]">
-                  <div className="absolute inset-0 grid place-items-center">
-                    <div className="flex items-center gap-2 rounded-full bg-background/80 px-4 py-2 text-sm font-medium backdrop-blur">
-                      <MapPin className="size-4 text-primary" /> San Francisco, CA
-                    </div>
-                  </div>
-                  <svg className="absolute inset-0 h-full w-full opacity-30" xmlns="http://www.w3.org/2000/svg">
-                    <defs>
-                      <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
-                        <path d="M 32 0 L 0 0 0 32" fill="none" stroke="currentColor" strokeWidth="0.5" />
-                      </pattern>
-                    </defs>
-                    <rect width="100%" height="100%" fill="url(#grid)" />
-                  </svg>
-                </div>
-              </div>
-            </FadeUp>
-          </div>
-
-          <FadeUp delay={0.1}>
-            <form
-              onSubmit={(e) => { e.preventDefault(); alert("Thanks! I'll be in touch shortly."); }}
-              className="glass-card rounded-3xl p-6 sm:p-8"
-            >
-              <div className="grid gap-4 sm:grid-cols-2">
-                <Field label="Name" name="name" placeholder="Jane Doe" />
-                <Field label="Email" name="email" type="email" placeholder="jane@company.com" />
-              </div>
-              <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                <Field label="Company" name="company" placeholder="Acme Inc" />
-                <Field label="Budget" name="budget" placeholder="$5k – $25k / mo" />
-              </div>
-              <div className="mt-4">
-                <label className="mb-2 block text-xs font-medium uppercase tracking-wider text-muted-foreground">
-                  Project details
-                </label>
-                <textarea
-                  rows={5}
-                  placeholder="Tell me about your goals, channels and timeline..."
-                  className="w-full resize-none rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-                />
-              </div>
-              <button
-                type="submit"
-                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[image:var(--gradient-primary)] px-5 py-3.5 text-sm font-semibold text-primary-foreground shadow-[var(--shadow-glow)] transition-transform hover:scale-[1.01]"
-              >
-                Send message <ArrowRight className="size-4" />
-              </button>
-            </form>
-          </FadeUp>
-        </div>
-      </Section>
-
-      {/* Footer */}
-      <footer className="border-t border-border bg-surface/50 px-6 py-12 md:px-10">
-        <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[1.5fr_1fr_1fr]">
-          <div>
-            <div className="flex items-center gap-2 font-display text-lg font-bold">
-              <span className="grid size-8 place-items-center rounded-lg bg-[image:var(--gradient-primary)] text-primary-foreground">
-                <Sparkles className="size-4" />
-              </span>
-              Alex Morgan
-            </div>
-            <p className="mt-4 max-w-sm text-sm text-muted-foreground">
-              Performance marketing for ambitious businesses. Strategy, execution and measurable growth.
-            </p>
-          </div>
-          <div>
-            <div className="mb-3 text-xs font-semibold uppercase tracking-wider text-foreground">Quick links</div>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              {NAV.map((n) => (
-                <li key={n.id}>
-                  <button onClick={() => scrollTo(n.id)} className="hover:text-foreground">{n.label}</button>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <div className="mb-3 text-xs font-semibold uppercase tracking-wider text-foreground">Legal</div>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><a href="#" className="hover:text-foreground">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-foreground">Terms</a></li>
-            </ul>
-            <div className="mt-6 flex gap-3">
-              {[Linkedin, Facebook, MessageCircle].map((Icon, i) => (
-                <a key={i} href="#" aria-label="Social" className="grid size-9 place-items-center rounded-lg border border-border bg-surface-elevated text-muted-foreground hover:text-foreground">
-                  <Icon className="size-4" />
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="mx-auto mt-10 flex max-w-7xl flex-col items-center justify-between gap-4 border-t border-border pt-6 text-xs text-muted-foreground sm:flex-row">
-          <div>© {new Date().getFullYear()} Alex Morgan. All rights reserved.</div>
-          <div>Crafted with care.</div>
-        </div>
-      </footer>
-
-      {/* Back to top */}
-      {showTop && (
-        <motion.button
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          aria-label="Back to top"
-          className="fixed bottom-6 right-6 z-50 grid size-12 place-items-center rounded-full bg-[image:var(--gradient-primary)] text-primary-foreground shadow-[var(--shadow-glow)] transition-transform hover:scale-110"
-        >
-          <ChevronUp className="size-5" />
-        </motion.button>
-      )}
+      <aside class="booking">
+        <div class="price-big">${p.price}</div>
+        <div class="price-sub">Inclusive of registration assistance</div>
+        <input type="text" placeholder="Full name"/>
+        <input type="tel" placeholder="Phone number"/>
+        <input type="email" placeholder="Email address"/>
+        <textarea placeholder="I'd like to schedule a visit..."></textarea>
+        <button class="btn-primary" id="bookBtn">Schedule a Visit</button>
+        <button class="btn-outline" id="contactAgent">Contact Agent</button>
+      </aside>
     </div>
-  );
+  `;
+  homePage.style.display = 'none';
+  detailPage.classList.add('active');
+  window.scrollTo({top:0,behavior:'instant'});
+
+  document.getElementById('bookBtn').onclick = ()=> window.open(whatsappLink(p),'_blank','noopener');
+  document.getElementById('contactAgent').onclick = ()=> window.open(whatsappLink(p),'_blank','noopener');
 }
 
-function Field({ label, name, type = "text", placeholder }: { label: string; name: string; type?: string; placeholder?: string }) {
-  return (
-    <div>
-      <label htmlFor={name} className="mb-2 block text-xs font-medium uppercase tracking-wider text-muted-foreground">
-        {label}
-      </label>
-      <input
-        id={name}
-        name={name}
-        type={type}
-        placeholder={placeholder}
-        className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-      />
-    </div>
-  );
-}
+document.getElementById('backBtn').addEventListener('click', ()=>{
+  detailPage.classList.remove('active');
+  homePage.style.display = '';
+  window.scrollTo({top:0,behavior:'smooth'});
+});
+
+/* Social icons */
+document.getElementById('socials').addEventListener('click', e=>{
+  const a = e.target.closest('a'); if(!a) return;
+  e.preventDefault();
+  window.open(a.dataset.url,'_blank','noopener');
+});
+
+document.getElementById('year').textContent = new Date().getFullYear();
+
+renderGrid();
+</script>
+</body>
+</html>
